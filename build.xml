@@ -1,0 +1,106 @@
+<project name="PDDL4J Project" default="build" basedir=".">
+
+	<property name="version" value="beta" />
+	<property name="src_dir" value="${basedir}/src" />
+	<property name="class_dir" value="${basedir}/classes" />
+	<property name="doc_dir" value="${basedir}/doc/api" />
+	<property name="lib_dir" value="${basedir}/lib" />	
+	<property name="dev_dir" value="${basedir}/dev" />
+	
+	<property name="javacc_home" value="${dev_dir}/javacc/" />
+	<property name="javacc_target" value="src/pddl4j/lexer/Lexer" />
+	<property name="javacc_output" value="src/pddl4j/lexer/" />
+	
+	<property name="pddl4j" value="pddl4j" />
+	<property name="pddl4j.lexer" value="pddl4j/lexer" />
+			
+	<mkdir dir="${class_dir}"/>
+	
+	<target name="build" depends="pddl4j" description="Build PDDL4J Project packages" >
+		<echo>PDDL4J Project is successfully built</echo>
+	</target>
+	
+	<target name="rebuild" depends="clean, build" description="Rebuild PDDL4J Project packages" >
+		<echo>PDDL4J Project is successfully rebuilt</echo>
+	</target>	
+	
+	<target name="pddl4j.parser.lexer" description="Build pddl4j.parser.lexer package">
+		<echo>Build pddl4j.lexer package</echo>
+		<jjtree target="${javacc_target}.jjt" 
+			outputdirectory="${javacc_output}" 
+			javacchome="${javacc_home}"/>
+		<javacc target="${javacc_target}.jj" 
+			debugparser="false" 
+			outputdirectory="${javacc_output}" 
+			javacchome="${javacc_home}"/>
+	</target>
+	
+	<target name="pddl4j" depends="pddl4j.parser.lexer" description="Build pddl4j package">
+		<echo>Build pddl4j.parser package</echo>
+			<javac 
+				classpath="${class_dir}" 
+				srcdir="${src_dir}" 
+				destdir="${class_dir}" 
+				deprecation="yes"
+				includes="**/*.java" 
+				source="1.6" 
+				debug="on"
+			/>
+	</target>		
+
+	<target name="pddl4j.lexer.clean" description="Clean the pddl4j.parser.lexer package">
+		<echo>Clean the pddl4j.lexer package</echo>
+		<delete>
+			<fileset dir="${src_dir}">
+				<include name="${pddl4j.lexer}/*.java"/>
+				<exclude name="${pddl4j.lexer}/SimpleNode.java"/>
+				<exclude name="${pddl4j.lexer}/LexerException.java"/>
+				</fileset>
+			<fileset dir="${src_dir}" includes="${pddl4j.lexer}/*.jj" />
+		</delete>
+	</target>
+	
+	<target name="pddl4j.clean" description="Clean the pddl4j.lexer package">
+		<echo>Clean the pddl4j package</echo>
+		<delete>
+			<fileset dir="${class_dir}" includes="**/*.class" />
+		</delete>
+	</target>
+	
+	<target name="clean" depends="pddl4j.lexer.clean, pddl4j.clean" description="Clean the PDDL4J Project">
+		<echo>PDDL4J Procject is successfully cleaned</echo>
+	</target>
+
+	<target name="doc" description="Generate the PDDL4J Project Documentation">
+		<javadoc 
+			sourcepath="${src_dir}" 
+			classpath="${class_dir}" 
+			destdir="${doc_dir}" 
+			packagenames="pddl4j.exp.*, pddl4j" 
+			access="public" 
+			source="1.6" 
+			linksource="no"
+			overview="${src_dir}/overview.html"
+			Windowtitle="PDDL4J Project ${version}"
+			Author="Damien Pellier"
+			Version="${version}"
+		/>
+		<jjdoc target="${javacc_target}.jj" 
+			outputfile="doc/PDDLLexerBNF.html" 
+			javacchome="${javacc_home}" 
+			onetable="true"/>
+	</target>
+	
+	<target name="jar" description="Build PDDL4J Jar">
+		<jar destfile="${lib_dir}/pddl4j.jar" 
+			basedir="${class_dir}" 
+			includes="**/*.class"
+			excludes="**/tests/*">
+			<manifest>
+				<attribute name="Built-By" value="Damien Pellier" />
+			</manifest>
+		</jar>
+	</target>
+
+</project>
+
