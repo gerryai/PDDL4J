@@ -111,7 +111,7 @@ public class NotAtomicFormula extends NotExp implements Literal {
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public final NotAtomicFormula apply(Substitution sigma) {
-        return (NotAtomicFormula) super.apply(sigma);
+        return new NotAtomicFormula((AtomicFormula) this.exp.apply(sigma));
     }
 
     /**
