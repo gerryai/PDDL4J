@@ -15,6 +15,7 @@
 	<property name="pddl4j.lexer" value="pddl4j/lexer" />
 			
 	<mkdir dir="${class_dir}"/>
+	<mkdir dir="${lib_dir}"/>
 	
 	<target name="build" depends="pddl4j" description="Build PDDL4J Project packages" >
 		<echo>PDDL4J Project is successfully built</echo>
