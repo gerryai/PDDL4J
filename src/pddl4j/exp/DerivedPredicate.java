@@ -132,14 +132,15 @@ public final class DerivedPredicate extends AbstractExp {
      * expression and that are mapped in the substitution by its binding expression.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public final Exp apply(Substitution sigma) {
         if (sigma == null) 
             throw new NullPointerException();
-        this.exp.apply(sigma);
-        return this;
+        DerivedPredicate other = this.clone();
+        other.exp = this.exp.apply(sigma);
+        return other;
     }
 
     /**

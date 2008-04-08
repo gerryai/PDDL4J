@@ -72,7 +72,7 @@ public final class OrExp extends ListExp {
      * expression.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public OrExp apply(Substitution sigma) {

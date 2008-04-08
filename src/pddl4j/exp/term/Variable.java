@@ -89,15 +89,15 @@ public class Variable extends AbstractTerm {
      * or this variable is the variable is not bind the substitution.
      * 
      * @param sigma the substitution.
-     * @return the substituted term or this variable if there is no binding term
-     *         for this variable in the substitution.
+     * @return the substituted term or a copy of this variable if there is no
+     *         binding term for this variable in the substitution.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public Term apply(Substitution sigma) {
         if (sigma == null) 
             throw new NullPointerException();
         Term value = sigma.getBinding(this);
-        return value != null ? value : this;
+        return value != null ? value : this.clone();
     }
     
     /**

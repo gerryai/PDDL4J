@@ -153,14 +153,13 @@ public class PrefExp extends AbstractExp {
      * expression.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public PrefExp apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        this.exp = this.exp.apply(sigma);
-        return this;
+        return new PrefExp(this.name, this.exp.apply(sigma));
     }
 
     /**

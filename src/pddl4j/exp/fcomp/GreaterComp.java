@@ -69,10 +69,10 @@ public class GreaterComp extends FCompExp {
     /**
      * Substitutes all occurrences of the variables that occur in this
      * expression and that are mapped in the substitution by its binding
-     * expression.
+     * term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public GreaterComp apply(Substitution sigma) {

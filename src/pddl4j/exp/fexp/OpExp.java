@@ -100,14 +100,14 @@ public abstract class OpExp extends FExp {
      * modify the content of the term on which it is applied.
      * 
      * @param sigma the substitution.
-     * @return the substituted term.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      * @throws EvaluationException if this arithmetic function is ground after
      *             applying the substitution and its evaluation fails.
      */
     public Term apply(Substitution sigma) {
-        super.apply(sigma);
-        return this.isEvaluable() ? this.evaluate() : this;
+        OpExp other = (OpExp) super.apply(sigma);
+        return other.isEvaluable() ? other.evaluate() : other;
     }
     
     /**

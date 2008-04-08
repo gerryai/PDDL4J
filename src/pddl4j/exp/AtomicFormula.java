@@ -97,12 +97,15 @@ public class AtomicFormula extends AbstractExp implements Literal {
     }
 
     /**
-     * Adds a new exp to this atomic formula.
+     * Adds a new term to this atomic formula.
      * 
-     * @param term the exp to add. The exp must be not null.
-     * @return <code>true</code> if the exp was added; <code>false</code> otherwise.
+     * @param term the term to add. The term must be not null.
+     * @return <code>true</code> if the term was added; <code>false</code> otherwise.
+     * @throws NullPointerException if <code>term == null</code>.
      */
     public final boolean add(Term term) {
+        if (term == null)
+            throw new NullPointerException();
         return this.arguments.add(term);
     }
 
@@ -116,9 +119,9 @@ public class AtomicFormula extends AbstractExp implements Literal {
     }
 
     /**
-     * Returns an iterator over the exp of the atomic formula.
+     * Returns an iterator over the terms of the atomic formula.
      * 
-     * @return an iterator over the exp of the atomic formula.
+     * @return an iterator over the terms of the atomic formula.
      * @see java.lang.Iterable#iterator()
      */
     public final Iterator<Term> iterator() {
@@ -138,19 +141,20 @@ public class AtomicFormula extends AbstractExp implements Literal {
 
     /**
      * Substitutes all occurrences of the variables that occur in this
-     * expression and that are mapped in the substitution by its binding exp.
+     * expression and that are mapped in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public final AtomicFormula apply(Substitution sigma) {
         if (sigma == null) 
             throw new NullPointerException();
-        for (int i = 0; i < this.getArity(); i++) {
-            this.arguments.set(i, this.arguments.get(i).apply(sigma));
+        AtomicFormula other = new AtomicFormula(this.predicate);
+        for (Term arg : this) {
+            other.add(arg.apply(sigma));
         }
-        return this;
+        return other;
     }
 
     /**

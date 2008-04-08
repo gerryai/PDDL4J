@@ -70,7 +70,7 @@ public interface Literal extends InitEl, Iterable<Term> {
      * expression.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     Literal apply(Substitution sigma);

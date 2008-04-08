@@ -178,7 +178,7 @@ public abstract class FExp extends AbstractTerm implements Iterable<Term> {
      * modify the content of the term on which it is applied.
      * 
      * @param sigma the substitution.
-     * @return the substituted term.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      * @throws EvaluationException if a ground arithmetic function occurs in
      *             this function expression and its evaluation fails.
@@ -186,10 +186,12 @@ public abstract class FExp extends AbstractTerm implements Iterable<Term> {
     public Term apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        for (int i = 0; i < this.getArity(); i++) {
-            this.set(i, this.arguments.get(i).apply(sigma));
+        FExp other = this.clone();
+        other.arguments.clear();
+        for (Term arg : this.arguments) {
+            other.add(arg.apply(sigma));
         }
-        return this;
+        return other;
     }
 
     /**

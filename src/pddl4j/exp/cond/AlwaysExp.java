@@ -61,10 +61,10 @@ public class AlwaysExp extends UnaryCondExp {
 
     /**
      * Substitutes all occurrences of the variables that occur in this
-     * expression and that are mapped in the substitution by its binding expression.
+     * expression and that are mapped in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public AlwaysExp apply(Substitution sigma) {

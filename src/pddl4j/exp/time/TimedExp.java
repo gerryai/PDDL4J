@@ -125,17 +125,18 @@ public abstract class TimedExp extends AbstractExp {
     /**
      * Substitutes all occurrences of the variables that occur in this
      * expression and that are mapped in the substitution by its binding
-     * expression.
+     * term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public TimedExp apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        this.exp = this.exp.apply(sigma);
-        return this;
+        TimedExp other = this.clone();
+        other.exp = this.exp.apply(sigma);
+        return other;
     }
     
     /**

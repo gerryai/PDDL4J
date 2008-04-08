@@ -190,16 +190,18 @@ public abstract class ListExp extends AbstractExp implements Iterable<Exp> {
      * expression and that are mapped in the substitution by its binding exp.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public ListExp apply(Substitution sigma) {
         if (sigma == null) 
             throw new NullPointerException();
-        for (int i = 0; i < this.elements.size(); i++) {
-            this.set(i, this.elements.get(i).apply(sigma));
+        ListExp other = this.clone();
+        other.elements.clear();
+        for (Exp exp : this) {
+            other.add(exp.apply(sigma));
         }
-        return this;
+        return other;
     }
     
     /**

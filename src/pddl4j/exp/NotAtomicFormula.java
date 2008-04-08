@@ -107,7 +107,7 @@ public class NotAtomicFormula extends NotExp implements Literal {
      * expression.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public final NotAtomicFormula apply(Substitution sigma) {

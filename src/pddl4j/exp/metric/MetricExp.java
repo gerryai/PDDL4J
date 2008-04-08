@@ -36,7 +36,6 @@ import java.util.Set;
 
 import pddl4j.exp.AbstractExp;
 import pddl4j.exp.ExpID;
-import pddl4j.exp.fexp.FExp;
 import pddl4j.exp.term.Substitution;
 import pddl4j.exp.term.Term;
 import pddl4j.exp.term.Variable;
@@ -122,17 +121,18 @@ public abstract class MetricExp extends AbstractExp {
     
     /**
      * Substitutes all occurrences of the variables that occur in this
-     * expression and that are mapped in the substitution by its binding expression.
+     * expression and that are mapped in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public MetricExp apply(Substitution sigma) {
         if (sigma == null) 
             throw new NullPointerException();
-        this.exp = (FExp) this.exp.apply(sigma);
-        return this;
+        MetricExp other = this.clone();
+        other.exp = this.exp.apply(sigma);
+        return other;
     }
     
     /**

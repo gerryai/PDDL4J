@@ -117,7 +117,6 @@ public interface Term extends Exp, Cloneable {
      * term and that are bound in the substitution by its binding term.
      * This method modify the content of the term on which it is applied. 
      *  
-     * 
      * @param sigma the substitution.
      * @return the substituted term.
      */

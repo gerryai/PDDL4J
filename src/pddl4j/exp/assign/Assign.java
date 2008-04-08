@@ -64,10 +64,10 @@ public final class Assign extends AssignOpExp {
     /**
      * Substitutes all occurrences of the variables that occur in this
      * expression and that are mapped in the substitution by its binding
-     * expression.
+     * term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public Assign apply(Substitution sigma) {

@@ -163,18 +163,19 @@ public abstract class AssignOpExp extends AbstractExp {
 
     /**
      * Substitutes all occurrences of the variables that occur in this
-     * expression and that are mapped in the substitution by its binding exp.
+     * expression and that are mapped in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public AssignOpExp apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        this.arg1 = this.arg1.apply(sigma);
-        this.arg2 = this.arg2.apply(sigma);
-        return this;
+        AssignOpExp other = this.clone();
+        other.arg1 = this.arg1.apply(sigma);
+        other.arg2 = this.arg2.apply(sigma);
+        return other;
     }
 
     /**
@@ -204,7 +205,7 @@ public abstract class AssignOpExp extends AbstractExp {
         AssignOpExp other = this.clone();
         other.arg1 = this.arg1.standardize(images);
         other.arg2 = this.arg2.standardize(images);
-        return this;
+        return other;
     }
 
     /**

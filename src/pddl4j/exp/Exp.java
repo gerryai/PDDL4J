@@ -103,7 +103,7 @@ public interface Exp extends Serializable, Cloneable {
      * expression and that are bound in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     Exp apply(Substitution sigma);

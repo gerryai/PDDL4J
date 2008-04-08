@@ -109,14 +109,13 @@ public class NotExp extends AbstractExp {
      * expression and that are mapped in the substitution by its binding expression.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public NotExp apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        this.exp = this.exp.apply(sigma);
-        return this;
+        return new NotExp(this.exp.apply(sigma));
     }
 
     /**

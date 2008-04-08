@@ -88,10 +88,10 @@ public class WithinExp extends UnaryCondExp {
     
     /**
      * Substitutes all occurrences of the variables that occur in this
-     * expression and that are mapped in the substitution by its binding expression.
+     * expression and that are mapped in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public WithinExp apply(Substitution sigma) {
@@ -111,8 +111,7 @@ public class WithinExp extends UnaryCondExp {
     /**
      * Standardizes all occurrences of the variables that occur in this
      * expression. The map argument is used to store the variable already
-     * standardized. The bound argument is used to store the bound variables. a
-     * standardized copy of this expression. Remember that free variables are
+     * standardized. Remember that free variables are
      * existentially quantified.
      * 
      * @param images the object that maps old variable images to the standardize

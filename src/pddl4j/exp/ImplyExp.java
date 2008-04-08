@@ -85,8 +85,11 @@ public class ImplyExp extends AbstractExp {
      * @param head the new head of this implication expression. The new head of
      *            the implication expression must be a not null reference to an
      *            instance of <code>Exp</code>.
+     * @throws NullPointerException if <code>head == null</code>.            
      */
     public final void setHead(Exp head) {
+        if (head == null)
+            throw new NullPointerException();
         this.head = head;
     }
 
@@ -105,8 +108,11 @@ public class ImplyExp extends AbstractExp {
      * @param body the new body of this implication expression. The new body of
      *            the implication expression must be a not null reference to an
      *            instance of <code>Exp</code>.
+     * @throws NullPointerException if <code>body == null</code>.           
      */
     public final void setBody(Exp body) {
+        if (body == null)
+            throw new NullPointerException();
         this.body = body;
     }
 
@@ -133,18 +139,16 @@ public class ImplyExp extends AbstractExp {
     
     /**
      * Substitutes all occurrences of the variables that occur in this
-     * expression and that are mapped in the substitution by its binding exp.
+     * expression and that are mapped in the substitution by its binding term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public final ImplyExp apply(Substitution sigma) {
         if (sigma == null) 
             throw new NullPointerException();
-        this.head = this.head.apply(sigma);
-        this.body = this.body.apply(sigma);
-        return this;
+        return new ImplyExp(this.head.apply(sigma), this.body.apply(sigma));
     }
     
     /**

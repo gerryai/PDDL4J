@@ -146,18 +146,17 @@ public class WhenExp extends AbstractExp {
     /**
      * Substitutes all occurrences of the variables that occur in this
      * expression and that are mapped in the substitution by its binding
-     * expression.
+     * term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public WhenExp apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        this.condition = this.condition.apply(sigma);
-        this.effect = this.effect.apply(sigma);
-        return this;
+        return new WhenExp(this.condition.apply(sigma),
+                    this.effect.apply(sigma));
     }
 
     /**

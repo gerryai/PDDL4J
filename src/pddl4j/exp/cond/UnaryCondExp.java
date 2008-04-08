@@ -106,17 +106,18 @@ public abstract class UnaryCondExp extends CondExp {
     /**
      * Substitutes all occurrences of the variables that occur in this
      * expression and that are mapped in the substitution by its binding
-     * expression.
+     * term.
      * 
      * @param sigma the substitution.
-     * @return this expression.
+     * @return a substituted copy of this expression.
      * @throws NullPointerException if <code>sigma == null</code>.
      */
     public UnaryCondExp apply(Substitution sigma) {
         if (sigma == null)
             throw new NullPointerException();
-        this.arg = this.arg.apply(sigma);
-        return this;
+        UnaryCondExp other = this.clone();
+        other.arg = this.arg.apply(sigma);
+        return other;
     }
 
     /**

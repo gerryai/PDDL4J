@@ -70,8 +70,8 @@ public final class Substitution implements Serializable, Cloneable, Iterable<Bin
      * substitution previously contained a mapping term for the variable, the
      * old term value is replaced.
      * 
-     * @param var the exp to bind.
-     * @param term the exp to be bound to <code>var</code>.
+     * @param var the variable to bind.
+     * @param term the term to be bound to <code>var</code>.
      * @return the previous term value associated with <code>var</code>,
      *         or <tt>null</tt> if there was no mapping term for <code>var</code>.
      * @throws NullPointerException if <code>var == null || term == null</code>.
