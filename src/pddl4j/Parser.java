@@ -2567,17 +2567,13 @@ public final class Parser {
         if (node.jjtGetNumChildren() == 2) {
             SimpleNode cn1 = (SimpleNode) node.jjtGetChild(0);
             SimpleNode cn2 = (SimpleNode) node.jjtGetChild(1);
-            if (cn1.getId() == LexerTreeConstants.JJTTYPED_LIST 
+            if (cn1.getId() == LexerTreeConstants.JJTATOMIC_FORMULA 
                        && cn2.getId() == LexerTreeConstants.JJTGD) {
-                LinkedHashMap<String, Variable> parameters = new LinkedHashMap<String, Variable>();
-                this.var_typed_list(cn1, parameters);
-                Exp exp = this.gd(cn2);
-                DerivedPredicate pre = new DerivedPredicate(exp);
-                for (Variable param : parameters.values()) {
-                    pre.add(param);
-                }
-                this.obj.axioms.add(pre);
-                return pre;
+                AtomicFormula head = this.atomic_formula(cn1);
+                Exp body = this.gd(cn2);
+                DerivedPredicate axiom = new DerivedPredicate(head, body);
+                this.obj.axioms.add(axiom);
+                return axiom;
             }
            
         }

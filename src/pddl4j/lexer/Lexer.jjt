@@ -2905,7 +2905,7 @@ Token derived_def() #DERIVED_DEF:
 }
 {
 	try {
-		t=<LPAREN> <DERIVED> typed_list(LexerTreeConstants.JJTVARIABLE) gd() <RPAREN> 
+		t=<LPAREN> <DERIVED> atomic_formula(LexerTreeConstants.JJTVARIABLE) gd() <RPAREN> 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}

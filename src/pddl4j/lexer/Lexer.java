@@ -6505,7 +6505,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
       try {
         t = jj_consume_token(LPAREN);
         jj_consume_token(DERIVED);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
+        atomic_formula(LexerTreeConstants.JJTVARIABLE);
         gd();
         jj_consume_token(RPAREN);
       } catch (Throwable e) {

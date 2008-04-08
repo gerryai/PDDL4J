@@ -31,8 +31,6 @@
 package pddl4j.exp;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,8 +44,7 @@ import pddl4j.exp.term.Variable;
  * @author Damien Pellier
  * @version 1.0
  */
-public final class DerivedPredicate extends AbstractExp implements
-            Iterable<Term> {
+public final class DerivedPredicate extends AbstractExp {
 
     /**
      * The serial version id of the class.
@@ -55,56 +52,70 @@ public final class DerivedPredicate extends AbstractExp implements
     private static final long serialVersionUID = 523481664576398238L;
 
     /**
-     * The list of parameters of the derived predicate.
-     */
-    private Set<Term> parameters;
-
-    /**
      * The expression that defines the derived predicate.
      */
-    private Exp exp;
+    private ImplyExp exp;
 
     /**
      * Creates a new derived predicate with a specific head and body.
      * 
-     * @param exp the expression that defines the axiom.
+     * @param head the head of this derived predicate.
+     * @param body the body of this derived predicate
+     * @throws NullPointerException if <code>head == null || body == null</code>.
      */
-    public DerivedPredicate(Exp exp) {
+    public DerivedPredicate(AtomicFormula head, Exp body) {
         super(ExpID.DERIVED_PREDICATE);
-        this.parameters = new LinkedHashSet<Term>();
-        this.exp = exp;
+        if (head == null || body == null) 
+            throw new NullPointerException();
+        this.exp = new ImplyExp(head, body);
     }
     
     /**
-     * Creates a new derived predicate with a specific head and body.
+     * Sets a new head to this derived predicate.
      * 
+     * @param head the new head of this implication expression. The new head of
+     *            the derived predicate must be a not null reference to an
+     *            instance of <code>AtomicFormula</code>.
+     * @throws NullPointerException if <code>head == null</code>.
      */
-    public DerivedPredicate() {
-        super(ExpID.DERIVED_PREDICATE);
-        this.parameters = new LinkedHashSet<Term>();
-        this.exp = new AndExp();
+    public final void setHead(AtomicFormula head) {
+        if (head == null) 
+            throw new NullPointerException();
+        this.exp.setHead(head);
+    }
+
+    /**
+     * Returns the head of the derived predicate.
+     * 
+     * @return the head of the derived predicate.
+     */
+    public final AtomicFormula getHead() {
+        return (AtomicFormula) this.exp.getHead();
+    }
+
+    /**
+     * Sets a new body to this derived predicate.
+     * 
+     * @param body the new body of this derived predicate. The new body of
+     *            the derived predicate must be a not null reference to an
+     *            instance of <code>Exp</code>.
+     * @throws NullPointerException if <code>body == null</code>.           
+     */
+    public final void setBody(Exp body) {
+        if (body == null)
+            throw new NullPointerException();
+        this.setBody(body);
+    }
+
+    /**
+     * Returns the body of the derived predicate.
+     * 
+     * @return the body of the derived predicate.
+     */
+    public final Exp getBody() {
+        return this.exp.getBody();
     }
     
-    /**
-     * Adds a parameter to this derived predicate.
-     * 
-     * @param param the parameter to add.
-     * @return <code>true</code> if the parameter was added;
-     *         <code>false</code> otherwise.
-     */
-    public final boolean add(Term param) {
-        return this.parameters.add(param);
-    }
-
-    /**
-     * Returns the expression that defines the derived predicate.
-     * 
-     * @return the expression that defines the derived predicate.
-     */
-    public Exp getExp() {
-        return this.exp;
-    }
-
     /**
      * Returns <code>true</code> if a expression occurs in this derived predicate.
      * 
@@ -156,10 +167,7 @@ public final class DerivedPredicate extends AbstractExp implements
     public DerivedPredicate standardize(Map<String, String> images) {
         if (images == null)
             throw new NullPointerException();
-        DerivedPredicate other = new DerivedPredicate();
-        for (Term p : this.parameters) {
-            other.add(p.standardize(images));
-        }
+        DerivedPredicate other = this.clone();
         other.exp = this.exp.standardize(images);
         return other;
     }
@@ -175,14 +183,6 @@ public final class DerivedPredicate extends AbstractExp implements
         return this.exp.isGround();
     }
 
-    /**
-     * Returns an iterator over the parameters.
-     * 
-     * @return an iterator over the parameters.
-     */
-    public Iterator<Term> iterator() {
-        return this.parameters.iterator();
-    }
 
     /**
      * Returns <code>true</code> if this derived predicate is equal to an
@@ -197,9 +197,7 @@ public final class DerivedPredicate extends AbstractExp implements
     public boolean equals(Object obj) {
         if (obj != null && obj instanceof DerivedPredicate) {
             DerivedPredicate other = (DerivedPredicate) obj;
-            return this.getExpID().equals(other.getExpID())
-                        && this.parameters.equals(other.parameters)
-                        && this.exp.equals(exp);
+            return this.exp.equals(other.exp);
         }
         return false;
     }
@@ -212,8 +210,7 @@ public final class DerivedPredicate extends AbstractExp implements
      * @return a hash code value for the derived predicate.
      */
     public int hashCode() {
-        return this.getExpID().hashCode() + this.parameters.hashCode()
-                    + this.exp.hashCode();
+        return this.getExpID().hashCode() + this.exp.hashCode();
     }
 
     /**
@@ -224,10 +221,6 @@ public final class DerivedPredicate extends AbstractExp implements
      */
     public DerivedPredicate clone() {
         DerivedPredicate other = (DerivedPredicate) super.clone();
-        other.parameters = new LinkedHashSet<Term>();
-        for (Term arg : this.parameters) {
-                other.parameters.add(arg.clone());
-        }
         other.exp = exp.clone();
         return other;
     }
@@ -240,7 +233,7 @@ public final class DerivedPredicate extends AbstractExp implements
      */
     public Exp moveQuantifierOutward() {
         DerivedPredicate other = this.clone();
-        other.exp = this.exp.moveQuantifierOutward();
+        other.exp.body = this.exp.body.moveQuantifierOutward();
         return other;
     }
     
@@ -253,7 +246,7 @@ public final class DerivedPredicate extends AbstractExp implements
      */
     public DerivedPredicate toDisjunctiveNormalForm() {
         DerivedPredicate dnf = this.clone();
-        dnf.exp = this.exp.toDisjunctiveNormalForm();
+        dnf.exp.body = this.exp.body.toDisjunctiveNormalForm();
         return dnf;
     }
     
@@ -266,7 +259,7 @@ public final class DerivedPredicate extends AbstractExp implements
      */
     public DerivedPredicate toConjunctiveNormalForm() {
         DerivedPredicate cnf = this.clone();
-        cnf.exp = this.exp.toConjunctiveNormalForm();
+        cnf.exp.body = this.exp.body.toConjunctiveNormalForm();
         return cnf;
     }
    
@@ -279,7 +272,7 @@ public final class DerivedPredicate extends AbstractExp implements
      */
     public DerivedPredicate toNegativeNormalForm() {
         DerivedPredicate nnf = this.clone();
-        nnf.exp = this.exp.toNegativeNormalForm();
+        nnf.exp.body = this.exp.body.toNegativeNormalForm();
         return nnf;
     }
     
@@ -301,13 +294,7 @@ public final class DerivedPredicate extends AbstractExp implements
         StringBuffer str = new StringBuffer();
         str.append("(:derived ");
         str.append("(");
-        if (!this.parameters.isEmpty()) {
-            Iterator<Term> i = this.parameters.iterator();
-            str.append(i.next().toString());
-            while (i.hasNext()) {
-                str.append(" " + i.next().toString());
-            }
-        }
+        str.append(this.exp.toString());
         str.append(")");
         str.append(" ");
         str.append(this.exp.toString());
@@ -324,13 +311,7 @@ public final class DerivedPredicate extends AbstractExp implements
         StringBuffer str = new StringBuffer();
         str.append("(:derived ");
         str.append("(");
-        if (!this.parameters.isEmpty()) {
-            Iterator<Term> i = this.parameters.iterator();
-            str.append(i.next().toTypedString());
-            while (i.hasNext()) {
-                str.append(" " + i.next().toTypedString());
-            }
-        }
+        str.append(this.exp.toTypedString());
         str.append(")");
         str.append(" ");
         str.append(this.exp.toTypedString());
