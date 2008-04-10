@@ -14,6 +14,13 @@
 	<property name="pddl4j" value="pddl4j" />
 	<property name="pddl4j.lexer" value="pddl4j/lexer" />
 			
+	<property name="repository.path" value="/cvsroot/pdd4j"/>
+	<property name="ip.cvs" value="pdd4j.cvs.sourceforge.net"/>	
+	<property name="anonymous.cvs.root" value=":pserver:anonymous@${ip.cvs}:${repository.path}"/>
+	<property name="cvs.root" value=":ext:${user.cvs}@${ip.cvs}:${repository.path}"/>
+	<property name="cvs.module" value="PDDL4J"/>
+	
+	
 	<mkdir dir="${class_dir}"/>
 	<mkdir dir="${lib_dir}"/>
 	
@@ -103,5 +110,25 @@
 		</jar>
 	</target>
 
+	<target name="cvs-checkout" description="Checkout project from CVS repository">
+			<echo>Checkout project from CVS repository</echo>
+			<cvs command="checkout" 
+				package="${cvs.module}" 
+				cvsRoot=":pserver:anonymous@${ip.cvs}:${repository.path}"  
+				dest="${basedir}"
+			/>
+	</target>
+		
+	
+	<target name="cvs-commit" description="Commits modifications to CVS repository">
+		<echo>Commits modifications to CVS repository</echo>	
+		<input message="Commit message" addproperty="cvs.commit.msg"/>	
+		<!-- <input message="User" addproperty="user.cvs"/>	-->
+		<cvs command="commit -m '${cvs-commit-msg}'" 
+			cvsRoot=":ext:pellier@${ip.cvs}:${repository.path}"
+			cvsRsh="ssh"
+		/>
+	</target>
+	
 </project>
 
