@@ -291,11 +291,11 @@ public abstract class FExp extends AbstractTerm implements Iterable<Term> {
                         i++;
                     }
                     return failure ? null : theta;
-                }
-            } else {
-                throw new BindingException("cannot bind "
+                } else {
+                    throw new BindingException("cannot bind "
                             + this.toTypedString() + " with "
                             + term.toTypedString() + ": imcompatible type");
+                }
             }
         }
         return null;
