@@ -31,8 +31,7 @@
 package pddl4j.exp.type;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -98,8 +97,8 @@ public final class Type implements Serializable {
         if (image == null || hierarchy == null) 
             throw new NullPointerException();
         this.image = image;
-        this.superTypes = new HashMap<String, Set<String>>();
-        this.subTypes = new HashMap<String, Set<String>>();        
+        this.superTypes = new LinkedHashMap<String, Set<String>>();
+        this.subTypes = new LinkedHashMap<String, Set<String>>();        
         if (!this.checkTypeHierarchy(hierarchy)) {
             throw new TypingException(this);
         }
@@ -109,7 +108,7 @@ public final class Type implements Serializable {
             for (String st : e.getValue()) {
                 Set<String> stSet = this.superTypes.get(st);
                 if (stSet == null) {
-                    stSet = new HashSet<String>();
+                    stSet = new LinkedHashSet<String>();
                     this.superTypes.put(st, stSet);
                 }
                 stSet.add(e.getKey());
@@ -128,10 +127,10 @@ public final class Type implements Serializable {
      */
     private Type(String image) {
         this.image = image;
-        this.superTypes = new HashMap<String, Set<String>>();
-        this.subTypes = new HashMap<String, Set<String>>();
-        this.subTypes.put(image, new HashSet<String>());
-        this.superTypes.put(image, new HashSet<String>());
+        this.superTypes = new LinkedHashMap<String, Set<String>>();
+        this.subTypes = new LinkedHashMap<String, Set<String>>();
+        this.subTypes.put(image, new LinkedHashSet<String>());
+        this.superTypes.put(image, new LinkedHashSet<String>());
     }
     
     /**
@@ -287,11 +286,11 @@ public final class Type implements Serializable {
      *         <code>false</code> otherwise.
      */
     private boolean checkTypeHierarchy(Map<String, Set<String>> hierarchy) {
-        Set<String> explored = new HashSet<String>();
+        Set<String> explored = new LinkedHashSet<String>();
         if (hierarchy.containsKey(Type.OBJECT_SYMBOL)) {
             Stack<String> stack = new Stack<String>();
             stack.push(Type.OBJECT_SYMBOL);
-            Set<String> prefix = new HashSet<String>();
+            Set<String> prefix = new LinkedHashSet<String>();
             boolean consistant = true;
             while (!stack.isEmpty() && consistant) {
                 String type = stack.pop();
@@ -309,7 +308,7 @@ public final class Type implements Serializable {
                     }
                 }
             }
-            Set<String> types = new HashSet<String>(hierarchy.keySet());
+            Set<String> types = new LinkedHashSet<String>(hierarchy.keySet());
             types.removeAll(explored);
             return consistant
                         && (types.isEmpty() || (types.size() == 1 && 
