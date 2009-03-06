@@ -30,7 +30,6 @@
 
 package pddl4j.exp.type;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -155,9 +154,9 @@ public final class TypeSet implements Iterable<Type>, Cloneable {
      *         type set; <code>false</code> otherwise.
      */
     public boolean isInstanceOf(TypeSet typeSet) {
-        Set<Type> thisSet = new HashSet<Type>(this.types);
+        Set<Type> thisSet = new LinkedHashSet<Type>(this.types);
         thisSet.addAll(this.getSubTypes());
-        Set<Type> otherSet = new HashSet<Type>(typeSet.types);
+        Set<Type> otherSet = new LinkedHashSet<Type>(typeSet.types);
         otherSet.addAll(typeSet.getSubTypes());
         return thisSet.containsAll(otherSet);
     }
@@ -199,15 +198,15 @@ public final class TypeSet implements Iterable<Type>, Cloneable {
         if (ts == null)
             throw new NullPointerException();
         TypeSet ts1 = new TypeSet();
-        ts1.types = new HashSet<Type>(this.types);
+        ts1.types = new LinkedHashSet<Type>(this.types);
         ts1.types.removeAll(ts.types);
         
         TypeSet ts2 = new TypeSet();
-        ts2.types = new HashSet<Type>(ts.types);
+        ts2.types = new LinkedHashSet<Type>(ts.types);
         ts2.types.removeAll(this.types);
         
         TypeSet infinum = new TypeSet();
-        infinum.types = new HashSet<Type>(this.types);
+        infinum.types = new LinkedHashSet<Type>(this.types);
         infinum.types.retainAll(ts.types);
             
         Set<Type> st = ts1.getSubTypes();
@@ -228,7 +227,7 @@ public final class TypeSet implements Iterable<Type>, Cloneable {
     public boolean intersect(TypeSet typeSet) {
         if (typeSet == null)
             throw new NullPointerException();
-        Set<Type> types = new HashSet<Type>(this.types);
+        Set<Type> types = new LinkedHashSet<Type>(this.types);
         types.addAll(this.getSubTypes());
         return types.retainAll(typeSet.types);
     }
