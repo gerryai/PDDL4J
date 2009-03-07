@@ -30,7 +30,7 @@
 
 package pddl4j.exp.time;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.Exp;
@@ -66,7 +66,7 @@ public final class OverAllTimedExp extends OverTimedExp {
      * @return a standardized copy of this expression.
      */
     public OverAllTimedExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

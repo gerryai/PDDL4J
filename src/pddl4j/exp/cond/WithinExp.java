@@ -30,8 +30,8 @@
 
 package pddl4j.exp.cond;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import pddl4j.exp.Exp;
 import pddl4j.exp.fexp.Number;
@@ -105,7 +105,7 @@ public class WithinExp extends UnaryCondExp {
      * @return a standardized copy of this expression.
      */
     public WithinExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

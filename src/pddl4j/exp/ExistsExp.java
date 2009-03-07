@@ -30,7 +30,7 @@
 
 package pddl4j.exp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.term.Variable;
@@ -73,7 +73,7 @@ public final class ExistsExp extends QuantifiedExp {
      * @return a standardized copy of this expression. 
      */
     public ExistsExp standardize() {
-        return this.standardize(new HashMap<String,String>());
+        return this.standardize(new LinkedHashMap<String,String>());
     }
     
     /**

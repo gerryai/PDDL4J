@@ -30,8 +30,8 @@
 
 package pddl4j.exp.assign;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -185,7 +185,7 @@ public abstract class AssignOpExp extends AbstractExp {
      * @return a standardized copy of this expression.
      */
     public AssignOpExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**
@@ -268,7 +268,7 @@ public abstract class AssignOpExp extends AbstractExp {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         if (this.arg1.getTermID().equals(TermID.VARIABLE)) {
             vars.add((Variable) this.arg1);
         }

@@ -30,7 +30,7 @@
 
 package pddl4j.exp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -170,7 +170,7 @@ public class PrefExp extends AbstractExp {
      * @see pddl4j.exp.Exp#standardize()
      */
     public PrefExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

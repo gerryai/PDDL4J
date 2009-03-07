@@ -30,7 +30,7 @@
 
 package pddl4j.exp.time;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -176,7 +176,7 @@ public class TimedLiteral extends TimedExp implements Literal {
      * @return a standardized copy of this expression.
      */
     public TimedLiteral standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

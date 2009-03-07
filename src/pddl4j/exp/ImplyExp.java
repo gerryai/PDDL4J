@@ -30,8 +30,8 @@
 
 package pddl4j.exp;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -159,7 +159,7 @@ public class ImplyExp extends AbstractExp {
      * @see pddl4j.exp.Exp#standardize()
      */
     public ImplyExp standardize() {
-        return this.standardize(new HashMap<String,String>());
+        return this.standardize(new LinkedHashMap<String,String>());
     }
     
     /**
@@ -328,7 +328,7 @@ public class ImplyExp extends AbstractExp {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         vars.addAll(this.head.getFreeVariables());
         vars.addAll(this.body.getFreeVariables());
         return vars;

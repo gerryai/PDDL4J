@@ -31,8 +31,8 @@
 package pddl4j.exp.fexp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -201,7 +201,7 @@ public abstract class FExp extends AbstractTerm implements Iterable<Term> {
      * @return a standardized copy of this expression.
      */
     public FExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
     
     /**
@@ -307,7 +307,7 @@ public abstract class FExp extends AbstractTerm implements Iterable<Term> {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         for (Term arg : this) {
             vars.addAll(arg.getFreeVariables());
         }

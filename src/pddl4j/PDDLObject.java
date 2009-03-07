@@ -32,8 +32,6 @@ package pddl4j;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -125,7 +123,7 @@ public class PDDLObject implements Domain, Problem {
     /**
      * The map used to store for each type its domain.
      */
-    protected HashMap<Type, Set<Constant>> typeDomains;
+    protected Map<Type, Set<Constant>> typeDomains;
     
     /**
      * Returns the set of constants associated to a specified type.
@@ -137,7 +135,7 @@ public class PDDLObject implements Domain, Problem {
     public Set<Constant> getTypedDomain(Type type) {
         Set<Constant> domain = this.typeDomains.get(type);
         if (domain == null) {
-            domain = new HashSet<Constant>();
+            domain = new LinkedHashSet<Constant>();
         }
         for (Type st : type.getSubTypes()) {
             Set<Constant> tmp = this.typeDomains.get(st);
@@ -154,7 +152,7 @@ public class PDDLObject implements Domain, Problem {
      *         if the type is not defined in the pddl object.
      */
     public Set<Constant> getTypedDomain(TypeSet typeSet) {
-        Set<Constant> domain = new HashSet<Constant>();
+        Set<Constant> domain = new LinkedHashSet<Constant>();
         for (Type type : typeSet) {
             domain.addAll(this.getTypedDomain(type));
         }
@@ -166,7 +164,7 @@ public class PDDLObject implements Domain, Problem {
     /**
      * The constants table of this PDDL object.
      */
-    protected HashMap<String, Constant> constants;
+    protected Map<String, Constant> constants;
 
     /**
      * Returns an iterator over the constants defined in this pddl object.
@@ -180,7 +178,7 @@ public class PDDLObject implements Domain, Problem {
     /**
      * The predicates table of this PDDL object.
      */
-    protected LinkedHashSet<AtomicFormula> predicates;
+    protected Set<AtomicFormula> predicates;
 
     /**
      * Returns an iterator over the constants defined in this pddl object.
@@ -194,7 +192,7 @@ public class PDDLObject implements Domain, Problem {
     /**
      * The functions table of this PDDL object.
      */
-    protected LinkedHashSet<FHead> functions;
+    protected Set<FHead> functions;
     
     /**
      * Returns an iterator over the functions defined in this pddl object.
@@ -208,7 +206,7 @@ public class PDDLObject implements Domain, Problem {
     /**
      * The constraints table of this PDDL object.
      */
-    protected LinkedHashSet<Exp> constraints;
+    protected Set<Exp> constraints;
 
     /**
      * The actions table of this PDDL object.
@@ -227,7 +225,7 @@ public class PDDLObject implements Domain, Problem {
     /**
      * The axioms predicates table of this PDDL object.
      */
-    protected LinkedHashSet<DerivedPredicate> axioms;
+    protected Set<DerivedPredicate> axioms;
 
     /**
      * The initial state.

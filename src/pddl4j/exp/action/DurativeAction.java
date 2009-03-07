@@ -30,7 +30,8 @@
 
 package pddl4j.exp.action;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 
 import pddl4j.exp.Exp;
@@ -145,7 +146,7 @@ public class DurativeAction extends AbstractActionDef {
      * @return a standardized copy of this expression.
      */
     public DurativeAction standardize() {
-        HashMap<String,String> images = new HashMap<String, String>();
+        Map<String,String> images = new LinkedHashMap<String, String>();
         DurativeAction other = this.clone();
         other.parameters.clear();
         for (Term param : this.parameters) {

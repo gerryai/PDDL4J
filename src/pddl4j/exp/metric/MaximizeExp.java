@@ -30,7 +30,7 @@
 
 package pddl4j.exp.metric;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.term.Substitution;
@@ -80,7 +80,7 @@ public class MaximizeExp extends MetricExp {
      * @return a standardized copy of this expression.
      */
     public MaximizeExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
     
     /**

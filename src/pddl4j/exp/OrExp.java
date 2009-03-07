@@ -30,7 +30,7 @@
 
 package pddl4j.exp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -86,7 +86,7 @@ public final class OrExp extends ListExp {
      * @return this expression.
      */
     public OrExp standardize() {
-        return this.standardize(new HashMap<String,String>());
+        return this.standardize(new LinkedHashMap<String,String>());
     }
     
     /**

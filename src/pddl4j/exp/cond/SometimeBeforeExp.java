@@ -30,8 +30,8 @@
 
 package pddl4j.exp.cond;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import pddl4j.exp.Exp;
 import pddl4j.exp.term.Substitution;
@@ -83,7 +83,7 @@ public class SometimeBeforeExp extends BinaryCondExp {
      * @return a standardized copy of this expression.
      */
     public SometimeBeforeExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

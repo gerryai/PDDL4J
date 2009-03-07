@@ -30,8 +30,8 @@
 
 package pddl4j.exp.term;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -215,7 +215,7 @@ public class Variable extends AbstractTerm {
      * @return this expression.
      */
     public Variable standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
     
     /**
@@ -292,7 +292,7 @@ public class Variable extends AbstractTerm {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         vars.add(this);
         return vars;
     }

@@ -30,10 +30,9 @@
 
 package pddl4j.exp;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -203,7 +202,7 @@ public abstract class QuantifiedExp extends AbstractExp implements
      * @see pddl4j.exp.Exp#standardize()
      */
     public QuantifiedExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**
@@ -220,7 +219,7 @@ public abstract class QuantifiedExp extends AbstractExp implements
     public QuantifiedExp standardize(Map<String, String> images) {
         if (images == null)
             throw new NullPointerException();
-        Map<String, String> newImages = new HashMap<String,String>(images);
+        Map<String, String> newImages = new LinkedHashMap<String,String>(images);
         QuantifiedExp other = this.clone();
         other.vars.clear();
         for (Variable var : this.vars) {
@@ -295,7 +294,7 @@ public abstract class QuantifiedExp extends AbstractExp implements
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         vars.addAll(this.exp.getFreeVariables());
         vars.removeAll(this.vars);
         return vars;

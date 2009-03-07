@@ -30,8 +30,8 @@
 
 package pddl4j.exp.fcomp;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import pddl4j.EvaluationException;
 import pddl4j.exp.InitEl;
@@ -87,7 +87,7 @@ public class EqualComp extends FCompExp implements InitEl {
      * @return a standardized copy of this expression.
      */
     public EqualComp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

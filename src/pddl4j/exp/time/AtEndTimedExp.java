@@ -30,7 +30,7 @@
 
 package pddl4j.exp.time;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.Exp;
@@ -65,7 +65,7 @@ public final class AtEndTimedExp extends AtTimedExp {
      * @return a standardized copy of this expression.
      */
     public AtEndTimedExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
     
     /**

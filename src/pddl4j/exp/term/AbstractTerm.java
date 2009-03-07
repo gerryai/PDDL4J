@@ -30,8 +30,9 @@
 
 package pddl4j.exp.term;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import pddl4j.exp.AbstractExp;
@@ -80,8 +81,8 @@ public abstract class AbstractTerm extends AbstractExp implements Term {
         super(ExpID.TERM);
         this.id = id;
         this.setImage(image);
-        HashMap<String, Set<String>> type = new HashMap<String,Set<String>>();
-        type.put(Type.OBJECT_SYMBOL, new HashSet<String>());
+        Map<String, Set<String>> type = new LinkedHashMap<String,Set<String>>();
+        type.put(Type.OBJECT_SYMBOL, new LinkedHashSet<String>());
         this.setTypeSet(new TypeSet(new Type(Type.OBJECT_SYMBOL, type)));
     }
     

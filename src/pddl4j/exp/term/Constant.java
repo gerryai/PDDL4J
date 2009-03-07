@@ -30,7 +30,7 @@
 
 package pddl4j.exp.term;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.fexp.FExp;
@@ -90,7 +90,7 @@ public final class Constant extends FExp implements Comparable<Constant> {
      * @return a standardized copy of this expression.
      */
     public Constant standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

@@ -30,7 +30,7 @@
 
 package pddl4j.exp.assign;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.term.Substitution;
@@ -81,7 +81,7 @@ public final class Assign extends AssignOpExp {
      * @return a standardized copy of this expression.
      */
     public Assign standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
     
     /**

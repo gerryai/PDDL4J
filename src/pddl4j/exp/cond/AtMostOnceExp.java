@@ -23,8 +23,8 @@
 
 package pddl4j.exp.cond;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import pddl4j.exp.Exp;
 import pddl4j.exp.term.Substitution;
@@ -73,7 +73,7 @@ public final class AtMostOnceExp extends UnaryCondExp {
      * @return a standardized copy of this expression.
      */
     public AtMostOnceExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

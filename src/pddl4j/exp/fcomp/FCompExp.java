@@ -31,8 +31,8 @@
 package pddl4j.exp.fcomp;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -208,7 +208,7 @@ public abstract class FCompExp extends AbstractExp {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         vars.addAll(this.arg1.getFreeVariables());
         vars.addAll(this.arg2.getFreeVariables());
         return vars;

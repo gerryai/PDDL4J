@@ -31,8 +31,8 @@
 package pddl4j.exp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -228,7 +228,7 @@ public abstract class ListExp extends AbstractExp implements Iterable<Exp> {
      * @see pddl4j.exp.Exp#standardize() 
      */
     public ListExp standardize() {
-        return this.standardize(new HashMap<String,String>());
+        return this.standardize(new LinkedHashMap<String,String>());
     }
     
     /**
@@ -259,7 +259,7 @@ public abstract class ListExp extends AbstractExp implements Iterable<Exp> {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         for (Exp exp : this) {
             vars.addAll(exp.getFreeVariables());  
         }

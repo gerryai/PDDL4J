@@ -23,8 +23,9 @@
 
 package pddl4j.exp.assign;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
+
 
 import pddl4j.exp.term.Substitution;
 import pddl4j.exp.term.Term;
@@ -74,7 +75,7 @@ public final class ScaleDown extends AssignOpExp {
      * @return a standardized copy of this expression.
      */
     public ScaleDown standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

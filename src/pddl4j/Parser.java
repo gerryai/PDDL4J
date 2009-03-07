@@ -34,7 +34,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -1063,7 +1062,7 @@ public final class Parser {
      * @return the object declartion structure built.
      * @throws ParserException if an error occurs while parsing.
      */
-    private HashMap<String, Constant> object_declaration(SimpleNode node) throws ParserException {
+    private Map<String, Constant> object_declaration(SimpleNode node) throws ParserException {
         if (node.jjtGetNumChildren() ==  1) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(0);
             if (cn.getId() == LexerTreeConstants.JJTTYPED_LIST) {
@@ -3314,7 +3313,7 @@ public final class Parser {
      * @return the typed list structure built.
      * @throws ParserException if an error occurs while parsing.
      */
-    private HashMap<String, Variable> var_typed_list(SimpleNode node,
+    private Map<String, Variable> var_typed_list(SimpleNode node,
                 LinkedHashMap<String, Variable> tl) throws ParserException {
         List<Variable> vtl = new ArrayList<Variable>();
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
@@ -3377,8 +3376,8 @@ public final class Parser {
      * @return the typed list structure built.
      * @throws ParserException if an error occurs while parsing.
      */
-    private HashMap<String, Constant> constant_typed_list(SimpleNode node,
-                HashMap<String, Constant> tl) throws ParserException {
+    private Map<String, Constant> constant_typed_list(SimpleNode node,
+                Map<String, Constant> tl) throws ParserException {
         List<Constant> ctl = new ArrayList<Constant>();
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(i);
@@ -3472,7 +3471,7 @@ public final class Parser {
      * @return the constants definition structure built.
      * @throws ParserException if an error occurs while parsing.
      */
-    private HashMap<String, Constant> constants_def(SimpleNode node) throws ParserException {
+    private Map<String, Constant> constants_def(SimpleNode node) throws ParserException {
         if (node.jjtGetNumChildren() ==  1) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(0);
             if (cn.getId() == LexerTreeConstants.JJTTYPED_LIST) {
@@ -3525,7 +3524,7 @@ public final class Parser {
      * @return the predicates definition structure built.
      * @throws ParserException if an error occurs while parsing.
      */
-    private LinkedHashSet<AtomicFormula> predicates_def(SimpleNode node) throws ParserException {
+    private Set<AtomicFormula> predicates_def(SimpleNode node) throws ParserException {
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(i);
             switch (cn.getId()) {
@@ -3589,7 +3588,7 @@ public final class Parser {
      * @return the functions definition structure built.
      * @throws ParserException if an error occurs while parsing.
      */
-    private LinkedHashSet<FHead> functions_def(SimpleNode node) throws ParserException {
+    private Set<FHead> functions_def(SimpleNode node) throws ParserException {
         if (!this.obj.requirements.contains(RequireKey.FLUENTS)) {
             this.mgr.logParserError("Require key \"" + RequireKey.FLUENTS
                         + "\" needed to defined functions.", this.file, node.getLine(),

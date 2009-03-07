@@ -30,7 +30,7 @@
 
 package pddl4j.exp.metric;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -160,7 +160,7 @@ public abstract class MetricExp extends AbstractExp {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         vars.addAll(this.exp.getFreeVariables());
         return vars;
     }

@@ -30,8 +30,8 @@
 
 package pddl4j.exp.cond;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -127,7 +127,7 @@ public abstract class UnaryCondExp extends CondExp {
      * @return a standardized copy of this expression.
      */
     public UnaryCondExp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**
@@ -154,7 +154,7 @@ public abstract class UnaryCondExp extends CondExp {
      * @return the set of free variables of this expression.
      */
     public Set<Variable> getFreeVariables() {
-        Set<Variable> vars = new HashSet<Variable>();
+        Set<Variable> vars = new LinkedHashSet<Variable>();
         vars.addAll(this.arg.getFreeVariables());
         return vars;
     }

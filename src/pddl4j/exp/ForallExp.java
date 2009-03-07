@@ -30,7 +30,7 @@
 
 package pddl4j.exp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.term.Variable;
@@ -75,7 +75,7 @@ public class ForallExp extends QuantifiedExp {
      * @see pddl4j.exp.Exp#standardize()
      */
     public ForallExp standardize() {
-        return this.standardize(new HashMap<String,String>());
+        return this.standardize(new LinkedHashMap<String,String>());
     }
     
     /**

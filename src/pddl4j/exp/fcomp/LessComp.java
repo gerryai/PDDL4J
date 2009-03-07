@@ -30,7 +30,7 @@
 
 package pddl4j.exp.fcomp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.EvaluationException;
@@ -85,7 +85,7 @@ public class LessComp extends FCompExp {
      * @return a standardized copy of this expression.
      */
     public LessComp standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**

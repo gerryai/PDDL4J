@@ -30,7 +30,7 @@
 
 package pddl4j.exp.fexp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import pddl4j.exp.term.TermID;
@@ -83,7 +83,7 @@ public final class Number extends FExp implements Comparable<Number> {
      * @return a standardized copy of this expression.
      */
     public Number standardize() {
-        return this.standardize(new HashMap<String, String>());
+        return this.standardize(new LinkedHashMap<String, String>());
     }
 
     /**
