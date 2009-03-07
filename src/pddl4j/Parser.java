@@ -35,7 +35,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -473,7 +472,7 @@ public final class Parser {
             for (Type type : cst.getTypeSet()) {
                 Set<Constant> setCst = object.typeDomains.get(type);
                 if (setCst == null) {
-                    setCst = new HashSet<Constant>();
+                    setCst = new LinkedHashSet<Constant>();
                     object.typeDomains.put(type, setCst);
                 }
                 setCst.add(cst);
@@ -3483,7 +3482,7 @@ public final class Parser {
                     for (Type pt : cst.getTypeSet()) {
                         Set<Constant> domain = this.obj.typeDomains.get(pt);
                         if (domain == null) {
-                            domain = new HashSet<Constant>();
+                            domain = new LinkedHashSet<Constant>();
                         }
                         domain.add(cst);
                     }
