@@ -36,7 +36,7 @@
 			outputdirectory="${javacc_output}" 
 			javacchome="${javacc_home}"/>
 		<javacc target="${javacc_target}.jj" 
-			debugparser="false" 
+			debugparser="true" 
 			outputdirectory="${javacc_output}" 
 			javacchome="${javacc_home}"/>
 	</target>

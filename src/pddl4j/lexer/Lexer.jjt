@@ -110,9 +110,9 @@ public class Lexer {
 		do {
   			t = getNextToken();  	
   			t2 = getToken(2);	
-  			//System.out.println(t2.image);
   			
   		} while (t2 != null && isBlock(t2.kind));
+  		System.exit(0);
 	}
 	
 	public void setErrorManager(ErrorManager mgr) {
@@ -933,15 +933,15 @@ Token gd() #GD:
 }
 {
 	try {
-		LOOKAHEAD(2) t=atomic_formula(LexerTreeConstants.JJTTERM) 
-//	|	LOOKAHEAD(2) t=literal(LexerTreeConstants.JJTTERM)
+		LOOKAHEAD(2) t=atomic_formula(LexerTreeConstants.JJTTERM) 		
+	|	LOOKAHEAD(2) t=not_atomic_formula(LexerTreeConstants.JJTTERM) 
 	|	LOOKAHEAD(2) t=and_gd()
 	|	LOOKAHEAD(2) t=or_gd()
-	|	LOOKAHEAD(2) t=not_gd()
+	|	LOOKAHEAD(2) t=not_gd() 
 	|	LOOKAHEAD(2) t=imply_gd()
 	|	LOOKAHEAD(2) t=exists_gd()
 	|	LOOKAHEAD(2) t=forall_gd()
-	|	LOOKAHEAD(2) t=f_comp()
+	|	LOOKAHEAD(2) t=f_comp() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2363,8 +2363,8 @@ Token da_effect() #DA_EFFECT:
 }
 {
 	try {
-		LOOKAHEAD(2) t=and_da_effect() 
-	|	LOOKAHEAD(2) t=timed_effect()
+		LOOKAHEAD(2) t=timed_effect()
+	|	LOOKAHEAD(2) t=and_da_effect() 
 	|	LOOKAHEAD(2) t=forall_da_effect()
 	|	LOOKAHEAD(2) t=when_da_effect()
 	|	LOOKAHEAD(2) t=da_assign_op() 
@@ -2615,8 +2615,8 @@ Token at_da_effect() #AT_DA_EFFECT:
 }
 {
 	try {
-		LOOKAHEAD(3) t=at_start_da_effect()
-	|	LOOKAHEAD(3) t=at_end_da_effect()
+		LOOKAHEAD(4) t=at_start_da_effect()
+	|	LOOKAHEAD(4) t=at_end_da_effect()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2633,7 +2633,7 @@ Token at_start_da_effect() #AT_START_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AT> <START> da_effect() <RPAREN> 
+		t=<LPAREN> <AT> <START> literal(LexerTreeConstants.JJTTERM) <RPAREN> 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2651,7 +2651,7 @@ Token at_end_da_effect() #AT_END_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AT> <END> da_effect() <RPAREN>
+		t=<LPAREN> <AT> <END> literal(LexerTreeConstants.JJTTERM)  <RPAREN>
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
