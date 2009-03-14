@@ -58,7 +58,7 @@ public class Test {
             
             boolean success;
             PDDLObject domain = parser.parse(new File(args[0]));
-            
+
             if (mgr.contains(Message.ERROR)) {
                 mgr.print(Message.ALL);
             } // else we print the warning and start the planning process
@@ -89,15 +89,16 @@ public class Test {
                         mgr.print(Message.LINKER_WARNING);
                         System.out.println("Linking \"" + domain.getDomainName() + "\" with \"" + problem.getProblemName()
                             + "\" done successfully ...");
-                        //System.out.println(obj);
+                        System.out.println(obj);
                         
-                        Iterator<ActionDef> i = obj.actionsIterator();
+                        /*Iterator<ActionDef> i = obj.actionsIterator();
                         while (i.hasNext()) {
                             ActionDef action = i.next();
                             System.out.println(action.toTypedString());
                             System.out.println(action.normalize().toTypedString());
                             
-                        }
+                        }*/
+                        
                         
                     }
                 }
@@ -128,6 +129,7 @@ public class Test {
         options.put(RequireKey.UNIVERSAL_PRECONDITIONS, true);
         options.put(RequireKey.QUANTIFIED_PRECONDITIONS, true);
         options.put(RequireKey.CONDITIONAL_EFFECTS, true);
+        options.put(RequireKey.DURATIVE_ACTIONS, true);
         options.put(RequireKey.ADL, true);
         return options;
     }

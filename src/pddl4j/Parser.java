@@ -295,6 +295,7 @@ public final class Parser {
         if (file == null) 
             throw new NullPointerException("\"file\" parameter is null");
         PDDLObject obj = null;
+        
         try {
             String ext = file.getName().substring(file.getName().lastIndexOf(".")); 
             if (!ext.equals(Parser.PDDL_EXTENTION)) {
@@ -313,7 +314,7 @@ public final class Parser {
         try {
             root = lexer.parse();
             if (root != null) {
-                obj = this.root(root);    
+                obj = this.root(root);
             }
         } catch (Throwable e) {
             boolean print = false;
@@ -331,6 +332,7 @@ public final class Parser {
                 e.printStackTrace(System.err);
             }
         }
+        
         return obj;
     }
     
@@ -414,7 +416,7 @@ public final class Parser {
     public static Properties getDefaultOptions() {
         Properties options = new Properties();
         options.put("source", Source.V3_0);
-        options.put("debug", false);
+        options.put("debug", true);
         options.put(RequireKey.STRIPS, true);
         options.put(RequireKey.TYPING, true);
         options.put(RequireKey.NEGATIVE_PRECONDITIONS, true);
@@ -1123,6 +1125,7 @@ public final class Parser {
                 this.structure_def(cn);
                 break;
             default:
+                
                 throw new ParserException(
                             "An internal parser error occurs: node "
                                         + cn.getLabel() + " unexpected.");
@@ -1177,7 +1180,7 @@ public final class Parser {
             SimpleNode cn1 = (SimpleNode) node.jjtGetChild(0);
             SimpleNode cn2 = (SimpleNode) node.jjtGetChild(1);
             SimpleNode cn3 = (SimpleNode) node.jjtGetChild(2);
-            if (cn1.getId() == LexerTreeConstants.JJTACTION_NAME
+            if (cn1.getId() == LexerTreeConstants.JJTDA_SYMBOL
                 && cn2.getId() == LexerTreeConstants.JJTTYPED_LIST
                 && cn3.getId() == LexerTreeConstants.JJTDA_DEF_BODY) {
                 DurativeAction action = new DurativeAction(this.action_name(cn1));
@@ -1219,7 +1222,7 @@ public final class Parser {
                 && cn3.getId() == LexerTreeConstants.JJTDA_EFFECT) {
                 action.setConstraint(this.duration_constraint(cn1));
                 action.setCondition(this.da_gd(cn2));
-                action.setEffect(this.da_effect(cn2));
+                action.setEffect(this.da_effect(cn3));
             } else {
                 throw new ParserException("An internal parser error occurs: node "
                             + node.getLabel() + " unexpected.");
@@ -1908,8 +1911,8 @@ public final class Parser {
     private AtEndTimedExp at_end_da_effect(SimpleNode node) throws ParserException {
         if (node.jjtGetNumChildren() == 1) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(0);
-            if (cn.getId() == LexerTreeConstants.JJTDA_EFFECT) {
-                Exp exp = this.da_effect(cn);
+            if (cn.getId() == LexerTreeConstants.JJTLITERAL) {
+                Exp exp = this.literal(cn);
                 return new AtEndTimedExp(exp);
             }
         }
@@ -1928,8 +1931,8 @@ public final class Parser {
     private AtStartTimedExp at_start_da_effect(SimpleNode node) throws ParserException {
         if (node.jjtGetNumChildren() == 1) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(0);
-            if (cn.getId() == LexerTreeConstants.JJTDA_EFFECT) {
-                Exp exp = this.da_effect(cn);
+            if (cn.getId() == LexerTreeConstants.JJTLITERAL) {
+                Exp exp = this.literal(cn);
                 return new AtStartTimedExp(exp);
             }
         }
@@ -2260,20 +2263,24 @@ public final class Parser {
      * @throws ParserException if an error occurs while parsing.
      */
     private Exp duration_constraint(SimpleNode node) throws ParserException {
+        Exp exp = null;
         if (node.jjtGetNumChildren() == 1) {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(0);
             switch (cn.getId()) {
             case LexerTreeConstants.JJTEMPTY_OR:
-                return this.empty_or(cn);
+                 exp = this.empty_or(cn);
+                 break;
             case LexerTreeConstants.JJTAND_SIMPLE_DURATION_CONSTRAINT:
                 if (!this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.DURATION_INEQUALITIES
                                 + "\" needed to specify conjunction of durative constraints.",
                                 this.file, node.getLine(), node.getColumn());
                 }
-                return this.and_simple_duration_constraint(cn);
+                exp = this.and_simple_duration_constraint(cn);
+                break;
             case LexerTreeConstants.JJTSIMPLE_DURATION_CONSTRAINT:
-                return this.simple_duration_constraint(cn);
+                exp = this.simple_duration_constraint(cn);
+                break;
             default:
                 throw new ParserException("An internal parser error occurs: node "
                             + node.getLabel() + " unexpected.");
@@ -2282,6 +2289,7 @@ public final class Parser {
             throw new ParserException("An internal parser error occurs: node "
                             + node.getLabel() + " unexpected.");
         }
+        return exp;
     }
     
     /**
@@ -2735,8 +2743,6 @@ public final class Parser {
                            + cn.getLabel() + " unexpected.");
            }
        }
-       System.out.println(node.jjtGetChild(0));
-       
        throw new ParserException("An internal parser error occurs: node "
                    + node.getLabel() + " unexpected.");
    }
@@ -3162,6 +3168,7 @@ public final class Parser {
             switch (cn.getId()) {
             case LexerTreeConstants.JJTREQUIRE_KEY:
                 RequireKey rk = RequireKey.getRequireKey(cn.getImage());
+                
                 if (rk == null) {
                     this.mgr.logParserError("Invalid require key \"" + cn.getImage() + "\".",
                                 file, node.getLine(), node.getColumn());

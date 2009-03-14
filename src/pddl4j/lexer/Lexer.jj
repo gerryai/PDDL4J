@@ -112,7 +112,6 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants/*@egen*/ {/*@bg
   			t2 = getToken(2);	
   			
   		} while (t2 != null && isBlock(t2.kind));
-  		System.exit(0);
 	}
 	
 	public void setErrorManager(ErrorManager mgr) {
@@ -1834,7 +1833,7 @@ Token gd()    :
 /*@egen*/
 	try {
 		LOOKAHEAD(2) t=atomic_formula(LexerTreeConstants.JJTTERM) 		
-	|	LOOKAHEAD(2) t=not_atomic_formula(LexerTreeConstants.JJTTERM) 
+//	|	LOOKAHEAD(2) t=not_atomic_formula(LexerTreeConstants.JJTTERM) 
 	|	LOOKAHEAD(2) t=and_gd()
 	|	LOOKAHEAD(2) t=or_gd()
 	|	LOOKAHEAD(2) t=not_gd() 
@@ -4436,6 +4435,7 @@ Token da_symbol()           :
 	{ 
 		jjtn000.setLine(t.beginLine);
 		jjtn000.setColumn(t.beginColumn);
+		jjtn000.setImage(t.image);
 		return t;
 	}/*@bgen(jjtree)*/
         } finally {
@@ -7808,10 +7808,10 @@ Token metric_spec()             :
 }
 {/*@bgen(jjtree) METRIC_SPEC */
         try {
-/*@egen*/
+/*@egen*/	
 	try {
-		LOOKAHEAD(2) t=maximize()
-	| 	LOOKAHEAD(2) t=minimize() 
+		LOOKAHEAD(3) t=maximize()
+	| 	LOOKAHEAD(3) t=minimize() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7859,7 +7859,7 @@ Token maximize()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <MAXIMIZE> metric_f_exp() <RPAREN>
+		t=<LPAREN> <METRIC> <MAXIMIZE> metric_f_exp() <RPAREN>
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7907,7 +7907,7 @@ Token minimize()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <MINIMIZE> metric_f_exp() <RPAREN>
+		t=<LPAREN> <METRIC> <MINIMIZE> metric_f_exp() <RPAREN>
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7959,7 +7959,7 @@ Token metric_f_exp()              :
 	|	LOOKAHEAD(2) t=binary_op_metric_f_exp()
 	|	LOOKAHEAD(2) t=multi_op_metric_f_exp()
 	|	LOOKAHEAD(2) t=number()
-	|	LOOKAHEAD(2) t=constant_f_head() <RPAREN>
+	|	LOOKAHEAD(2) t=constant_f_head()
 	|	LOOKAHEAD(2) t=total_time()
 	|	LOOKAHEAD(2) t=violated_pref_exp()
 	} catch (Throwable e) {

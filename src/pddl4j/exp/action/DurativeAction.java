@@ -94,7 +94,7 @@ public class DurativeAction extends AbstractActionDef {
     public final void setConstraint(Exp cons) {
         if (cons == null)
             throw new NullPointerException();
-        this.condition = cons;
+        this.constraint = cons;
     }
     
     /**

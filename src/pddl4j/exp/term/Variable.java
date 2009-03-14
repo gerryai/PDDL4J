@@ -345,7 +345,7 @@ public class Variable extends AbstractTerm {
     /**
      * The timed variable symbol.
      */
-    public static final String DURATIVE_VARIABLE = "?duration";
+    public static final String DURATIVE_VARIABLE = "duration";
     
     /**
      * The continus variable symbol.

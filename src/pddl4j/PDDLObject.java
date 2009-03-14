@@ -463,7 +463,7 @@ public class PDDLObject implements Domain, Problem {
         str.append(this.axiomsToString());
         str.append(this.actionsToString());
         str.append(this.initToString());
-        str.append(this.goalToString());
+        str.append(this.goalToString() + "\n");
         str.append(this.metricToString());
         return str.toString();
 

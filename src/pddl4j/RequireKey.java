@@ -84,7 +84,7 @@ public enum RequireKey {
     /**
      * The PDDL :durative-actions requirement.
      */
-    DURATIVE_ACTIONS(":durative-action"),
+    DURATIVE_ACTIONS(":durative-actions"),
     /**
      * The PDDL :derived-predicates requirement.
      */
