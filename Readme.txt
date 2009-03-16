@@ -1,9 +1,9 @@
-PDDL4J library (version beta)
+PDDL4J library (version 1.0)
 Date: 14/01/2008
 
 1. Contact 
 
-Damien Pellier (damien.pellier@math-info.univ-paris5.fr)
+Damien Pellier (damien.pellier@parisdescartes.fr)
 htt://www-math-info.univ-paris5.fr/~pellier
 
 2. Description 

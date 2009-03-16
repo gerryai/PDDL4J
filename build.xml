@@ -1,6 +1,6 @@
 <project name="PDDL4J Project" default="build" basedir=".">
 
-	<property name="version" value="beta" />
+	<property name="version" value="v1.0" />
 	<property name="src_dir" value="${basedir}/src" />
 	<property name="class_dir" value="${basedir}/classes" />
 	<property name="doc_dir" value="${basedir}/doc/api" />
