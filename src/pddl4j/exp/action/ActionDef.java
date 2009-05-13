@@ -32,6 +32,7 @@ package pddl4j.exp.action;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import pddl4j.exp.term.Term;
@@ -65,7 +66,7 @@ public interface ActionDef extends Iterable<Term>, Serializable, Cloneable {
      * 
      * @return the parameters of the action.
      */
-    Set<Term> getParameters();
+    List<Term> getParameters();
     
     /**
      * Adds a parameter to this action.

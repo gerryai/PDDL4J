@@ -246,7 +246,8 @@ public final class Parser {
      */
     public Parser() {
         super();
-        this.mgr = new ErrorManager();      
+        this.options = Parser.getDefaultOptions();
+        this.mgr = new ErrorManager();   
     }
 
     /**
@@ -318,6 +319,7 @@ public final class Parser {
             }
         } catch (Throwable e) {
             boolean print = false;
+            System.out.println(")))))" + this.options);
             Object debug = this.options.get("debug");
             if (debug instanceof String) {
                 if (debug.equals("true")) {

@@ -30,9 +30,10 @@
 
 package pddl4j.exp.action;
 
+
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import pddl4j.exp.term.Term;
 
@@ -58,7 +59,7 @@ public abstract class AbstractActionDef implements ActionDef {
     /**
      * The parameters of the action.
      */
-    protected Set<Term> parameters;
+    protected List<Term> parameters;
 
     /**
      * Creates a new action with a specific image.
@@ -71,7 +72,7 @@ public abstract class AbstractActionDef implements ActionDef {
     protected AbstractActionDef(ActionID id, String name) {
         this.id = id;
         this.setName(name);
-        this.parameters = new LinkedHashSet<Term>();
+        this.parameters = new ArrayList<Term>();
     }
     
     /**
@@ -112,7 +113,7 @@ public abstract class AbstractActionDef implements ActionDef {
      * 
      * @return the parameters of this action.
      */
-    public final Set<Term> getParameters() {
+    public final List<Term> getParameters() {
         return this.parameters;
     }
     
@@ -208,7 +209,7 @@ public abstract class AbstractActionDef implements ActionDef {
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        other.parameters = new LinkedHashSet<Term>();
+        other.parameters = new ArrayList<Term>();
         for (Term param : this.parameters) {
             other.parameters.add(param.clone());
         }
