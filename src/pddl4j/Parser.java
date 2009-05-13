@@ -319,7 +319,6 @@ public final class Parser {
             }
         } catch (Throwable e) {
             boolean print = false;
-            System.out.println(")))))" + this.options);
             Object debug = this.options.get("debug");
             if (debug instanceof String) {
                 if (debug.equals("true")) {
