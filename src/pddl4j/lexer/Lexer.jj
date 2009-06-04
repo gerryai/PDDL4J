@@ -7423,7 +7423,7 @@ Token equal_init_el()               :
         try {
 /*@egen*/	
 	try {
-		t=<LPAREN> <EQUALITY> f_head() number() <RPAREN>
+		t=<LPAREN> <EQUAL> f_head() number() <RPAREN>
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/

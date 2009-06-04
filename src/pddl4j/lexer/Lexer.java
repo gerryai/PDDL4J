@@ -6806,7 +6806,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     try {
       try {
         t = jj_consume_token(LPAREN);
-        jj_consume_token(EQUALITY);
+        jj_consume_token(EQUAL);
         f_head();
         number();
         jj_consume_token(RPAREN);
@@ -8847,7 +8847,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
 
   final private boolean jj_3R_139() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(EQUALITY)) return true;
+    if (jj_scan_token(EQUAL)) return true;
     return false;
   }
 

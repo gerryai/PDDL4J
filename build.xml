@@ -74,7 +74,7 @@
 	</target>
 	
 	<target name="clean" depends="pddl4j.lexer.clean, pddl4j.clean" description="Clean the PDDL4J Project">
-		<echo>PDDL4J Procject is successfully cleaned</echo>
+		<echo>PDDL4J Project is successfully cleaned</echo>
 	</target>
 
 	<target name="doc" description="Generate the PDDL4J Project Documentation">
