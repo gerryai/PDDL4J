@@ -12,7 +12,7 @@
 
 (define (problem pb2)
     (:domain logistics)
-    (:requirements :strips :typing) 
+ 
     (:objects
         package1 - package
         package2 - package

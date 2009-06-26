@@ -158,6 +158,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants/*@egen*/ {/*@bg
         }
         return retval;
     }
+    
 }
 PARSER_END(Lexer)
 
@@ -193,10 +194,12 @@ MORE :
 		< ~[] > 
 }
 
+
+
 TOKEN :
 {
-  	< LPAREN: "(">
-| 	< RPAREN: ")">
+  	< LEFT_BRACKET: "(">
+| 	< RIGHT_BRACKET: ")">
 }
 
 TOKEN : {
@@ -377,6 +380,33 @@ SimpleNode parse()      :
 	
 }
 
+Token right_bracket()       :
+{
+	Token t = null;
+}
+{
+	(<RIGHT_BRACKET>
+|   {
+		ParseException e = generateParseException();
+		this.mgr.logLexicalError(generateErrorMesssage(e), this.file, e.currentToken.beginLine, e.currentToken.beginColumn);
+	})
+	{ return t;}
+}
+
+Token left_bracket()       :
+{
+	Token t = null;
+}
+{
+	(t=<LEFT_BRACKET>
+|   {
+		ParseException e = generateParseException();
+		this.mgr.logLexicalError(generateErrorMesssage(e), this.file, e.currentToken.beginLine, e.currentToken.beginColumn);
+	})
+	{ return t;}
+}
+
+
 Token domain()        :
 {/*@bgen(jjtree) DOMAIN */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDOMAIN);
@@ -389,7 +419,7 @@ Token domain()        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DEFINE> <LPAREN> <DOMAIN> domain_name() <RPAREN>
+		t=left_bracket() <DEFINE> left_bracket() <DOMAIN> domain_name() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -429,7 +459,7 @@ Token domain()        :
 		this.error(e, t.beginLine, t.beginColumn);
 	}
 	try {
-		<RPAREN>
+		right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -478,7 +508,7 @@ Token require_def()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <REQUIREMENTS> (require_key())+ <RPAREN>
+		t=left_bracket() <REQUIREMENTS> (require_key())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -578,7 +608,7 @@ Token type_def()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <TYPES> typed_list(LexerTreeConstants.JJTPRIMITIVE_TYPE) <RPAREN>
+		t=left_bracket() <TYPES> typed_list(LexerTreeConstants.JJTPRIMITIVE_TYPE) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -682,7 +712,7 @@ Token type()      :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <EITHER> (primitive_type())+ <RPAREN>
+		t=left_bracket() <EITHER> (LOOKAHEAD(2) primitive_type())+ right_bracket()
 	|	t=primitive_type()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
@@ -764,7 +794,7 @@ Token constants_def()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <CONSTANTS> typed_list(LexerTreeConstants.JJTCONSTANT) <RPAREN> 
+		t=left_bracket() <CONSTANTS> typed_list(LexerTreeConstants.JJTCONSTANT) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -843,7 +873,7 @@ Token predicates_def()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <PREDICATES> (atomic_formula_skeleton())+ <RPAREN> 
+		t=left_bracket() <PREDICATES> (LOOKAHEAD(2) atomic_formula_skeleton())+ right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -890,12 +920,12 @@ Token atomic_formula_skeleton()                         :
 {/*@bgen(jjtree) ATOMIC_FORMULA_SKELETON */
         try {
 /*@egen*/
-	t=<LPAREN> predicate() typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>/*@bgen(jjtree)*/
+	t=<LEFT_BRACKET> predicate() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket()/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
         }
-/*@egen*/ 
+/*@egen*/  
 	{ 
 		jjtn000.setLine(t.beginLine);
 		jjtn000.setColumn(t.beginColumn);
@@ -997,7 +1027,7 @@ Token functions_def()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FUNCTIONS> function_typed_list(LexerTreeConstants.JJTATOMIC_FUNCTION_SKELETON) <RPAREN> 
+		t=left_bracket() <FUNCTIONS> function_typed_list(LexerTreeConstants.JJTATOMIC_FUNCTION_SKELETON) right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1044,7 +1074,7 @@ Token atomic_function_skeleton()                          :
 {/*@bgen(jjtree) ATOMIC_FUNCTION_SKELETON */
         try {
 /*@egen*/
-	t=<LPAREN> functor() typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>/*@bgen(jjtree)*/
+	t=left_bracket() functor() typed_list(LexerTreeConstants.JJTVARIABLE) <RIGHT_BRACKET>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -1119,7 +1149,7 @@ Token function_typed_list(int type)                     :
 {/*@bgen(jjtree) FUNCTION_TYPED_LIST */
         try {
 /*@egen*/
-	(t=atomic_function_skeleton())* (<SUB> function_type() function_typed_list(type))?/*@bgen(jjtree)*/
+	(LOOKAHEAD(2) t=atomic_function_skeleton())* (<SUB> function_type() function_typed_list(type))?/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -1256,7 +1286,7 @@ Token and_con_gd()            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (con_gd())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) con_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1304,7 +1334,7 @@ Token forall_con_gd()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> con_gd() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1352,7 +1382,7 @@ Token at_end_con_gd()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <END> gd() <RPAREN> 
+		t=left_bracket() <AT> <END> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1400,7 +1430,7 @@ Token always_con_gd()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ALWAYS> gd() <RPAREN> 
+		t=left_bracket() <ALWAYS> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1448,7 +1478,7 @@ Token sometime_con_gd()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SOMETIME> gd() <RPAREN> 
+		t=left_bracket() <SOMETIME> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1496,7 +1526,7 @@ Token within_con_gd()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <WITHIN> <NUMBER> gd() <RPAREN> 
+		t=left_bracket() <WITHIN> <NUMBER> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1544,7 +1574,7 @@ Token at_most_once_con_gd()                     :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT_MOST_ONCE> gd() <RPAREN> 
+		t=left_bracket() <AT_MOST_ONCE> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1592,7 +1622,7 @@ Token sometime_after_con_gd()                       :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SOMETIME_AFTER> gd() gd() <RPAREN> 
+		t=left_bracket() <SOMETIME_AFTER> gd() gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1640,7 +1670,7 @@ Token sometime_before_con_gd()                        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SOMETIME_BEFORE> gd() gd() <RPAREN> 
+		t=left_bracket() <SOMETIME_BEFORE> gd() gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1688,7 +1718,7 @@ Token always_within_con_gd()                      :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ALWAYS_WITHIN> <NUMBER> gd() gd() <RPAREN> 
+		t=left_bracket() <ALWAYS_WITHIN> <NUMBER> gd() gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1736,7 +1766,7 @@ Token hold_during_con_gd()                    :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <HOLD_DURING> <NUMBER> <NUMBER> gd() <RPAREN> 
+		t=left_bracket() <HOLD_DURING> <NUMBER> <NUMBER> gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1784,7 +1814,7 @@ Token hold_after_con_gd()                   :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <HOLD_AFTER> <NUMBER> gd() <RPAREN> 
+		t=left_bracket() <HOLD_AFTER> <NUMBER> gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1888,7 +1918,7 @@ Token and_gd()        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (gd())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1936,7 +1966,7 @@ Token or_gd()       :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <OR> (gd())* <RPAREN> 
+		t=left_bracket() <OR> (LOOKAHEAD(2) gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -1984,7 +2014,7 @@ Token not_gd()        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <NOT> gd() <RPAREN> 
+		t=left_bracket() <NOT> gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2032,7 +2062,7 @@ Token imply_gd()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <IMPLY> gd() gd() <RPAREN> 
+		t=left_bracket() <IMPLY> gd() gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2080,7 +2110,7 @@ Token exists_gd()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <EXISTS> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> gd() <RPAREN> 
+		t=left_bracket() <EXISTS> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2128,7 +2158,7 @@ Token forall_gd()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> gd() <RPAREN> 
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2176,14 +2206,14 @@ Token atomic_formula(int type)                :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> predicate() (		
+		t=<LEFT_BRACKET> predicate() (		
 		LOOKAHEAD({ type == LexerTreeConstants.JJTCONSTANT } ) (constant())* {
 				jjtn000.setTypeId(LexerTreeConstants.JJTCONSTANT);
 			}
 		| LOOKAHEAD({ type == LexerTreeConstants.JJTTERM }) (term())* {		
 				jjtn000.setTypeId(LexerTreeConstants.JJTTERM);
 			}
-		) <RPAREN> 
+		) right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2330,7 +2360,7 @@ Token not_atomic_formula(int type)                    :
         try {
 /*@egen*/		
 	try {
-		t=<LPAREN> <NOT> atomic_formula(type) <RPAREN>
+		t=left_bracket() <NOT> atomic_formula(type) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2478,7 +2508,7 @@ Token greater_comp()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <GREATER> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <GREATER> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2526,7 +2556,7 @@ Token greater_equal_comp()                    :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <GEQUAL> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <GEQUAL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2574,7 +2604,7 @@ Token less_equal_comp()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <LEQUAL> f_exp() f_exp() <RPAREN> 
+		t=left_bracket() <LEQUAL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2622,7 +2652,7 @@ Token less_comp()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <LESS> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <LESS> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2670,7 +2700,7 @@ Token equal_comp()            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <EQUAL> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <EQUAL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2904,7 +2934,7 @@ Token add_op()        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ADD> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <ADD> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -2952,7 +2982,7 @@ Token substract_op()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SUB> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <SUB> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3000,7 +3030,7 @@ Token multiply_op()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <MUL> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <MUL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3048,7 +3078,7 @@ Token divide_op()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DIV> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <DIV> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3096,7 +3126,7 @@ Token unary_op()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SUB> f_exp_da() <RPAREN>
+		t=left_bracket() <SUB> f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3144,7 +3174,7 @@ Token f_head()        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> functor() (term())* <RPAREN> 
+		t=left_bracket() functor() (LOOKAHEAD(2) term())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3242,10 +3272,10 @@ Token action_def()            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ACTION> action_name()
-		<PARAMETERS> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>
+		t=left_bracket() <ACTION> action_name()
+		<PARAMETERS> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket()
 		action_def_body()
-		<RPAREN> 
+		right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3428,7 +3458,7 @@ Token empty_or()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <RPAREN>
+		t=<LEFT_BRACKET> <RIGHT_BRACKET>
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3462,7 +3492,7 @@ Token and_pre_gd()            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (pre_gd())* <RPAREN>
+		t=left_bracket() <AND> (LOOKAHEAD(2) pre_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3510,7 +3540,7 @@ Token forall_pre_gd()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> pre_gd() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() pre_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3607,7 +3637,7 @@ Token named_pref_gd()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <PREFERENCE> [pref_name()] gd() <RPAREN>
+		t=left_bracket() <PREFERENCE> [pref_name()] gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3739,7 +3769,7 @@ Token and_c_effect()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (c_effect())* <RPAREN>
+		t=left_bracket() <AND> (LOOKAHEAD(2) c_effect())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3837,7 +3867,7 @@ Token forall_effect()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> effect() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3885,7 +3915,7 @@ Token when_con_effect()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <WHEN> gd() cond_effect() <RPAREN>
+		t=left_bracket() <WHEN> gd() cond_effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -3982,7 +4012,7 @@ Token and_p_effect()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (p_effect())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) p_effect())* right_bracket()  
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4131,7 +4161,7 @@ Token assign()        :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ASSIGN> f_head() f_exp() <RPAREN>
+		t=left_bracket() <ASSIGN> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -4180,7 +4210,7 @@ Token scale_up()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SCALE_UP> f_head() f_exp() <RPAREN>
+		t=left_bracket() <SCALE_UP> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4228,7 +4258,7 @@ Token scale_down()            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SCALE_DOWN> f_head() f_exp() <RPAREN>
+		t=left_bracket() <SCALE_DOWN> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4276,7 +4306,7 @@ Token increase()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <INCREASE> f_head() f_exp() <RPAREN>
+		t=left_bracket() <INCREASE> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4324,7 +4354,7 @@ Token decrease()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DECREASE> f_head() f_exp() <RPAREN>
+		t=left_bracket() <DECREASE> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4372,10 +4402,10 @@ Token durative_action_def()                     :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DURATIVE_ACTION> da_symbol()
-		<PARAMETERS> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>
+		t=left_bracket() <DURATIVE_ACTION> da_symbol()
+		<PARAMETERS> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket()
 		da_def_body()
-		<RPAREN>
+		right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4558,7 +4588,7 @@ Token and_simple_duration_constraint()                                :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (simple_duration_constraint())+ <RPAREN>
+		t=left_bracket() <AND> (LOOKAHEAD(2) simple_duration_constraint())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4704,7 +4734,7 @@ Token at_start_simple_duration_constraint()                                     
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <START> simple_duration_constraint() <RPAREN>
+		t=left_bracket() <AT> <START> simple_duration_constraint() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4752,7 +4782,7 @@ Token at_end_simple_duration_constraint()                                   :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <END> simple_duration_constraint() <RPAREN>
+		t=<LEFT_BRACKET> <AT> <END> simple_duration_constraint() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4850,7 +4880,7 @@ Token equal_d_op()            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <EQUAL> var_duration() d_value() <RPAREN> 
+		t=left_bracket() <EQUAL> var_duration() d_value() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4898,7 +4928,7 @@ Token gequal_d_op()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <GEQUAL> var_duration() d_value() <RPAREN>
+		t=<LEFT_BRACKET> <GEQUAL> var_duration() d_value() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -4946,7 +4976,7 @@ Token lequal_d_op()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <LEQUAL> var_duration() d_value() <RPAREN>
+		t=left_bracket() <LEQUAL> var_duration() d_value() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5127,7 +5157,7 @@ Token forall_da_gd()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> da_gd() <RPAREN>
+		t=<LEFT_BRACKET> <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() da_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5175,7 +5205,7 @@ Token and_da_gd()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (da_gd())* <RPAREN>
+		t=<LEFT_BRACKET> <AND> (LOOKAHEAD(2) da_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5273,7 +5303,7 @@ Token named_pref_timed_gd()                     :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <PREFERENCE> [pref_name()] timed_gd() <RPAREN>
+		t=left_bracket() <PREFERENCE> [pref_name()] timed_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5418,7 +5448,7 @@ Token over_all_timed_gd()                   :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <OVER> <ALL> gd() <RPAREN>
+		t=left_bracket() <OVER> <ALL> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5515,7 +5545,7 @@ Token at_start_timed_gd()                   :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <START> gd() <RPAREN>
+		t=left_bracket() <AT> <START> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5563,7 +5593,7 @@ Token at_end_timed_gd()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <END> gd() <RPAREN> 
+		t=left_bracket() <AT> <END> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5749,7 +5779,7 @@ Token da_assign()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ASSIGN> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <ASSIGN> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5797,7 +5827,7 @@ Token da_scale_up()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SCALE_UP> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <SCALE_UP> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5845,7 +5875,7 @@ Token da_scale_down()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SCALE_DOWN> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <SCALE_DOWN> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5894,7 +5924,7 @@ Token da_increase()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <INCREASE> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <INCREASE> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5942,7 +5972,7 @@ Token da_decrease()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DECREASE> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <DECREASE> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -5990,7 +6020,7 @@ Token when_da_effect()                :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <WHEN> da_gd() timed_effect() <RPAREN>
+		t=left_bracket() <WHEN> da_gd() timed_effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6039,7 +6069,7 @@ Token forall_da_effect()                  :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> da_effect() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() da_effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6087,7 +6117,7 @@ Token and_da_effect()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (da_effect())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) da_effect())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6234,7 +6264,7 @@ Token at_start_f_assign_da_effect()                             :
         try {
 /*@egen*/
 	try { 
-		t=<LPAREN> <AT> <START> f_assign_da() <RPAREN>
+		t=left_bracket() <AT> <START> f_assign_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6283,7 +6313,7 @@ Token at_end_f_assign_da_effect()                           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <END> f_assign_da() <RPAREN>
+		t=left_bracket() <AT> <END> f_assign_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6380,7 +6410,7 @@ Token at_start_da_effect()                    :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <START> literal(LexerTreeConstants.JJTTERM) <RPAREN> 
+		t=left_bracket() <AT> <START> literal(LexerTreeConstants.JJTTERM) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6429,7 +6459,7 @@ Token at_end_da_effect()                  :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> <END> literal(LexerTreeConstants.JJTTERM)  <RPAREN>
+		t=left_bracket() <AT> <END> literal(LexerTreeConstants.JJTTERM)  right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6526,7 +6556,7 @@ Token increase_assign_op_t()                      :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <INCREASE> f_head() f_exp_t() <RPAREN>
+		t=left_bracket() <INCREASE> f_head() f_exp_t() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6574,7 +6604,7 @@ Token decrease_assign_op_t()                      :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DECREASE> f_head() f_exp_t() <RPAREN>
+		t=left_bracket() <DECREASE> f_head() f_exp_t() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6622,8 +6652,8 @@ Token f_exp_t()         :
         try {
 /*@egen*/
 	try {
-		LOOKAHEAD(2) t=<LPAREN> <MUL> continous_variable() f_exp() <RPAREN>
-	| 	LOOKAHEAD(2) t=<LPAREN> <MUL> f_exp() continous_variable() <RPAREN>
+		LOOKAHEAD(2) t=left_bracket() <MUL> continous_variable() f_exp() right_bracket()
+	| 	LOOKAHEAD(2) t=left_bracket() <MUL> f_exp() continous_variable() right_bracket()
 	| 	LOOKAHEAD(2) t=continous_variable() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
@@ -6863,7 +6893,7 @@ Token da_add_op()           :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ADD> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <ADD> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6911,7 +6941,7 @@ Token da_substract_op()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SUB> f_head() f_exp_da() <RPAREN> 
+		t=left_bracket() <SUB> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -6959,7 +6989,7 @@ Token da_multiply_op()                :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <MUL> f_head() f_exp_da() <RPAREN> 
+		t=left_bracket() <MUL> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7007,7 +7037,7 @@ Token da_divide_op()              :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DIV> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <DIV> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7055,7 +7085,7 @@ Token da_unary_op()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SUB> f_exp_da() <RPAREN>
+		t=left_bracket() <SUB> f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7103,7 +7133,7 @@ Token derived_def()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DERIVED> atomic_formula(LexerTreeConstants.JJTVARIABLE) gd() <RPAREN> 
+		t=left_bracket() <DERIVED> atomic_formula(LexerTreeConstants.JJTVARIABLE) gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7151,8 +7181,8 @@ Token problem()         :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <DEFINE> <LPAREN> <PROBLEM> problem_name() <RPAREN> 
-		<LPAREN> <P_DOMAIN> domain_name() <RPAREN>
+		t=left_bracket() <DEFINE> left_bracket() <PROBLEM> problem_name() right_bracket()
+		left_bracket() <P_DOMAIN> domain_name() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -7163,11 +7193,11 @@ Token problem()         :
 	[LOOKAHEAD(2) constraints()]
 	[LOOKAHEAD(2) metric_spec()]
 	// [length-spec()] not implemented
-	<RPAREN>/*@bgen(jjtree)*/
-                 {
-                   jjtree.closeNodeScope(jjtn000, true);
-                   jjtc000 = false;
-                 }
+	right_bracket()/*@bgen(jjtree)*/
+                        {
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
+                        }
 /*@egen*/ { 
 		jjtn000.setLine(t.beginLine);
 		jjtn000.setColumn(t.beginColumn);
@@ -7277,7 +7307,7 @@ Token object_declaration()                    :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <OBJECTS> typed_list(LexerTreeConstants.JJTCONSTANT) <RPAREN> 
+		t=left_bracket() <OBJECTS> typed_list(LexerTreeConstants.JJTCONSTANT) right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7325,7 +7355,7 @@ Token init()      :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <INIT> (init_el())* <RPAREN> 
+		t=left_bracket() <INIT> (LOOKAHEAD(2) init_el())* right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7423,7 +7453,7 @@ Token equal_init_el()               :
         try {
 /*@egen*/	
 	try {
-		t=<LPAREN> <EQUAL> f_head() number() <RPAREN>
+		t=left_bracket() <EQUAL> f_head() number() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7471,7 +7501,7 @@ Token timed_literal()               :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AT> number() literal(LexerTreeConstants.JJTCONSTANT) <RPAREN>
+		t=left_bracket() <AT> number() literal(LexerTreeConstants.JJTCONSTANT) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7519,7 +7549,7 @@ Token goal()      :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <GOAL> pre_gd() <RPAREN> 
+		t=left_bracket() <GOAL> pre_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7567,7 +7597,7 @@ Token constraints()             :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <CONSTRAINTS> pref_con_gd() <RPAREN> 
+		t=<LEFT_BRACKET> <CONSTRAINTS> pref_con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7666,7 +7696,7 @@ Token and_pref_con_gd()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <AND> (pref_con_gd())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) pref_con_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7714,7 +7744,7 @@ Token named_pref_con_gd()                   :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <PREFERENCE> [pref_name()] con_gd() <RPAREN> 
+		t=left_bracket() <PREFERENCE> [pref_name()] con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7762,7 +7792,7 @@ Token forall_pref_con_gd()                    :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> pref_con_gd() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() pref_con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7859,7 +7889,7 @@ Token maximize()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <METRIC> <MAXIMIZE> metric_f_exp() <RPAREN>
+		t=left_bracket() <METRIC> <MAXIMIZE> metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -7907,7 +7937,7 @@ Token minimize()          :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <METRIC> <MINIMIZE> metric_f_exp() <RPAREN>
+		t=left_bracket() <METRIC> <MINIMIZE> metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8009,7 +8039,7 @@ Token violated_pref_exp()                   :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <IS_VIOLATED> pref_name() <RPAREN>
+		t=left_bracket() <IS_VIOLATED> pref_name() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8057,7 +8087,7 @@ Token constant_f_head()                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> functor() (constant())* <RPAREN>
+		t=left_bracket() functor() (LOOKAHEAD(2) constant())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8189,7 +8219,7 @@ Token add_op_metric_f_exp()                     :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ADD> metric_f_exp() metric_f_exp() <RPAREN>
+		t=left_bracket() <ADD> metric_f_exp() metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8237,7 +8267,7 @@ Token substract_op_metric_f_exp()                           :
         try {
 /*@egen*/
 	try{
-		t=<LPAREN> <SUB> metric_f_exp() metric_f_exp() <RPAREN>
+		t=left_bracket() <SUB> metric_f_exp() metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8334,7 +8364,7 @@ Token multiply_narity_op_metric_f_exp()                                 :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <MUL> metric_f_exp() (metric_f_exp())+ <RPAREN>
+		t=left_bracket() <MUL> metric_f_exp() (LOOKAHEAD(2) metric_f_exp())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8382,7 +8412,7 @@ Token add_narity_op_metric_f_exp()                            :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <ADD> metric_f_exp() (metric_f_exp())+ <RPAREN>
+		t=left_bracket() <ADD> metric_f_exp() (LOOKAHEAD(2) metric_f_exp())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}/*@bgen(jjtree)*/
@@ -8430,7 +8460,7 @@ Token unary_op_metric_f_exp()                       :
         try {
 /*@egen*/
 	try {
-		t=<LPAREN> <SUB> metric_f_exp() <RPAREN>
+		t=left_bracket() <SUB> metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);;
 	}/*@bgen(jjtree)*/

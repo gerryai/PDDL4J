@@ -237,9 +237,14 @@ public final class Parser {
     private QuantifiedExp quantifiedExpCtx;
     
     /**
-     * The flag use to specified the context.
+     * The flag used to specified the context.
      */
     private boolean constantDef = false;
+    
+    /**
+     * The flag used to indicate if the requirement must be checked. 
+     */
+    private boolean check_requirements;
     
     /**
      * Create a new <tt>Parser</tt>.
@@ -247,7 +252,8 @@ public final class Parser {
     public Parser() {
         super();
         this.options = Parser.getDefaultOptions();
-        this.mgr = new ErrorManager();   
+        this.mgr = new ErrorManager();  
+        this.check_requirements = true;
     }
 
     /**
@@ -259,6 +265,7 @@ public final class Parser {
         super();
         this.options = options;
         this.mgr =  new ErrorManager();
+        this.check_requirements = true;
     }
     
     /**
@@ -270,6 +277,7 @@ public final class Parser {
         super();
         this.options = Parser.getDefaultOptions();
         this.mgr = mgr;
+        this.check_requirements = true;
     }
     
     /**
@@ -282,6 +290,7 @@ public final class Parser {
         super();
         this.options = options;
         this.mgr = mgr;
+        this.check_requirements = true;
     }
     
     /**
@@ -432,7 +441,7 @@ public final class Parser {
        
     /**
      * Creates a new PDDL
-     * object containing also the domain informations. This method is usefull to
+     * object containing also the domain informations. This method is useful to
      * check the symbol shared between domain and problem input files. 
      * 
      * @param domain the domain. 
@@ -553,6 +562,7 @@ public final class Parser {
             case LexerTreeConstants.JJTDOMAIN:
                 return this.domain(cn);
             case LexerTreeConstants.JJTPROBLEM:
+                this.check_requirements = false;
                 return this.problem(cn);
             default:
                 throw new ParserException(
@@ -1103,6 +1113,7 @@ public final class Parser {
                                 + cn.getImage() + ".pddl\".", this.file, cn.getLine(),
                                 cn.getColumn());
                 }
+                
                 break;
             case LexerTreeConstants.JJTREQUIRE_DEF:
                 this.requireDef(cn);
@@ -1126,12 +1137,12 @@ public final class Parser {
                 this.structure_def(cn);
                 break;
             default:
-                
                 throw new ParserException(
                             "An internal parser error occurs: node "
                                         + cn.getLabel() + " unexpected.");
             }
         }
+
         return obj;
     }
     
@@ -1259,14 +1270,14 @@ public final class Parser {
                 }
                 return this.forall_da_effect(cn);
             case LexerTreeConstants.JJTWHEN_DA_EFFECT:
-                if (!this.obj.requirements.contains(RequireKey.CONDITIONAL_EFFECTS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.CONDITIONAL_EFFECTS)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.CONDITIONAL_EFFECTS
                                 + "\" needed to specify conditional durative effect.",
                                 this.file, node.getLine(), node.getColumn());
                 }
                 return this.when_da_effect(cn);
             case LexerTreeConstants.JJTDA_ASSIGN_OP:
-                if (!this.obj.requirements.contains(RequireKey.FLUENTS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.FLUENTS)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.FLUENTS
                                 + "\" needed to specify assign operation in durative actionCtx effect.",
                                 this.file, node.getLine(), node.getColumn());
@@ -1389,7 +1400,7 @@ public final class Parser {
             case LexerTreeConstants.JJTAT_F_ASSIGN_DA_EFFECT:
                 return this.at_f_assign_da_effect(cn);
             case LexerTreeConstants.JJTASSIGN_OP_T:
-                if (!this.obj.requirements.contains(RequireKey.CONDITIONAL_EFFECTS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.CONDITIONAL_EFFECTS)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.CONDITIONAL_EFFECTS
                                 + "\" needed to specify conditional durative effect.",
                                 this.file, node.getLine(), node.getColumn());
@@ -1725,7 +1736,7 @@ public final class Parser {
             case LexerTreeConstants.JJTDA_UNARY_OP:
                 return this.da_unary_op(cn);
             case LexerTreeConstants.JJTVAR_DURATION:
-                if (!this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.DURATION_INEQUALITIES
                                 + "\" needed to specify durative inequalities in actionCtx effect.",
                                 this.file, node.getLine(), node.getColumn());
@@ -1983,7 +1994,7 @@ public final class Parser {
             case LexerTreeConstants.JJTAND_DA_GD:
                 return this.and_da_gd(cn);
             case LexerTreeConstants.JJTFORALL_DA_GD:
-                if (!this.obj.requirements.contains(RequireKey.UNIVERSAL_PRECONDITIONS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.UNIVERSAL_PRECONDITIONS)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.PREFERENCES
                                 + "\" needed to specify preferences.",
                                 this.file, node.getLine(), node.getColumn());
@@ -2074,7 +2085,7 @@ public final class Parser {
             case LexerTreeConstants.JJTTIMED_GD:
                 return this.timed_gd(cn);
             case LexerTreeConstants.JJTNAMED_PREF_TIMED_GD:
-                if (!this.obj.requirements.contains(RequireKey.PREFERENCES)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.PREFERENCES)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.PREFERENCES
                                 + "\" needed to specify preferences.",
                                 this.file, node.getLine(), node.getColumn());
@@ -2272,7 +2283,7 @@ public final class Parser {
                  exp = this.empty_or(cn);
                  break;
             case LexerTreeConstants.JJTAND_SIMPLE_DURATION_CONSTRAINT:
-                if (!this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.DURATION_INEQUALITIES
                                 + "\" needed to specify conjunction of durative constraints.",
                                 this.file, node.getLine(), node.getColumn());
@@ -2419,14 +2430,14 @@ public final class Parser {
             SimpleNode cn = (SimpleNode) node.jjtGetChild(0);
             switch (cn.getId()) {
             case LexerTreeConstants.JJTGEQUAL_D_OP:
-                if (!this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.DURATION_INEQUALITIES
                                 + "\" needed to specify durative inequalitities.",
                                 this.file, node.getLine(), node.getColumn());
                 }
                 return this.gequal_d_op(cn);
             case LexerTreeConstants.JJTLEQUAL_D_OP:
-                if (!this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.DURATION_INEQUALITIES)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.DURATION_INEQUALITIES
                                 + "\" needed to specify durative inequalitities.",
                                 this.file, node.getLine(), node.getColumn());
@@ -3015,7 +3026,7 @@ public final class Parser {
             case LexerTreeConstants.JJTAND_PRE_GD:
                 return this.and_pre_gd(cn);
             case LexerTreeConstants.JJTFORALL_PRE_GD:
-                if (!this.obj.requirements.contains(RequireKey.UNIVERSAL_PRECONDITIONS)
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.UNIVERSAL_PRECONDITIONS)
                             && !this.obj.requirements.contains(RequireKey.QUANTIFIED_PRECONDITIONS)) {
                     this.mgr.logParserError("Universal formula cannot be defined without require keys \""
                                + RequireKey.UNIVERSAL_PRECONDITIONS
@@ -3217,7 +3228,7 @@ public final class Parser {
      * @throws ParserException if an error occurs while parsing.
      */
     private Map<String, Set<String>> types_def(SimpleNode node) throws ParserException {
-        if (!this.obj.requirements.contains(RequireKey.TYPING)) {
+        if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.TYPING)) {
             this.mgr.logParserError("Require key \"" + RequireKey.TYPING
                         + "\" needed to specify typed terms.", this.file, 
                         node.getLine(), node.getColumn());
@@ -3284,7 +3295,7 @@ public final class Parser {
                 }
                 break;
             case LexerTreeConstants.JJTTYPED_LIST:                
-                if (!this.obj.requirements.contains(RequireKey.TYPING)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.TYPING)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.TYPING
                                 + "\" needed to specify types.", this.file, 
                                 node.getLine(), node.getColumn());
@@ -3358,7 +3369,7 @@ public final class Parser {
                break;
             case LexerTreeConstants.JJTTYPED_LIST:
                 
-                if (!this.obj.requirements.contains(RequireKey.TYPING)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.TYPING)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.TYPING
                                 + "\" needed to specify typed variables.", this.file,
                                 node.getLine(), node.getColumn());
@@ -3420,7 +3431,7 @@ public final class Parser {
                }
                 break;
             case LexerTreeConstants.JJTTYPED_LIST:
-                if (!this.obj.requirements.contains(RequireKey.TYPING)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.TYPING)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.TYPING
                                 + "\" needed to specify typed constants.", this.file, 
                                 node.getLine(), node.getColumn());
@@ -3597,7 +3608,7 @@ public final class Parser {
      * @throws ParserException if an error occurs while parsing.
      */
     private Set<FHead> functions_def(SimpleNode node) throws ParserException {
-        if (!this.obj.requirements.contains(RequireKey.FLUENTS)) {
+        if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.FLUENTS)) {
             this.mgr.logParserError("Require key \"" + RequireKey.FLUENTS
                         + "\" needed to defined functions.", this.file, node.getLine(),
                         node.getColumn());
@@ -3647,7 +3658,7 @@ public final class Parser {
                 }
                 break;
             case LexerTreeConstants.JJTFUNCTION_TYPED_LIST:
-                if (!this.obj.requirements.contains(RequireKey.TYPING)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.TYPING)) {
                     this.mgr.logParserError("Require key \"" + RequireKey.TYPING
                                 + "\" needed to specify typed functions.", this.file, 
                                 node.getLine(), node.getColumn());
@@ -3764,7 +3775,7 @@ public final class Parser {
      * @throws ParserException if an error occurs while parsing.
      */
     private Set<Exp> constraints(SimpleNode node) throws ParserException {
-        if (!this.obj.requirements.contains(RequireKey.CONSTRAINTS)) {
+        if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.CONSTRAINTS)) {
             this.mgr.logParserError("Require key \"" + RequireKey.CONSTRAINTS
                         + "\" missing to define constraints.", this.file, 
                         node.getLine(),
@@ -3874,7 +3885,7 @@ public final class Parser {
      * @throws ParserException if an error occurs while parsing.
      */
     private PrefExp named_pref_con_gd(SimpleNode node) throws ParserException {
-        if (!this.obj.requirements.contains(RequireKey.PREFERENCES)) {
+        if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.PREFERENCES)) {
             this.mgr.logParserError("Require key \"" + RequireKey.PREFERENCES
                         + "\" missing.", this.file, node.getLine(), node.getColumn());
             if (node.jjtGetNumChildren() == 1) {
@@ -4285,7 +4296,7 @@ public final class Parser {
                 exp = this.and_gd(cn);
                 break;
             case LexerTreeConstants.JJTOR_GD:
-                if (!this.obj.requirements.contains(RequireKey.DISJUNCTIVE_PRECONDITIONS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.DISJUNCTIVE_PRECONDITIONS)) {
                     this.mgr.logParserError("Disjunctive formula cannot be defined without require key \""
                                + RequireKey.DISJUNCTIVE_PRECONDITIONS
                                + "\".", this.file, node.getLine(), node.getColumn());
@@ -4294,7 +4305,7 @@ public final class Parser {
                 break;
             case LexerTreeConstants.JJTNOT_GD:
                 NotExp notExp = this.not_gd(cn);
-                if (!notExp.getExp().getExpID().equals(ExpID.F_COMP) && !this.obj.requirements.contains(RequireKey.NEGATIVE_PRECONDITIONS)) {
+                if (this.check_requirements  && !notExp.getExp().getExpID().equals(ExpID.F_COMP) && !this.obj.requirements.contains(RequireKey.NEGATIVE_PRECONDITIONS)) {
                     this.mgr.logParserError("Negative formula cannot be defined without require key \""
                                + RequireKey.NEGATIVE_PRECONDITIONS
                                + "\".", this.file, node.getLine(), node.getColumn());
@@ -4302,7 +4313,7 @@ public final class Parser {
                 exp = notExp;
                 break;
             case LexerTreeConstants.JJTIMPLY_GD:
-                if (!this.obj.requirements.contains(RequireKey.DISJUNCTIVE_PRECONDITIONS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.DISJUNCTIVE_PRECONDITIONS)) {
                     this.mgr.logParserError("Implication formula cannot be defined without require key \""
                                 + RequireKey.DISJUNCTIVE_PRECONDITIONS
                                 + "\".", this.file, node.getLine(), node.getColumn());
@@ -4310,7 +4321,7 @@ public final class Parser {
                 exp = this.imply_gd(cn);
                 break;
             case LexerTreeConstants.JJTFORALL_GD:
-                if (!this.obj.requirements.contains(RequireKey.UNIVERSAL_PRECONDITIONS)
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.UNIVERSAL_PRECONDITIONS)
                             && !this.obj.requirements.contains(RequireKey.QUANTIFIED_PRECONDITIONS)) {
                     this.mgr.logParserError("Universal formula cannot be defined without require keys \""
                                + RequireKey.UNIVERSAL_PRECONDITIONS
@@ -4321,7 +4332,7 @@ public final class Parser {
                 exp = this.forall_gd(cn);
                 break;
             case LexerTreeConstants.JJTEXISTS_GD:
-                if (!this.obj.requirements.contains(RequireKey.EXISTENTIAL_PRECONDITIONS)
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.EXISTENTIAL_PRECONDITIONS)
                             && !this.obj.requirements.contains(RequireKey.QUANTIFIED_PRECONDITIONS)) {
                     this.mgr.logParserError("Existential formula cannot be defined without require keys \""
                                + RequireKey.EXISTENTIAL_PRECONDITIONS
@@ -4333,7 +4344,7 @@ public final class Parser {
                 break;
             case LexerTreeConstants.JJTF_COMP:
                 FCompExp fCompExp = this.f_comp(cn);
-                if (!this.obj.requirements.contains(RequireKey.FLUENTS)) {
+                if (this.check_requirements  && !this.obj.requirements.contains(RequireKey.FLUENTS)) {
                     if (!(fCompExp.getOp().equals(Comp.EQUAL)
                                 && fCompExp.getArg1().getExpID().equals(ExpID.TERM)
                                 && fCompExp.getArg2().getExpID().equals(ExpID.TERM) 

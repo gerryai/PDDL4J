@@ -120,30 +120,32 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     }
 
   final public SimpleNode parse() throws ParseException {
+    trace_call("parse");
+    try {
  /*@bgen(jjtree) ROOT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTROOT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t= null;
-    try {
       try {
-        if (jj_2_1(4)) {
-          t = domain();
-        } else if (jj_2_2(4)) {
-          t = problem();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_1(4)) {
+            t = domain();
+          } else if (jj_2_2(4)) {
+            t = problem();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.mgr.logLexicalError("Lexical error file (" +file.getName() + ") : to many errors", file);
                 {if (true) throw new ParseException(e.getMessage());}
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return jjtn000;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -157,111 +159,159 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("parse");
+    }
+  }
+
+  final public Token right_bracket() throws ParseException {
+    trace_call("right_bracket");
+    try {
+        Token t = null;
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case RIGHT_BRACKET:
+        jj_consume_token(RIGHT_BRACKET);
+        break;
+      default:
+        jj_la1[0] = jj_gen;
+                ParseException e = generateParseException();
+                this.mgr.logLexicalError(generateErrorMesssage(e), this.file, e.currentToken.beginLine, e.currentToken.beginColumn);
+      }
+          {if (true) return t;}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("right_bracket");
+    }
+  }
+
+  final public Token left_bracket() throws ParseException {
+    trace_call("left_bracket");
+    try {
+        Token t = null;
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LEFT_BRACKET:
+        t = jj_consume_token(LEFT_BRACKET);
+        break;
+      default:
+        jj_la1[1] = jj_gen;
+                ParseException e = generateParseException();
+                this.mgr.logLexicalError(generateErrorMesssage(e), this.file, e.currentToken.beginLine, e.currentToken.beginColumn);
+      }
+          {if (true) return t;}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("left_bracket");
+    }
   }
 
   final public Token domain() throws ParseException {
+    trace_call("domain");
+    try {
  /*@bgen(jjtree) DOMAIN */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDOMAIN);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DEFINE);
-        jj_consume_token(LPAREN);
-        jj_consume_token(DOMAIN);
-        domain_name();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DEFINE);
+          left_bracket();
+          jj_consume_token(DOMAIN);
+          domain_name();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        if (jj_2_3(2)) {
-          t = require_def();
-        } else {
-          ;
         }
-      } catch (Throwable e) {
-                this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        if (jj_2_4(2)) {
-          t = type_def();
-        } else {
-          ;
-        }
-      } catch (Throwable e) {
-                this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        if (jj_2_5(2)) {
-          t = constants_def();
-        } else {
-          ;
-        }
-      } catch (Throwable e) {
-                this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        if (jj_2_6(2)) {
-          t = predicates_def();
-        } else {
-          ;
-        }
-      } catch (Throwable e) {
-                this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        if (jj_2_7(2)) {
-          t = functions_def();
-        } else {
-          ;
-        }
-      } catch (Throwable e) {
-                this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        if (jj_2_8(2)) {
-          t = constraints();
-        } else {
-          ;
-        }
-      } catch (Throwable e) {
-                this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        label_1:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
+        try {
+          if (jj_2_3(2)) {
+            t = require_def();
+          } else {
             ;
-            break;
-          default:
-            jj_la1[0] = jj_gen;
-            break label_1;
           }
-          t = structure_def();
+        } catch (Throwable e) {
+                this.error(e, t.beginLine, t.beginColumn);
         }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_4(2)) {
+            t = type_def();
+          } else {
+            ;
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
-      try {
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        }
+        try {
+          if (jj_2_5(2)) {
+            t = constants_def();
+          } else {
+            ;
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
+        try {
+          if (jj_2_6(2)) {
+            t = predicates_def();
+          } else {
+            ;
+          }
+        } catch (Throwable e) {
+                this.error(e, t.beginLine, t.beginColumn);
+        }
+        try {
+          if (jj_2_7(2)) {
+            t = functions_def();
+          } else {
+            ;
+          }
+        } catch (Throwable e) {
+                this.error(e, t.beginLine, t.beginColumn);
+        }
+        try {
+          if (jj_2_8(2)) {
+            t = constraints();
+          } else {
+            ;
+          }
+        } catch (Throwable e) {
+                this.error(e, t.beginLine, t.beginColumn);
+        }
+        try {
+          label_1:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case LEFT_BRACKET:
+            case ACTION:
+            case DURATIVE_ACTION:
+            case DERIVED:
+              ;
+              break;
+            default:
+              jj_la1[2] = jj_gen;
+              break label_1;
+            }
+            t = structure_def();
+          }
+        } catch (Throwable e) {
+                this.error(e, t.beginLine, t.beginColumn);
+        }
+        try {
+          right_bracket();
+        } catch (Throwable e) {
+                this.error(e, t.beginLine, t.beginColumn);
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -275,62 +325,67 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("domain");
+    }
   }
 
   final public Token require_def() throws ParseException {
+    trace_call("require_def");
+    try {
  /*@bgen(jjtree) REQUIRE_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTREQUIRE_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(REQUIREMENTS);
-        label_2:
-        while (true) {
-          require_key();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case STRIPS:
-          case TYPING:
-          case NEGATIVE_PRECONDITIONS:
-          case DISJUNCTIVE_PRECONDITIONS:
-          case EQUALITY:
-          case EXISTENTIAL_PRECONDITIONS:
-          case UNIVERSAL_PRECONDITIONS:
-          case QUANTIFIED_PRECONDITIONS:
-          case CONDITIONAL_EFFECTS:
-          case FLUENTS:
-          case ADL:
-          case DURATIVE_ACTIONS:
-          case DERIVED_PREDICATES:
-          case TIMED_INITIAL_LITERALS:
-          case PREFERENCES:
-          case CONSTRAINTS:
-          case CONTINUS_EFFECTS:
-          case DURATION_INEQUALITIES:
-            ;
-            break;
-          default:
-            jj_la1[1] = jj_gen;
-            break label_2;
+        try {
+          t = left_bracket();
+          jj_consume_token(REQUIREMENTS);
+          label_2:
+          while (true) {
+            require_key();
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case STRIPS:
+            case TYPING:
+            case NEGATIVE_PRECONDITIONS:
+            case DISJUNCTIVE_PRECONDITIONS:
+            case EQUALITY:
+            case EXISTENTIAL_PRECONDITIONS:
+            case UNIVERSAL_PRECONDITIONS:
+            case QUANTIFIED_PRECONDITIONS:
+            case CONDITIONAL_EFFECTS:
+            case FLUENTS:
+            case ADL:
+            case DURATIVE_ACTIONS:
+            case DERIVED_PREDICATES:
+            case TIMED_INITIAL_LITERALS:
+            case PREFERENCES:
+            case CONSTRAINTS:
+            case CONTINUS_EFFECTS:
+            case DURATION_INEQUALITIES:
+              ;
+              break;
+            default:
+              jj_la1[3] = jj_gen;
+              break label_2;
+            }
           }
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -344,118 +399,128 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("require_def");
+    }
   }
 
   final public Token require_key() throws ParseException {
+    trace_call("require_key");
+    try {
  /*@bgen(jjtree) REQUIRE_KEY */
         SimpleNode jjtn000 = new SimpleNode(this, JJTREQUIRE_KEY);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case STRIPS:
-          t = jj_consume_token(STRIPS);
-          break;
-        case TYPING:
-          t = jj_consume_token(TYPING);
-          break;
-        case NEGATIVE_PRECONDITIONS:
-          t = jj_consume_token(NEGATIVE_PRECONDITIONS);
-          break;
-        case DISJUNCTIVE_PRECONDITIONS:
-          t = jj_consume_token(DISJUNCTIVE_PRECONDITIONS);
-          break;
-        case EQUALITY:
-          t = jj_consume_token(EQUALITY);
-          break;
-        case EXISTENTIAL_PRECONDITIONS:
-          t = jj_consume_token(EXISTENTIAL_PRECONDITIONS);
-          break;
-        case UNIVERSAL_PRECONDITIONS:
-          t = jj_consume_token(UNIVERSAL_PRECONDITIONS);
-          break;
-        case QUANTIFIED_PRECONDITIONS:
-          t = jj_consume_token(QUANTIFIED_PRECONDITIONS);
-          break;
-        case CONDITIONAL_EFFECTS:
-          t = jj_consume_token(CONDITIONAL_EFFECTS);
-          break;
-        case FLUENTS:
-          t = jj_consume_token(FLUENTS);
-          break;
-        case ADL:
-          t = jj_consume_token(ADL);
-          break;
-        case DURATIVE_ACTIONS:
-          t = jj_consume_token(DURATIVE_ACTIONS);
-          break;
-        case DERIVED_PREDICATES:
-          t = jj_consume_token(DERIVED_PREDICATES);
-          break;
-        case TIMED_INITIAL_LITERALS:
-          t = jj_consume_token(TIMED_INITIAL_LITERALS);
-          break;
-        case PREFERENCES:
-          t = jj_consume_token(PREFERENCES);
-          break;
-        case CONSTRAINTS:
-          t = jj_consume_token(CONSTRAINTS);
-          break;
-        case CONTINUS_EFFECTS:
-          t = jj_consume_token(CONTINUS_EFFECTS);
-          break;
-        case DURATION_INEQUALITIES:
-          t = jj_consume_token(DURATION_INEQUALITIES);
-          break;
-        default:
-          jj_la1[2] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case STRIPS:
+            t = jj_consume_token(STRIPS);
+            break;
+          case TYPING:
+            t = jj_consume_token(TYPING);
+            break;
+          case NEGATIVE_PRECONDITIONS:
+            t = jj_consume_token(NEGATIVE_PRECONDITIONS);
+            break;
+          case DISJUNCTIVE_PRECONDITIONS:
+            t = jj_consume_token(DISJUNCTIVE_PRECONDITIONS);
+            break;
+          case EQUALITY:
+            t = jj_consume_token(EQUALITY);
+            break;
+          case EXISTENTIAL_PRECONDITIONS:
+            t = jj_consume_token(EXISTENTIAL_PRECONDITIONS);
+            break;
+          case UNIVERSAL_PRECONDITIONS:
+            t = jj_consume_token(UNIVERSAL_PRECONDITIONS);
+            break;
+          case QUANTIFIED_PRECONDITIONS:
+            t = jj_consume_token(QUANTIFIED_PRECONDITIONS);
+            break;
+          case CONDITIONAL_EFFECTS:
+            t = jj_consume_token(CONDITIONAL_EFFECTS);
+            break;
+          case FLUENTS:
+            t = jj_consume_token(FLUENTS);
+            break;
+          case ADL:
+            t = jj_consume_token(ADL);
+            break;
+          case DURATIVE_ACTIONS:
+            t = jj_consume_token(DURATIVE_ACTIONS);
+            break;
+          case DERIVED_PREDICATES:
+            t = jj_consume_token(DERIVED_PREDICATES);
+            break;
+          case TIMED_INITIAL_LITERALS:
+            t = jj_consume_token(TIMED_INITIAL_LITERALS);
+            break;
+          case PREFERENCES:
+            t = jj_consume_token(PREFERENCES);
+            break;
+          case CONSTRAINTS:
+            t = jj_consume_token(CONSTRAINTS);
+            break;
+          case CONTINUS_EFFECTS:
+            t = jj_consume_token(CONTINUS_EFFECTS);
+            break;
+          case DURATION_INEQUALITIES:
+            t = jj_consume_token(DURATION_INEQUALITIES);
+            break;
+          default:
+            jj_la1[4] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("require_key");
+    }
   }
 
   final public Token type_def() throws ParseException {
+    trace_call("type_def");
+    try {
  /*@bgen(jjtree) TYPE_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTYPE_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(TYPES);
-        typed_list(LexerTreeConstants.JJTPRIMITIVE_TYPE);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(TYPES);
+          typed_list(LexerTreeConstants.JJTPRIMITIVE_TYPE);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -469,99 +534,104 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("type_def");
+    }
   }
 
   final public Token typed_list(int type) throws ParseException {
+    trace_call("typed_list");
+    try {
  /*@bgen(jjtree) TYPED_LIST */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTYPED_LIST);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (type == LexerTreeConstants.JJTPRIMITIVE_TYPE) {
-          label_3:
-          while (true) {
+        try {
+          if (type == LexerTreeConstants.JJTPRIMITIVE_TYPE) {
+            label_3:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case NUMBER_TYPE:
+              case OBJECT_TYPE:
+              case SYMBOL:
+                ;
+                break;
+              default:
+                jj_la1[5] = jj_gen;
+                break label_3;
+              }
+              t = primitive_type();
+            }
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-            case NUMBER_TYPE:
-            case OBJECT_TYPE:
-            case SYMBOL:
-              ;
+            case SUB:
+              jj_consume_token(SUB);
+              type();
+              typed_list(type);
               break;
             default:
-              jj_la1[3] = jj_gen;
-              break label_3;
-            }
-            t = primitive_type();
-          }
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case SUB:
-            jj_consume_token(SUB);
-            type();
-            typed_list(type);
-            break;
-          default:
-            jj_la1[4] = jj_gen;
-            ;
-          }
-        } else if (type == LexerTreeConstants.JJTCONSTANT) {
-          label_4:
-          while (true) {
-            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-            case SYMBOL:
+              jj_la1[6] = jj_gen;
               ;
+            }
+          } else if (type == LexerTreeConstants.JJTCONSTANT) {
+            label_4:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case SYMBOL:
+                ;
+                break;
+              default:
+                jj_la1[7] = jj_gen;
+                break label_4;
+              }
+              t = constant();
+            }
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case SUB:
+              jj_consume_token(SUB);
+              type();
+              typed_list(type);
               break;
             default:
-              jj_la1[5] = jj_gen;
-              break label_4;
-            }
-            t = constant();
-          }
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case SUB:
-            jj_consume_token(SUB);
-            type();
-            typed_list(type);
-            break;
-          default:
-            jj_la1[6] = jj_gen;
-            ;
-          }
-        } else if (type == LexerTreeConstants.JJTVARIABLE) {
-          label_5:
-          while (true) {
-            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-            case 103:
+              jj_la1[8] = jj_gen;
               ;
+            }
+          } else if (type == LexerTreeConstants.JJTVARIABLE) {
+            label_5:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case 103:
+                ;
+                break;
+              default:
+                jj_la1[9] = jj_gen;
+                break label_5;
+              }
+              t = variable();
+            }
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case SUB:
+              jj_consume_token(SUB);
+              type();
+              typed_list(type);
               break;
             default:
-              jj_la1[7] = jj_gen;
-              break label_5;
+              jj_la1[10] = jj_gen;
+              ;
             }
-            t = variable();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
           }
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case SUB:
-            jj_consume_token(SUB);
-            type();
-            typed_list(type);
-            break;
-          default:
-            jj_la1[8] = jj_gen;
-            ;
-          }
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 if (t != null) {
@@ -570,7 +640,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
                                 jjtn000.setTypeId(LexerTreeConstants.JJTVARIABLE);
                 }
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -584,60 +654,61 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("typed_list");
+    }
   }
 
   final public Token type() throws ParseException {
+    trace_call("type");
+    try {
  /*@bgen(jjtree) TYPE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTYPE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-          t = jj_consume_token(LPAREN);
-          jj_consume_token(EITHER);
-          label_6:
-          while (true) {
-            primitive_type();
-            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-            case NUMBER_TYPE:
-            case OBJECT_TYPE:
-            case SYMBOL:
-              ;
-              break;
-            default:
-              jj_la1[9] = jj_gen;
-              break label_6;
+        try {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case LEFT_BRACKET:
+          case EITHER:
+            t = left_bracket();
+            jj_consume_token(EITHER);
+            label_6:
+            while (true) {
+              primitive_type();
+              if (jj_2_9(2)) {
+                ;
+              } else {
+                break label_6;
+              }
             }
+            right_bracket();
+            break;
+          case NUMBER_TYPE:
+          case OBJECT_TYPE:
+          case SYMBOL:
+            t = primitive_type();
+            break;
+          default:
+            jj_la1[11] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
           }
-          jj_consume_token(RPAREN);
-          break;
-        case NUMBER_TYPE:
-        case OBJECT_TYPE:
-        case SYMBOL:
-          t = primitive_type();
-          break;
-        default:
-          jj_la1[10] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -651,69 +722,79 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("type");
+    }
   }
 
   final public Token primitive_type() throws ParseException {
+    trace_call("primitive_type");
+    try {
  /*@bgen(jjtree) PRIMITIVE_TYPE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPRIMITIVE_TYPE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case OBJECT_TYPE:
-        t = jj_consume_token(OBJECT_TYPE);
-        break;
-      case NUMBER_TYPE:
-        t = jj_consume_token(NUMBER_TYPE);
-        break;
-      case SYMBOL:
-        t = jj_consume_token(SYMBOL);
-        break;
-      default:
-        jj_la1[11] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
+      try {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case OBJECT_TYPE:
+          t = jj_consume_token(OBJECT_TYPE);
+          break;
+        case NUMBER_TYPE:
+          t = jj_consume_token(NUMBER_TYPE);
+          break;
+        case SYMBOL:
+          t = jj_consume_token(SYMBOL);
+          break;
+        default:
+          jj_la1[12] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
   if (jjtc000) {
     jjtree.closeNodeScope(jjtn000, true);
   }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("primitive_type");
+    }
   }
 
   final public Token constants_def() throws ParseException {
+    trace_call("constants_def");
+    try {
  /*@bgen(jjtree) CONSTANT_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCONSTANT_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(CONSTANTS);
-        typed_list(LexerTreeConstants.JJTCONSTANT);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(CONSTANTS);
+          typed_list(LexerTreeConstants.JJTCONSTANT);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -727,66 +808,73 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("constants_def");
+    }
   }
 
   final public Token constant() throws ParseException {
+    trace_call("constant");
+    try {
  /*@bgen(jjtree) CONSTANT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCONSTANT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      t = jj_consume_token(SYMBOL);
+      try {
+        t = jj_consume_token(SYMBOL);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("constant");
+    }
   }
 
   final public Token predicates_def() throws ParseException {
+    trace_call("predicates_def");
+    try {
  /*@bgen(jjtree) PREDICATE_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPREDICATE_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(PREDICATES);
-        label_7:
-        while (true) {
-          atomic_formula_skeleton();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[12] = jj_gen;
-            break label_7;
+        try {
+          t = left_bracket();
+          jj_consume_token(PREDICATES);
+          label_7:
+          while (true) {
+            atomic_formula_skeleton();
+            if (jj_2_10(2)) {
+              ;
+            } else {
+              break label_7;
+            }
           }
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -800,30 +888,35 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("predicates_def");
+    }
   }
 
   final public Token atomic_formula_skeleton() throws ParseException {
+    trace_call("atomic_formula_skeleton");
+    try {
  /*@bgen(jjtree) ATOMIC_FORMULA_SKELETON */
         SimpleNode jjtn000 = new SimpleNode(this, JJTATOMIC_FORMULA_SKELETON);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      t = jj_consume_token(LPAREN);
-      predicate();
-      typed_list(LexerTreeConstants.JJTVARIABLE);
-      jj_consume_token(RPAREN);
+      try {
+        t = jj_consume_token(LEFT_BRACKET);
+        predicate();
+        typed_list(LexerTreeConstants.JJTVARIABLE);
+        right_bracket();
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -837,102 +930,117 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("atomic_formula_skeleton");
+    }
   }
 
   final public Token predicate() throws ParseException {
+    trace_call("predicate");
+    try {
  /*@bgen(jjtree) PREDICATE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPREDICATE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case SYMBOL:
-        t = jj_consume_token(SYMBOL);
-        break;
-      case AT:
-        t = jj_consume_token(AT);
-        break;
-      default:
-        jj_la1[13] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
+      try {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SYMBOL:
+          t = jj_consume_token(SYMBOL);
+          break;
+        case AT:
+          t = jj_consume_token(AT);
+          break;
+        default:
+          jj_la1[13] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("predicate");
+    }
   }
 
   final public Token variable() throws ParseException {
+    trace_call("variable");
+    try {
  /*@bgen(jjtree) VARIABLE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTVARIABLE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      jj_consume_token(103);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case SYMBOL:
-        t = jj_consume_token(SYMBOL);
-        break;
-      case OBJECT_TYPE:
-        t = jj_consume_token(OBJECT_TYPE);
-        break;
-      case NUMBER_TYPE:
-        t = jj_consume_token(NUMBER_TYPE);
-        break;
-      default:
-        jj_la1[14] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
+      try {
+        jj_consume_token(103);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SYMBOL:
+          t = jj_consume_token(SYMBOL);
+          break;
+        case OBJECT_TYPE:
+          t = jj_consume_token(OBJECT_TYPE);
+          break;
+        case NUMBER_TYPE:
+          t = jj_consume_token(NUMBER_TYPE);
+          break;
+        default:
+          jj_la1[14] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("variable");
+    }
   }
 
   final public Token functions_def() throws ParseException {
+    trace_call("functions_def");
+    try {
  /*@bgen(jjtree) FUNCTION_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFUNCTION_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FUNCTIONS);
-        function_typed_list(LexerTreeConstants.JJTATOMIC_FUNCTION_SKELETON);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FUNCTIONS);
+          function_typed_list(LexerTreeConstants.JJTATOMIC_FUNCTION_SKELETON);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -946,30 +1054,35 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("functions_def");
+    }
   }
 
   final public Token atomic_function_skeleton() throws ParseException {
+    trace_call("atomic_function_skeleton");
+    try {
  /*@bgen(jjtree) ATOMIC_FUNCTION_SKELETON */
         SimpleNode jjtn000 = new SimpleNode(this, JJTATOMIC_FUNCTION_SKELETON);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      t = jj_consume_token(LPAREN);
-      functor();
-      typed_list(LexerTreeConstants.JJTVARIABLE);
-      jj_consume_token(RPAREN);
+      try {
+        t = left_bracket();
+        functor();
+        typed_list(LexerTreeConstants.JJTVARIABLE);
+        jj_consume_token(RIGHT_BRACKET);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -983,63 +1096,70 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("atomic_function_skeleton");
+    }
   }
 
   final public Token functor() throws ParseException {
+    trace_call("functor");
+    try {
  /*@bgen(jjtree) FUNCTOR */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFUNCTOR);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      t = jj_consume_token(SYMBOL);
+      try {
+        t = jj_consume_token(SYMBOL);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("functor");
+    }
   }
 
   final public Token function_typed_list(int type) throws ParseException {
+    trace_call("function_typed_list");
+    try {
  /*@bgen(jjtree) FUNCTION_TYPED_LIST */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFUNCTION_TYPED_LIST);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      label_8:
-      while (true) {
+      try {
+        label_8:
+        while (true) {
+          if (jj_2_11(2)) {
+            ;
+          } else {
+            break label_8;
+          }
+          t = atomic_function_skeleton();
+        }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-          ;
+        case SUB:
+          jj_consume_token(SUB);
+          function_type();
+          function_typed_list(type);
           break;
         default:
           jj_la1[15] = jj_gen;
-          break label_8;
+          ;
         }
-        t = atomic_function_skeleton();
-      }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case SUB:
-        jj_consume_token(SUB);
-        function_type();
-        function_typed_list(type);
-        break;
-      default:
-        jj_la1[16] = jj_gen;
-        ;
-      }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 if (t != null) {
@@ -1047,7 +1167,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
                         jjtn000.setColumn(t.beginColumn);
                 }
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1061,79 +1181,89 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("function_typed_list");
+    }
   }
 
   final public Token function_type() throws ParseException {
+    trace_call("function_type");
+    try {
  /*@bgen(jjtree) FUNCTION_TYPE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFUNCTION_TYPE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
-      t = jj_consume_token(NUMBER_TYPE);
+      try {
+        t = jj_consume_token(NUMBER_TYPE);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("function_type");
+    }
   }
 
   final public Token con_gd() throws ParseException {
+    trace_call("con_gd");
+    try {
  /*@bgen(jjtree) CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_9(2)) {
-          t = and_con_gd();
-        } else if (jj_2_10(2)) {
-          t = forall_con_gd();
-        } else if (jj_2_11(2)) {
-          t = at_end_con_gd();
-        } else if (jj_2_12(2)) {
-          t = always_con_gd();
-        } else if (jj_2_13(2)) {
-          t = sometime_con_gd();
-        } else if (jj_2_14(2)) {
-          t = within_con_gd();
-        } else if (jj_2_15(2)) {
-          t = at_most_once_con_gd();
-        } else if (jj_2_16(2)) {
-          t = sometime_after_con_gd();
-        } else if (jj_2_17(2)) {
-          t = sometime_before_con_gd();
-        } else if (jj_2_18(2)) {
-          t = always_within_con_gd();
-        } else if (jj_2_19(2)) {
-          t = hold_during_con_gd();
-        } else if (jj_2_20(2)) {
-          t = hold_after_con_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_12(2)) {
+            t = and_con_gd();
+          } else if (jj_2_13(2)) {
+            t = forall_con_gd();
+          } else if (jj_2_14(2)) {
+            t = at_end_con_gd();
+          } else if (jj_2_15(2)) {
+            t = always_con_gd();
+          } else if (jj_2_16(2)) {
+            t = sometime_con_gd();
+          } else if (jj_2_17(2)) {
+            t = within_con_gd();
+          } else if (jj_2_18(2)) {
+            t = at_most_once_con_gd();
+          } else if (jj_2_19(2)) {
+            t = sometime_after_con_gd();
+          } else if (jj_2_20(2)) {
+            t = sometime_before_con_gd();
+          } else if (jj_2_21(2)) {
+            t = always_within_con_gd();
+          } else if (jj_2_22(2)) {
+            t = hold_during_con_gd();
+          } else if (jj_2_23(2)) {
+            t = hold_after_con_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1147,45 +1277,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("con_gd");
+    }
   }
 
   final public Token and_con_gd() throws ParseException {
+    trace_call("and_con_gd");
+    try {
  /*@bgen(jjtree) AND_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_9:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[17] = jj_gen;
-            break label_9;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_9:
+          while (true) {
+            if (jj_2_24(2)) {
+              ;
+            } else {
+              break label_9;
+            }
+            con_gd();
           }
-          con_gd();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1199,37 +1331,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_con_gd");
+    }
   }
 
   final public Token forall_con_gd() throws ParseException {
+    trace_call("forall_con_gd");
+    try {
  /*@bgen(jjtree) FORALL_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        con_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          con_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1243,35 +1380,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_con_gd");
+    }
   }
 
   final public Token at_end_con_gd() throws ParseException {
+    trace_call("at_end_con_gd");
+    try {
  /*@bgen(jjtree) AT_END_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_END_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(END);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(END);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1285,34 +1427,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_end_con_gd");
+    }
   }
 
   final public Token always_con_gd() throws ParseException {
+    trace_call("always_con_gd");
+    try {
  /*@bgen(jjtree) ALWAYS_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTALWAYS_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ALWAYS);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ALWAYS);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1326,34 +1473,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("always_con_gd");
+    }
   }
 
   final public Token sometime_con_gd() throws ParseException {
+    trace_call("sometime_con_gd");
+    try {
  /*@bgen(jjtree) SOMETIME_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSOMETIME_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SOMETIME);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SOMETIME);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1367,35 +1519,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("sometime_con_gd");
+    }
   }
 
   final public Token within_con_gd() throws ParseException {
+    trace_call("within_con_gd");
+    try {
  /*@bgen(jjtree) WITHIN_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTWITHIN_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(WITHIN);
-        jj_consume_token(NUMBER);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(WITHIN);
+          jj_consume_token(NUMBER);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1409,34 +1566,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("within_con_gd");
+    }
   }
 
   final public Token at_most_once_con_gd() throws ParseException {
+    trace_call("at_most_once_con_gd");
+    try {
  /*@bgen(jjtree) AT_MOST_ONCE_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_MOST_ONCE_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT_MOST_ONCE);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT_MOST_ONCE);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1450,35 +1612,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_most_once_con_gd");
+    }
   }
 
   final public Token sometime_after_con_gd() throws ParseException {
+    trace_call("sometime_after_con_gd");
+    try {
  /*@bgen(jjtree) SOMETIME_AFTER_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSOMETIME_AFTER_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SOMETIME_AFTER);
-        gd();
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SOMETIME_AFTER);
+          gd();
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1492,35 +1659,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("sometime_after_con_gd");
+    }
   }
 
   final public Token sometime_before_con_gd() throws ParseException {
+    trace_call("sometime_before_con_gd");
+    try {
  /*@bgen(jjtree) SOMETIME_BEFORE_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSOMETIME_BEFORE_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SOMETIME_BEFORE);
-        gd();
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SOMETIME_BEFORE);
+          gd();
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1534,36 +1706,41 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("sometime_before_con_gd");
+    }
   }
 
   final public Token always_within_con_gd() throws ParseException {
+    trace_call("always_within_con_gd");
+    try {
  /*@bgen(jjtree) ALWAYS_WITHIN_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTALWAYS_WITHIN_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ALWAYS_WITHIN);
-        jj_consume_token(NUMBER);
-        gd();
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ALWAYS_WITHIN);
+          jj_consume_token(NUMBER);
+          gd();
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1577,36 +1754,41 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("always_within_con_gd");
+    }
   }
 
   final public Token hold_during_con_gd() throws ParseException {
+    trace_call("hold_during_con_gd");
+    try {
  /*@bgen(jjtree) HOLD_DURING_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTHOLD_DURING_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(HOLD_DURING);
-        jj_consume_token(NUMBER);
-        jj_consume_token(NUMBER);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(HOLD_DURING);
+          jj_consume_token(NUMBER);
+          jj_consume_token(NUMBER);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1620,35 +1802,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("hold_during_con_gd");
+    }
   }
 
   final public Token hold_after_con_gd() throws ParseException {
+    trace_call("hold_after_con_gd");
+    try {
  /*@bgen(jjtree) HOLD_AFTER_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTHOLD_AFTER_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(HOLD_AFTER);
-        jj_consume_token(NUMBER);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(HOLD_AFTER);
+          jj_consume_token(NUMBER);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1662,50 +1849,55 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("hold_after_con_gd");
+    }
   }
 
   final public Token gd() throws ParseException {
+    trace_call("gd");
+    try {
  /*@bgen(jjtree) GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTGD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_21(2)) {
-          t = atomic_formula(LexerTreeConstants.JJTTERM);
-        } else if (jj_2_22(2)) {
-          t = and_gd();
-        } else if (jj_2_23(2)) {
-          t = or_gd();
-        } else if (jj_2_24(2)) {
-          t = not_gd();
-        } else if (jj_2_25(2)) {
-          t = imply_gd();
-        } else if (jj_2_26(2)) {
-          t = exists_gd();
-        } else if (jj_2_27(2)) {
-          t = forall_gd();
-        } else if (jj_2_28(2)) {
-          t = f_comp();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_25(2)) {
+            t = atomic_formula(LexerTreeConstants.JJTTERM);
+          } else if (jj_2_26(2)) {
+            t = and_gd();
+          } else if (jj_2_27(2)) {
+            t = or_gd();
+          } else if (jj_2_28(2)) {
+            t = not_gd();
+          } else if (jj_2_29(2)) {
+            t = imply_gd();
+          } else if (jj_2_30(2)) {
+            t = exists_gd();
+          } else if (jj_2_31(2)) {
+            t = forall_gd();
+          } else if (jj_2_32(2)) {
+            t = f_comp();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1719,45 +1911,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("gd");
+    }
   }
 
   final public Token and_gd() throws ParseException {
+    trace_call("and_gd");
+    try {
  /*@bgen(jjtree) AND_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_10:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[18] = jj_gen;
-            break label_10;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_10:
+          while (true) {
+            if (jj_2_33(2)) {
+              ;
+            } else {
+              break label_10;
+            }
+            gd();
           }
-          gd();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1771,45 +1965,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_gd");
+    }
   }
 
   final public Token or_gd() throws ParseException {
+    trace_call("or_gd");
+    try {
  /*@bgen(jjtree) OR_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTOR_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(OR);
-        label_11:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[19] = jj_gen;
-            break label_11;
+        try {
+          t = left_bracket();
+          jj_consume_token(OR);
+          label_11:
+          while (true) {
+            if (jj_2_34(2)) {
+              ;
+            } else {
+              break label_11;
+            }
+            gd();
           }
-          gd();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1823,34 +2019,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("or_gd");
+    }
   }
 
   final public Token not_gd() throws ParseException {
+    trace_call("not_gd");
+    try {
  /*@bgen(jjtree) NOT_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTNOT_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(NOT);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(NOT);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1864,35 +2065,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("not_gd");
+    }
   }
 
   final public Token imply_gd() throws ParseException {
+    trace_call("imply_gd");
+    try {
  /*@bgen(jjtree) IMPLY_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTIMPLY_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(IMPLY);
-        gd();
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(IMPLY);
+          gd();
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1906,37 +2112,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("imply_gd");
+    }
   }
 
   final public Token exists_gd() throws ParseException {
+    trace_call("exists_gd");
+    try {
  /*@bgen(jjtree) EXISTS_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTEXISTS_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(EXISTS);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(EXISTS);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1950,37 +2161,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("exists_gd");
+    }
   }
 
   final public Token forall_gd() throws ParseException {
+    trace_call("forall_gd");
+    try {
  /*@bgen(jjtree) FORALL_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -1994,66 +2210,71 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_gd");
+    }
   }
 
   final public Token atomic_formula(int type) throws ParseException {
+    trace_call("atomic_formula");
+    try {
  /*@bgen(jjtree) ATOMIC_FORMULA */
         SimpleNode jjtn000 = new SimpleNode(this, JJTATOMIC_FORMULA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        predicate();
-        if (type == LexerTreeConstants.JJTCONSTANT) {
-          label_12:
-          while (true) {
-            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-            case SYMBOL:
-              ;
-              break;
-            default:
-              jj_la1[20] = jj_gen;
-              break label_12;
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          predicate();
+          if (type == LexerTreeConstants.JJTCONSTANT) {
+            label_12:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case SYMBOL:
+                ;
+                break;
+              default:
+                jj_la1[16] = jj_gen;
+                break label_12;
+              }
+              constant();
             }
-            constant();
-          }
                                 jjtn000.setTypeId(LexerTreeConstants.JJTCONSTANT);
-        } else if (type == LexerTreeConstants.JJTTERM) {
-          label_13:
-          while (true) {
-            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-            case SYMBOL:
-            case 103:
-              ;
-              break;
-            default:
-              jj_la1[21] = jj_gen;
-              break label_13;
+          } else if (type == LexerTreeConstants.JJTTERM) {
+            label_13:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case SYMBOL:
+              case 103:
+                ;
+                break;
+              default:
+                jj_la1[17] = jj_gen;
+                break label_13;
+              }
+              term();
             }
-            term();
-          }
                                 jjtn000.setTypeId(LexerTreeConstants.JJTTERM);
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2067,42 +2288,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("atomic_formula");
+    }
   }
 
   final public Token term() throws ParseException {
+    trace_call("term");
+    try {
  /*@bgen(jjtree) TERM */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTERM);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case SYMBOL:
-          t = constant();
-          break;
-        case 103:
-          t = variable();
-          break;
-        default:
-          jj_la1[22] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case SYMBOL:
+            t = constant();
+            break;
+          case 103:
+            t = variable();
+            break;
+          default:
+            jj_la1[18] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2116,38 +2342,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("term");
+    }
   }
 
   final public Token literal(int type) throws ParseException {
+    trace_call("literal");
+    try {
  /*@bgen(jjtree) LITERAL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTLITERAL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_29(2)) {
-          t = atomic_formula(type);
-        } else if (jj_2_30(2)) {
-          t = not_atomic_formula(type);
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_35(2)) {
+            t = atomic_formula(type);
+          } else if (jj_2_36(2)) {
+            t = not_atomic_formula(type);
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2161,34 +2392,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("literal");
+    }
   }
 
   final public Token not_atomic_formula(int type) throws ParseException {
+    trace_call("not_atomic_formula");
+    try {
  /*@bgen(jjtree) NOT_ATOMIC_FORMULA */
         SimpleNode jjtn000 = new SimpleNode(this, JJTNOT_ATOMIC_FORMULA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(NOT);
-        atomic_formula(type);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(NOT);
+          atomic_formula(type);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2202,31 +2438,36 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("not_atomic_formula");
+    }
   }
 
   final public Token f_comp() throws ParseException {
+    trace_call("f_comp");
+    try {
  /*@bgen(jjtree) F_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTF_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = binary_comp();
-      } catch (Throwable e) {
+        try {
+          t = binary_comp();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2240,44 +2481,49 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("f_comp");
+    }
   }
 
   final public Token binary_comp() throws ParseException {
+    trace_call("binary_comp");
+    try {
  /*@bgen(jjtree) BINARY_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTBINARY_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_31(2)) {
-          t = greater_comp();
-        } else if (jj_2_32(2)) {
-          t = less_comp();
-        } else if (jj_2_33(2)) {
-          t = greater_equal_comp();
-        } else if (jj_2_34(2)) {
-          t = less_equal_comp();
-        } else if (jj_2_35(2)) {
-          t = equal_comp();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_37(2)) {
+            t = greater_comp();
+          } else if (jj_2_38(2)) {
+            t = less_comp();
+          } else if (jj_2_39(2)) {
+            t = greater_equal_comp();
+          } else if (jj_2_40(2)) {
+            t = less_equal_comp();
+          } else if (jj_2_41(2)) {
+            t = equal_comp();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2291,35 +2537,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("binary_comp");
+    }
   }
 
   final public Token greater_comp() throws ParseException {
+    trace_call("greater_comp");
+    try {
  /*@bgen(jjtree) GREATER_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTGREATER_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(GREATER);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(GREATER);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2333,35 +2584,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("greater_comp");
+    }
   }
 
   final public Token greater_equal_comp() throws ParseException {
+    trace_call("greater_equal_comp");
+    try {
  /*@bgen(jjtree) GREATER_EQUAL_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTGREATER_EQUAL_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(GEQUAL);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(GEQUAL);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2375,35 +2631,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("greater_equal_comp");
+    }
   }
 
   final public Token less_equal_comp() throws ParseException {
+    trace_call("less_equal_comp");
+    try {
  /*@bgen(jjtree) LESS_EQUAL_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTLESS_EQUAL_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(LEQUAL);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(LEQUAL);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2417,35 +2678,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("less_equal_comp");
+    }
   }
 
   final public Token less_comp() throws ParseException {
+    trace_call("less_comp");
+    try {
  /*@bgen(jjtree) LESS_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTLESS_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(LESS);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(LESS);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2459,35 +2725,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("less_comp");
+    }
   }
 
   final public Token equal_comp() throws ParseException {
+    trace_call("equal_comp");
+    try {
  /*@bgen(jjtree) EQUAL_COMP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTEQUAL_COMP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(EQUAL);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(EQUAL);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2501,47 +2772,52 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("equal_comp");
+    }
   }
 
   final public Token f_exp() throws ParseException {
+    trace_call("f_exp");
+    try {
  /*@bgen(jjtree) F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTF_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case NUMBER:
-          t = number();
-          break;
-        default:
-          jj_la1[23] = jj_gen;
-          if (jj_2_36(2)) {
-            t = op();
-          } else if (jj_2_37(2)) {
-            t = f_head();
-          } else if (jj_2_38(2)) {
-            t = variable();
-          } else {
-            jj_consume_token(-1);
-            throw new ParseException();
+        try {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case NUMBER:
+            t = number();
+            break;
+          default:
+            jj_la1[19] = jj_gen;
+            if (jj_2_42(2)) {
+              t = op();
+            } else if (jj_2_43(2)) {
+              t = f_head();
+            } else if (jj_2_44(2)) {
+              t = variable();
+            } else {
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
           }
-        }
-      } catch (Throwable e) {
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2555,63 +2831,73 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("f_exp");
+    }
   }
 
   final public Token number() throws ParseException {
+    trace_call("number");
+    try {
  /*@bgen(jjtree) NUMBER */
         SimpleNode jjtn000 = new SimpleNode(this, JJTNUMBER);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(NUMBER);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(NUMBER);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("number");
+    }
   }
 
   final public Token op() throws ParseException {
+    trace_call("op");
+    try {
  /*@bgen(jjtree) OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTOP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_39(2)) {
-          t = binary_operation();
-        } else if (jj_2_40(2)) {
-          t = unary_op();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_45(2)) {
+            t = binary_operation();
+          } else if (jj_2_46(2)) {
+            t = unary_op();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2625,42 +2911,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("op");
+    }
   }
 
   final public Token binary_operation() throws ParseException {
+    trace_call("binary_operation");
+    try {
  /*@bgen(jjtree) BINARY_OPERATION */
         SimpleNode jjtn000 = new SimpleNode(this, JJTBINARY_OPERATION);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_41(2)) {
-          t = add_op();
-        } else if (jj_2_42(2)) {
-          t = substract_op();
-        } else if (jj_2_43(2)) {
-          t = multiply_op();
-        } else if (jj_2_44(2)) {
-          t = divide_op();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_47(2)) {
+            t = add_op();
+          } else if (jj_2_48(2)) {
+            t = substract_op();
+          } else if (jj_2_49(2)) {
+            t = multiply_op();
+          } else if (jj_2_50(2)) {
+            t = divide_op();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2674,35 +2965,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("binary_operation");
+    }
   }
 
   final public Token add_op() throws ParseException {
+    trace_call("add_op");
+    try {
  /*@bgen(jjtree) ADD_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTADD_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ADD);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ADD);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2716,35 +3012,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("add_op");
+    }
   }
 
   final public Token substract_op() throws ParseException {
+    trace_call("substract_op");
+    try {
  /*@bgen(jjtree) SUBSTRACT_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSUBSTRACT_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SUB);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SUB);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2758,35 +3059,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("substract_op");
+    }
   }
 
   final public Token multiply_op() throws ParseException {
+    trace_call("multiply_op");
+    try {
  /*@bgen(jjtree) MULTIPLY_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMULTIPLY_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(MUL);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(MUL);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2800,35 +3106,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("multiply_op");
+    }
   }
 
   final public Token divide_op() throws ParseException {
+    trace_call("divide_op");
+    try {
  /*@bgen(jjtree) DIVIDE_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDIVIDE_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DIV);
-        f_exp();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DIV);
+          f_exp();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2842,34 +3153,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("divide_op");
+    }
   }
 
   final public Token unary_op() throws ParseException {
+    trace_call("unary_op");
+    try {
  /*@bgen(jjtree) UNARY_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTUNARY_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SUB);
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SUB);
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2883,46 +3199,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("unary_op");
+    }
   }
 
   final public Token f_head() throws ParseException {
+    trace_call("f_head");
+    try {
  /*@bgen(jjtree) F_HEAD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTF_HEAD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        functor();
-        label_14:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case SYMBOL:
-          case 103:
-            ;
-            break;
-          default:
-            jj_la1[24] = jj_gen;
-            break label_14;
+        try {
+          t = left_bracket();
+          functor();
+          label_14:
+          while (true) {
+            if (jj_2_51(2)) {
+              ;
+            } else {
+              break label_14;
+            }
+            term();
           }
-          term();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2936,40 +3253,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("f_head");
+    }
   }
 
   final public Token structure_def() throws ParseException {
+    trace_call("structure_def");
+    try {
  /*@bgen(jjtree) STRUCTURE_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSTRUCTURE_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_45(2)) {
-          t = action_def();
-        } else if (jj_2_46(2)) {
-          t = durative_action_def();
-        } else if (jj_2_47(2)) {
-          t = derived_def();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_52(2)) {
+            t = action_def();
+          } else if (jj_2_53(2)) {
+            t = durative_action_def();
+          } else if (jj_2_54(2)) {
+            t = derived_def();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -2983,39 +3305,44 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("structure_def");
+    }
   }
 
   final public Token action_def() throws ParseException {
+    trace_call("action_def");
+    try {
  /*@bgen(jjtree) ACTION_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTACTION_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ACTION);
-        action_name();
-        jj_consume_token(PARAMETERS);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        action_def_body();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ACTION);
+          action_name();
+          jj_consume_token(PARAMETERS);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          action_def_body();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3029,59 +3356,69 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("action_def");
+    }
   }
 
   final public Token action_name() throws ParseException {
+    trace_call("action_name");
+    try {
  /*@bgen(jjtree) ACTION_NAME */
         SimpleNode jjtn000 = new SimpleNode(this, JJTACTION_NAME);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(SYMBOL);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(SYMBOL);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("action_name");
+    }
   }
 
   final public Token action_def_body() throws ParseException {
+    trace_call("action_def_body");
+    try {
  /*@bgen(jjtree) ACTION_DEF_BODY */
         SimpleNode jjtn000 = new SimpleNode(this, JJTACTION_DEF_BODY);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(PRECONDITION);
-        pre_gd();
-        jj_consume_token(EFFECT);
-        effect();
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(PRECONDITION);
+          pre_gd();
+          jj_consume_token(EFFECT);
+          effect();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3095,42 +3432,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("action_def_body");
+    }
   }
 
   final public Token pre_gd() throws ParseException {
+    trace_call("pre_gd");
+    try {
  /*@bgen(jjtree) PRE_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPRE_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_48(2)) {
-          t = empty_or();
-        } else if (jj_2_49(2)) {
-          t = pref_gd();
-        } else if (jj_2_50(2)) {
-          t = and_pre_gd();
-        } else if (jj_2_51(2)) {
-          t = forall_pre_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_55(2)) {
+            t = empty_or();
+          } else if (jj_2_56(2)) {
+            t = pref_gd();
+          } else if (jj_2_57(2)) {
+            t = and_pre_gd();
+          } else if (jj_2_58(2)) {
+            t = forall_pre_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3144,70 +3486,77 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("pre_gd");
+    }
   }
 
   final public Token empty_or() throws ParseException {
+    trace_call("empty_or");
+    try {
  /*@bgen(jjtree) EMPTY_OR */
         SimpleNode jjtn000 = new SimpleNode(this, JJTEMPTY_OR);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          jj_consume_token(RIGHT_BRACKET);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("empty_or");
+    }
   }
 
   final public Token and_pre_gd() throws ParseException {
+    trace_call("and_pre_gd");
+    try {
  /*@bgen(jjtree) AND_PRE_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_PRE_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_15:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[25] = jj_gen;
-            break label_15;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_15:
+          while (true) {
+            if (jj_2_59(2)) {
+              ;
+            } else {
+              break label_15;
+            }
+            pre_gd();
           }
-          pre_gd();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3221,37 +3570,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_pre_gd");
+    }
   }
 
   final public Token forall_pre_gd() throws ParseException {
+    trace_call("forall_pre_gd");
+    try {
  /*@bgen(jjtree) FORALL_PRE_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_PRE_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        pre_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          pre_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3265,43 +3619,59 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_pre_gd");
+    }
   }
 
   final public Token pref_gd() throws ParseException {
+    trace_call("pref_gd");
+    try {
  /*@bgen(jjtree) PREF_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPREF_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_52(2)) {
-          t = named_pref_gd();
-        } else {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            t = gd();
-            break;
-          default:
-            jj_la1[26] = jj_gen;
-            jj_consume_token(-1);
-            throw new ParseException();
+        try {
+          if (jj_2_60(2)) {
+            t = named_pref_gd();
+          } else {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case LEFT_BRACKET:
+            case GREATER:
+            case LESS:
+            case GEQUAL:
+            case LEQUAL:
+            case EQUAL:
+            case OR:
+            case AND:
+            case IMPLY:
+            case NOT:
+            case FORALL:
+            case EXISTS:
+              t = gd();
+              break;
+            default:
+              jj_la1[20] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
           }
-        }
-      } catch (Throwable e) {
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3315,42 +3685,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("pref_gd");
+    }
   }
 
   final public Token named_pref_gd() throws ParseException {
+    trace_call("named_pref_gd");
+    try {
  /*@bgen(jjtree) NAMED_PREF_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTNAMED_PREF_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(PREFERENCE);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case SYMBOL:
-          pref_name();
-          break;
-        default:
-          jj_la1[27] = jj_gen;
-          ;
-        }
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(PREFERENCE);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case SYMBOL:
+            pref_name();
+            break;
+          default:
+            jj_la1[21] = jj_gen;
+            ;
+          }
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3364,62 +3739,72 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("named_pref_gd");
+    }
   }
 
   final public Token pref_name() throws ParseException {
+    trace_call("pref_name");
+    try {
  /*@bgen(jjtree) PREF_NAME */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPREF_NAME);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(SYMBOL);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(SYMBOL);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("pref_name");
+    }
   }
 
   final public Token effect() throws ParseException {
+    trace_call("effect");
+    try {
  /*@bgen(jjtree) EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTEFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_53(2)) {
-          t = and_c_effect();
-        } else if (jj_2_54(2)) {
-          t = c_effect();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_61(2)) {
+            t = and_c_effect();
+          } else if (jj_2_62(2)) {
+            t = c_effect();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3433,45 +3818,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("effect");
+    }
   }
 
   final public Token and_c_effect() throws ParseException {
+    trace_call("and_c_effect");
+    try {
  /*@bgen(jjtree) AND_C_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_C_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_16:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[28] = jj_gen;
-            break label_16;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_16:
+          while (true) {
+            if (jj_2_63(2)) {
+              ;
+            } else {
+              break label_16;
+            }
+            c_effect();
           }
-          c_effect();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3485,40 +3872,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_c_effect");
+    }
   }
 
   final public Token c_effect() throws ParseException {
+    trace_call("c_effect");
+    try {
  /*@bgen(jjtree) C_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTC_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_55(2)) {
-          t = forall_effect();
-        } else if (jj_2_56(2)) {
-          t = when_con_effect();
-        } else if (jj_2_57(2)) {
-          t = p_effect();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_64(2)) {
+            t = forall_effect();
+          } else if (jj_2_65(2)) {
+            t = when_con_effect();
+          } else if (jj_2_66(2)) {
+            t = p_effect();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3532,37 +3924,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("c_effect");
+    }
   }
 
   final public Token forall_effect() throws ParseException {
+    trace_call("forall_effect");
+    try {
  /*@bgen(jjtree) FORALL_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        effect();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          effect();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3576,35 +3973,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_effect");
+    }
   }
 
   final public Token when_con_effect() throws ParseException {
+    trace_call("when_con_effect");
+    try {
  /*@bgen(jjtree) WHEN_CON_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTWHEN_CON_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(WHEN);
-        gd();
-        cond_effect();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(WHEN);
+          gd();
+          cond_effect();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3618,38 +4020,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("when_con_effect");
+    }
   }
 
   final public Token cond_effect() throws ParseException {
+    trace_call("cond_effect");
+    try {
  /*@bgen(jjtree) COND_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCOND_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_58(2)) {
-          t = and_p_effect();
-        } else if (jj_2_59(2)) {
-          t = p_effect();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_67(2)) {
+            t = and_p_effect();
+          } else if (jj_2_68(2)) {
+            t = p_effect();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3663,45 +4070,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("cond_effect");
+    }
   }
 
   final public Token and_p_effect() throws ParseException {
+    trace_call("and_p_effect");
+    try {
  /*@bgen(jjtree) AND_P_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_P_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_17:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[29] = jj_gen;
-            break label_17;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_17:
+          while (true) {
+            if (jj_2_69(2)) {
+              ;
+            } else {
+              break label_17;
+            }
+            p_effect();
           }
-          p_effect();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3715,38 +4124,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_p_effect");
+    }
   }
 
   final public Token p_effect() throws ParseException {
+    trace_call("p_effect");
+    try {
  /*@bgen(jjtree) P_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTP_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_60(2)) {
-          t = assign_op();
-        } else if (jj_2_61(2)) {
-          t = literal(LexerTreeConstants.JJTTERM);
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_70(2)) {
+            t = assign_op();
+          } else if (jj_2_71(2)) {
+            t = literal(LexerTreeConstants.JJTTERM);
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3760,44 +4174,49 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("p_effect");
+    }
   }
 
   final public Token assign_op() throws ParseException {
+    trace_call("assign_op");
+    try {
  /*@bgen(jjtree) ASSIGN_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTASSIGN_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_62(2)) {
-          t = assign();
-        } else if (jj_2_63(2)) {
-          t = scale_up();
-        } else if (jj_2_64(2)) {
-          t = scale_down();
-        } else if (jj_2_65(2)) {
-          t = increase();
-        } else if (jj_2_66(2)) {
-          t = decrease();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_72(2)) {
+            t = assign();
+          } else if (jj_2_73(2)) {
+            t = scale_up();
+          } else if (jj_2_74(2)) {
+            t = scale_down();
+          } else if (jj_2_75(2)) {
+            t = increase();
+          } else if (jj_2_76(2)) {
+            t = decrease();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3811,36 +4230,41 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("assign_op");
+    }
   }
 
   final public Token assign() throws ParseException {
+    trace_call("assign");
+    try {
  /*@bgen(jjtree) ASSIGN */
         SimpleNode jjtn000 = new SimpleNode(this, JJTASSIGN);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ASSIGN);
-        f_head();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ASSIGN);
+          f_head();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
           {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3854,35 +4278,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("assign");
+    }
   }
 
   final public Token scale_up() throws ParseException {
+    trace_call("scale_up");
+    try {
  /*@bgen(jjtree) SCALE_UP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSCALE_UP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SCALE_UP);
-        f_head();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SCALE_UP);
+          f_head();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3896,35 +4325,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("scale_up");
+    }
   }
 
   final public Token scale_down() throws ParseException {
+    trace_call("scale_down");
+    try {
  /*@bgen(jjtree) SCALE_DOWN */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSCALE_DOWN);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SCALE_DOWN);
-        f_head();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SCALE_DOWN);
+          f_head();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3938,35 +4372,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("scale_down");
+    }
   }
 
   final public Token increase() throws ParseException {
+    trace_call("increase");
+    try {
  /*@bgen(jjtree) INCREASE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTINCREASE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(INCREASE);
-        f_head();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(INCREASE);
+          f_head();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -3980,35 +4419,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("increase");
+    }
   }
 
   final public Token decrease() throws ParseException {
+    trace_call("decrease");
+    try {
  /*@bgen(jjtree) DECREASE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDECREASE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DECREASE);
-        f_head();
-        f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DECREASE);
+          f_head();
+          f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4022,39 +4466,44 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("decrease");
+    }
   }
 
   final public Token durative_action_def() throws ParseException {
+    trace_call("durative_action_def");
+    try {
  /*@bgen(jjtree) DURATION_ACTION_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDURATION_ACTION_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DURATIVE_ACTION);
-        da_symbol();
-        jj_consume_token(PARAMETERS);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        da_def_body();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DURATIVE_ACTION);
+          da_symbol();
+          jj_consume_token(PARAMETERS);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          da_def_body();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4068,61 +4517,71 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("durative_action_def");
+    }
   }
 
   final public Token da_symbol() throws ParseException {
+    trace_call("da_symbol");
+    try {
  /*@bgen(jjtree) DA_SYMBOL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_SYMBOL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(SYMBOL);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(SYMBOL);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_symbol");
+    }
   }
 
   final public Token da_def_body() throws ParseException {
+    trace_call("da_def_body");
+    try {
  /*@bgen(jjtree) DA_DEF_BODY */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_DEF_BODY);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(DURATION);
-        duration_constraint();
-        jj_consume_token(CONDITION);
-        da_gd();
-        jj_consume_token(EFFECT);
-        da_effect();
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(DURATION);
+          duration_constraint();
+          jj_consume_token(CONDITION);
+          da_gd();
+          jj_consume_token(EFFECT);
+          da_effect();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4136,40 +4595,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_def_body");
+    }
   }
 
   final public Token duration_constraint() throws ParseException {
+    trace_call("duration_constraint");
+    try {
  /*@bgen(jjtree) DURATION_CONSTRAINT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDURATION_CONSTRAINT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_67(2)) {
-          t = empty_or();
-        } else if (jj_2_68(2)) {
-          t = and_simple_duration_constraint();
-        } else if (jj_2_69(2)) {
-          t = simple_duration_constraint();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_77(2)) {
+            t = empty_or();
+          } else if (jj_2_78(2)) {
+            t = and_simple_duration_constraint();
+          } else if (jj_2_79(2)) {
+            t = simple_duration_constraint();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4183,45 +4647,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("duration_constraint");
+    }
   }
 
   final public Token and_simple_duration_constraint() throws ParseException {
+    trace_call("and_simple_duration_constraint");
+    try {
  /*@bgen(jjtree) AND_SIMPLE_DURATION_CONSTRAINT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_SIMPLE_DURATION_CONSTRAINT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_18:
-        while (true) {
-          simple_duration_constraint();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[30] = jj_gen;
-            break label_18;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_18:
+          while (true) {
+            simple_duration_constraint();
+            if (jj_2_80(2)) {
+              ;
+            } else {
+              break label_18;
+            }
           }
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4235,38 +4701,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_simple_duration_constraint");
+    }
   }
 
   final public Token simple_duration_constraint() throws ParseException {
+    trace_call("simple_duration_constraint");
+    try {
  /*@bgen(jjtree) SIMPLE_DURATION_CONSTRAINT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSIMPLE_DURATION_CONSTRAINT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_70(2)) {
-          t = d_op();
-        } else if (jj_2_71(2)) {
-          t = at_simple_duration_constraint();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_81(2)) {
+            t = d_op();
+          } else if (jj_2_82(2)) {
+            t = at_simple_duration_constraint();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4280,38 +4751,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("simple_duration_constraint");
+    }
   }
 
   final public Token at_simple_duration_constraint() throws ParseException {
+    trace_call("at_simple_duration_constraint");
+    try {
  /*@bgen(jjtree) AT_SIMPLE_DURATION_CONSTRAINT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_SIMPLE_DURATION_CONSTRAINT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_72(3)) {
-          t = at_start_simple_duration_constraint();
-        } else if (jj_2_73(3)) {
-          t = at_end_simple_duration_constraint();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_83(3)) {
+            t = at_start_simple_duration_constraint();
+          } else if (jj_2_84(3)) {
+            t = at_end_simple_duration_constraint();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4325,35 +4801,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_simple_duration_constraint");
+    }
   }
 
   final public Token at_start_simple_duration_constraint() throws ParseException {
+    trace_call("at_start_simple_duration_constraint");
+    try {
  /*@bgen(jjtree) AT_START_SIMPLE_DURATION_CONSTRAINT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_START_SIMPLE_DURATION_CONSTRAINT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(START);
-        simple_duration_constraint();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(START);
+          simple_duration_constraint();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4367,35 +4848,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_start_simple_duration_constraint");
+    }
   }
 
   final public Token at_end_simple_duration_constraint() throws ParseException {
+    trace_call("at_end_simple_duration_constraint");
+    try {
  /*@bgen(jjtree) AT_END_SIMPLE_DURATION_CONSTRAINT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_END_SIMPLE_DURATION_CONSTRAINT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(END);
-        simple_duration_constraint();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          jj_consume_token(AT);
+          jj_consume_token(END);
+          simple_duration_constraint();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4409,40 +4895,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_end_simple_duration_constraint");
+    }
   }
 
   final public Token d_op() throws ParseException {
+    trace_call("d_op");
+    try {
  /*@bgen(jjtree) D_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTD_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_74(2)) {
-          t = equal_d_op();
-        } else if (jj_2_75(2)) {
-          t = gequal_d_op();
-        } else if (jj_2_76(2)) {
-          t = lequal_d_op();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_85(2)) {
+            t = equal_d_op();
+          } else if (jj_2_86(2)) {
+            t = gequal_d_op();
+          } else if (jj_2_87(2)) {
+            t = lequal_d_op();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4456,35 +4947,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("d_op");
+    }
   }
 
   final public Token equal_d_op() throws ParseException {
+    trace_call("equal_d_op");
+    try {
  /*@bgen(jjtree) EQUAL_D_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTEQUAL_D_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(EQUAL);
-        var_duration();
-        d_value();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(EQUAL);
+          var_duration();
+          d_value();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4498,35 +4994,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("equal_d_op");
+    }
   }
 
   final public Token gequal_d_op() throws ParseException {
+    trace_call("gequal_d_op");
+    try {
  /*@bgen(jjtree) GEQUAL_D_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTGEQUAL_D_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(GEQUAL);
-        var_duration();
-        d_value();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          jj_consume_token(GEQUAL);
+          var_duration();
+          d_value();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4540,35 +5041,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("gequal_d_op");
+    }
   }
 
   final public Token lequal_d_op() throws ParseException {
+    trace_call("lequal_d_op");
+    try {
  /*@bgen(jjtree) LEQUAL_D_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTLEQUAL_D_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(LEQUAL);
-        var_duration();
-        d_value();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(LEQUAL);
+          var_duration();
+          d_value();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4582,62 +5088,72 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("lequal_d_op");
+    }
   }
 
   final public Token var_duration() throws ParseException {
+    trace_call("var_duration");
+    try {
  /*@bgen(jjtree) VAR_DURATION */
         SimpleNode jjtn000 = new SimpleNode(this, JJTVAR_DURATION);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(VAR_DURATION);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(VAR_DURATION);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("var_duration");
+    }
   }
 
   final public Token d_value() throws ParseException {
+    trace_call("d_value");
+    try {
  /*@bgen(jjtree) D_VALUE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTD_VALUE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_77(2)) {
-          t = number();
-        } else if (jj_2_78(2)) {
-          t = f_exp();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_88(2)) {
+            t = number();
+          } else if (jj_2_89(2)) {
+            t = f_exp();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4651,40 +5167,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("d_value");
+    }
   }
 
   final public Token da_gd() throws ParseException {
+    trace_call("da_gd");
+    try {
  /*@bgen(jjtree) DA_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_79(2)) {
-          t = pref_timed_gd();
-        } else if (jj_2_80(2)) {
-          t = and_da_gd();
-        } else if (jj_2_81(2)) {
-          t = forall_da_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_90(2)) {
+            t = pref_timed_gd();
+          } else if (jj_2_91(2)) {
+            t = and_da_gd();
+          } else if (jj_2_92(2)) {
+            t = forall_da_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4698,37 +5219,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_gd");
+    }
   }
 
   final public Token forall_da_gd() throws ParseException {
+    trace_call("forall_da_gd");
+    try {
  /*@bgen(jjtree) FORALL_DA_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_DA_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        da_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          da_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4742,45 +5268,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_da_gd");
+    }
   }
 
   final public Token and_da_gd() throws ParseException {
+    trace_call("and_da_gd");
+    try {
  /*@bgen(jjtree) AND_DA_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_DA_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_19:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[31] = jj_gen;
-            break label_19;
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          jj_consume_token(AND);
+          label_19:
+          while (true) {
+            if (jj_2_93(2)) {
+              ;
+            } else {
+              break label_19;
+            }
+            da_gd();
           }
-          da_gd();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4794,38 +5322,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_da_gd");
+    }
   }
 
   final public Token pref_timed_gd() throws ParseException {
+    trace_call("pref_timed_gd");
+    try {
  /*@bgen(jjtree) PREF_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPREF_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_82(2)) {
-          t = timed_gd();
-        } else if (jj_2_83(2)) {
-          t = named_pref_timed_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_94(2)) {
+            t = timed_gd();
+          } else if (jj_2_95(2)) {
+            t = named_pref_timed_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4839,42 +5372,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("pref_timed_gd");
+    }
   }
 
   final public Token named_pref_timed_gd() throws ParseException {
+    trace_call("named_pref_timed_gd");
+    try {
  /*@bgen(jjtree) NAMED_PREF_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTNAMED_PREF_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(PREFERENCE);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case SYMBOL:
-          pref_name();
-          break;
-        default:
-          jj_la1[32] = jj_gen;
-          ;
-        }
-        timed_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(PREFERENCE);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case SYMBOL:
+            pref_name();
+            break;
+          default:
+            jj_la1[22] = jj_gen;
+            ;
+          }
+          timed_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4888,38 +5426,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("named_pref_timed_gd");
+    }
   }
 
   final public Token timed_gd() throws ParseException {
+    trace_call("timed_gd");
+    try {
  /*@bgen(jjtree) TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_84(2)) {
-          t = at_timed_gd();
-        } else if (jj_2_85(2)) {
-          t = over_timed_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_96(2)) {
+            t = at_timed_gd();
+          } else if (jj_2_97(2)) {
+            t = over_timed_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4933,31 +5476,36 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("timed_gd");
+    }
   }
 
   final public Token over_timed_gd() throws ParseException {
+    trace_call("over_timed_gd");
+    try {
  /*@bgen(jjtree) OVER_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTOVER_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = over_all_timed_gd();
-      } catch (Throwable e) {
+        try {
+          t = over_all_timed_gd();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -4971,35 +5519,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("over_timed_gd");
+    }
   }
 
   final public Token over_all_timed_gd() throws ParseException {
+    trace_call("over_all_timed_gd");
+    try {
  /*@bgen(jjtree) OVER_ALL_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTOVER_ALL_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(OVER);
-        jj_consume_token(ALL);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(OVER);
+          jj_consume_token(ALL);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5013,38 +5566,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("over_all_timed_gd");
+    }
   }
 
   final public Token at_timed_gd() throws ParseException {
+    trace_call("at_timed_gd");
+    try {
  /*@bgen(jjtree) AT_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_86(3)) {
-          t = at_start_timed_gd();
-        } else if (jj_2_87(2)) {
-          t = at_end_timed_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_98(3)) {
+            t = at_start_timed_gd();
+          } else if (jj_2_99(2)) {
+            t = at_end_timed_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5058,35 +5616,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_timed_gd");
+    }
   }
 
   final public Token at_start_timed_gd() throws ParseException {
+    trace_call("at_start_timed_gd");
+    try {
  /*@bgen(jjtree) AT_START_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_START_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(START);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(START);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5100,35 +5663,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_start_timed_gd");
+    }
   }
 
   final public Token at_end_timed_gd() throws ParseException {
+    trace_call("at_end_timed_gd");
+    try {
  /*@bgen(jjtree) AT_END_TIMED_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_END_TIMED_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(END);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(END);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5142,68 +5710,78 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_end_timed_gd");
+    }
   }
 
   final public Token interval() throws ParseException {
+    trace_call("interval");
+    try {
  /*@bgen(jjtree) INTERVAL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTINTERVAL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(ALL);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(ALL);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("interval");
+    }
   }
 
   final public Token da_effect() throws ParseException {
+    trace_call("da_effect");
+    try {
  /*@bgen(jjtree) DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_88(2)) {
-          t = timed_effect();
-        } else if (jj_2_89(2)) {
-          t = and_da_effect();
-        } else if (jj_2_90(2)) {
-          t = forall_da_effect();
-        } else if (jj_2_91(2)) {
-          t = when_da_effect();
-        } else if (jj_2_92(2)) {
-          t = da_assign_op();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_100(2)) {
+            t = timed_effect();
+          } else if (jj_2_101(2)) {
+            t = and_da_effect();
+          } else if (jj_2_102(2)) {
+            t = forall_da_effect();
+          } else if (jj_2_103(2)) {
+            t = when_da_effect();
+          } else if (jj_2_104(2)) {
+            t = da_assign_op();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5217,44 +5795,49 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_effect");
+    }
   }
 
   final public Token da_assign_op() throws ParseException {
+    trace_call("da_assign_op");
+    try {
  /*@bgen(jjtree) DA_ASSIGN_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_ASSIGN_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_93(2)) {
-          t = da_assign();
-        } else if (jj_2_94(2)) {
-          t = da_scale_up();
-        } else if (jj_2_95(2)) {
-          t = da_scale_down();
-        } else if (jj_2_96(2)) {
-          t = da_increase();
-        } else if (jj_2_97(2)) {
-          t = da_decrease();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_105(2)) {
+            t = da_assign();
+          } else if (jj_2_106(2)) {
+            t = da_scale_up();
+          } else if (jj_2_107(2)) {
+            t = da_scale_down();
+          } else if (jj_2_108(2)) {
+            t = da_increase();
+          } else if (jj_2_109(2)) {
+            t = da_decrease();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5268,35 +5851,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_assign_op");
+    }
   }
 
   final public Token da_assign() throws ParseException {
+    trace_call("da_assign");
+    try {
  /*@bgen(jjtree) DA_ASSIGN */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_ASSIGN);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ASSIGN);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ASSIGN);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5310,35 +5898,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_assign");
+    }
   }
 
   final public Token da_scale_up() throws ParseException {
+    trace_call("da_scale_up");
+    try {
  /*@bgen(jjtree) DA_SCALE_UP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_SCALE_UP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SCALE_UP);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SCALE_UP);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5352,35 +5945,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_scale_up");
+    }
   }
 
   final public Token da_scale_down() throws ParseException {
+    trace_call("da_scale_down");
+    try {
  /*@bgen(jjtree) DA_SCALE_DOWN */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_SCALE_DOWN);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SCALE_DOWN);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SCALE_DOWN);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5394,35 +5992,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_scale_down");
+    }
   }
 
   final public Token da_increase() throws ParseException {
+    trace_call("da_increase");
+    try {
  /*@bgen(jjtree) DA_INCREASE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_INCREASE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(INCREASE);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(INCREASE);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5436,35 +6039,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_increase");
+    }
   }
 
   final public Token da_decrease() throws ParseException {
+    trace_call("da_decrease");
+    try {
  /*@bgen(jjtree) DA_DECREASE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_DECREASE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DECREASE);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DECREASE);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5478,35 +6086,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_decrease");
+    }
   }
 
   final public Token when_da_effect() throws ParseException {
+    trace_call("when_da_effect");
+    try {
  /*@bgen(jjtree) WHEN_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTWHEN_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(WHEN);
-        da_gd();
-        timed_effect();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(WHEN);
+          da_gd();
+          timed_effect();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5520,37 +6133,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("when_da_effect");
+    }
   }
 
   final public Token forall_da_effect() throws ParseException {
+    trace_call("forall_da_effect");
+    try {
  /*@bgen(jjtree) FORALL_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        da_effect();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          da_effect();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5564,45 +6182,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_da_effect");
+    }
   }
 
   final public Token and_da_effect() throws ParseException {
+    trace_call("and_da_effect");
+    try {
  /*@bgen(jjtree) AND_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_20:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[33] = jj_gen;
-            break label_20;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_20:
+          while (true) {
+            if (jj_2_110(2)) {
+              ;
+            } else {
+              break label_20;
+            }
+            da_effect();
           }
-          da_effect();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5616,40 +6236,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_da_effect");
+    }
   }
 
   final public Token timed_effect() throws ParseException {
+    trace_call("timed_effect");
+    try {
  /*@bgen(jjtree) TIMED_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTIMED_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_98(2)) {
-          t = at_da_effect();
-        } else if (jj_2_99(2)) {
-          t = at_f_assign_da_effect();
-        } else if (jj_2_100(2)) {
-          t = assign_op_t();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_111(2)) {
+            t = at_da_effect();
+          } else if (jj_2_112(2)) {
+            t = at_f_assign_da_effect();
+          } else if (jj_2_113(2)) {
+            t = assign_op_t();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5663,38 +6288,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("timed_effect");
+    }
   }
 
   final public Token at_f_assign_da_effect() throws ParseException {
+    trace_call("at_f_assign_da_effect");
+    try {
  /*@bgen(jjtree) AT_F_ASSIGN_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_F_ASSIGN_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_101(3)) {
-          t = at_start_f_assign_da_effect();
-        } else if (jj_2_102(3)) {
-          t = at_end_f_assign_da_effect();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_114(3)) {
+            t = at_start_f_assign_da_effect();
+          } else if (jj_2_115(3)) {
+            t = at_end_f_assign_da_effect();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5708,35 +6338,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_f_assign_da_effect");
+    }
   }
 
   final public Token at_start_f_assign_da_effect() throws ParseException {
+    trace_call("at_start_f_assign_da_effect");
+    try {
  /*@bgen(jjtree) AT_START_F_ASSIGN_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_START_F_ASSIGN_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(START);
-        f_assign_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(START);
+          f_assign_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5750,35 +6385,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_start_f_assign_da_effect");
+    }
   }
 
   final public Token at_end_f_assign_da_effect() throws ParseException {
+    trace_call("at_end_f_assign_da_effect");
+    try {
  /*@bgen(jjtree) AT_END_F_ASSIGN_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_END_F_ASSIGN_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(END);
-        f_assign_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(END);
+          f_assign_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5792,38 +6432,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_end_f_assign_da_effect");
+    }
   }
 
   final public Token at_da_effect() throws ParseException {
+    trace_call("at_da_effect");
+    try {
  /*@bgen(jjtree) AT_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_103(4)) {
-          t = at_start_da_effect();
-        } else if (jj_2_104(4)) {
-          t = at_end_da_effect();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_116(4)) {
+            t = at_start_da_effect();
+          } else if (jj_2_117(4)) {
+            t = at_end_da_effect();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5837,35 +6482,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_da_effect");
+    }
   }
 
   final public Token at_start_da_effect() throws ParseException {
+    trace_call("at_start_da_effect");
+    try {
  /*@bgen(jjtree) AT_START_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_START_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(START);
-        literal(LexerTreeConstants.JJTTERM);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(START);
+          literal(LexerTreeConstants.JJTTERM);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5879,35 +6529,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_start_da_effect");
+    }
   }
 
   final public Token at_end_da_effect() throws ParseException {
+    trace_call("at_end_da_effect");
+    try {
  /*@bgen(jjtree) AT_END_DA_EFFECT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAT_END_DA_EFFECT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        jj_consume_token(END);
-        literal(LexerTreeConstants.JJTTERM);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          jj_consume_token(END);
+          literal(LexerTreeConstants.JJTTERM);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5921,38 +6576,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("at_end_da_effect");
+    }
   }
 
   final public Token assign_op_t() throws ParseException {
+    trace_call("assign_op_t");
+    try {
  /*@bgen(jjtree) ASSIGN_OP_T */
         SimpleNode jjtn000 = new SimpleNode(this, JJTASSIGN_OP_T);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_105(2)) {
-          t = increase_assign_op_t();
-        } else if (jj_2_106(2)) {
-          t = decrease_assign_op_t();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_118(2)) {
+            t = increase_assign_op_t();
+          } else if (jj_2_119(2)) {
+            t = decrease_assign_op_t();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -5966,35 +6626,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("assign_op_t");
+    }
   }
 
   final public Token increase_assign_op_t() throws ParseException {
+    trace_call("increase_assign_op_t");
+    try {
  /*@bgen(jjtree) INCREASE_ASSIGN_OP_T */
         SimpleNode jjtn000 = new SimpleNode(this, JJTINCREASE_ASSIGN_OP_T);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(INCREASE);
-        f_head();
-        f_exp_t();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(INCREASE);
+          f_head();
+          f_exp_t();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6008,35 +6673,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("increase_assign_op_t");
+    }
   }
 
   final public Token decrease_assign_op_t() throws ParseException {
+    trace_call("decrease_assign_op_t");
+    try {
  /*@bgen(jjtree) DECREASE_ASSIGN_OP_T */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDECREASE_ASSIGN_OP_T);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DECREASE);
-        f_head();
-        f_exp_t();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DECREASE);
+          f_head();
+          f_exp_t();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6050,48 +6720,53 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("decrease_assign_op_t");
+    }
   }
 
   final public Token f_exp_t() throws ParseException {
+    trace_call("f_exp_t");
+    try {
  /*@bgen(jjtree) F_EXP_T */
         SimpleNode jjtn000 = new SimpleNode(this, JJTF_EXP_T);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_107(2)) {
-          t = jj_consume_token(LPAREN);
-          jj_consume_token(MUL);
-          continous_variable();
-          f_exp();
-          jj_consume_token(RPAREN);
-        } else if (jj_2_108(2)) {
-          t = jj_consume_token(LPAREN);
-          jj_consume_token(MUL);
-          f_exp();
-          continous_variable();
-          jj_consume_token(RPAREN);
-        } else if (jj_2_109(2)) {
-          t = continous_variable();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_120(2)) {
+            t = left_bracket();
+            jj_consume_token(MUL);
+            continous_variable();
+            f_exp();
+            right_bracket();
+          } else if (jj_2_121(2)) {
+            t = left_bracket();
+            jj_consume_token(MUL);
+            f_exp();
+            continous_variable();
+            right_bracket();
+          } else if (jj_2_122(2)) {
+            t = continous_variable();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6105,69 +6780,79 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("f_exp_t");
+    }
   }
 
   final public Token continous_variable() throws ParseException {
+    trace_call("continous_variable");
+    try {
  /*@bgen(jjtree) CONTINOUS_VARIABLE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCONTINOUS_VARIABLE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(CONTINOUS_VARIABLE);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(CONTINOUS_VARIABLE);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("continous_variable");
+    }
   }
 
   final public Token f_assign_da() throws ParseException {
+    trace_call("f_assign_da");
+    try {
  /*@bgen(jjtree) F_ASSIGN_DA */
         SimpleNode jjtn000 = new SimpleNode(this, JJTF_ASSIGN_DA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_110(2)) {
-          t = da_assign();
-        } else if (jj_2_111(2)) {
-          t = da_scale_up();
-        } else if (jj_2_112(2)) {
-          t = da_scale_down();
-        } else if (jj_2_113(2)) {
-          t = da_increase();
-        } else if (jj_2_114(2)) {
-          t = da_decrease();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_123(2)) {
+            t = da_assign();
+          } else if (jj_2_124(2)) {
+            t = da_scale_up();
+          } else if (jj_2_125(2)) {
+            t = da_scale_down();
+          } else if (jj_2_126(2)) {
+            t = da_increase();
+          } else if (jj_2_127(2)) {
+            t = da_decrease();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6181,42 +6866,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("f_assign_da");
+    }
   }
 
   final public Token f_exp_da() throws ParseException {
+    trace_call("f_exp_da");
+    try {
  /*@bgen(jjtree) F_EXP_DA */
         SimpleNode jjtn000 = new SimpleNode(this, JJTF_EXP_DA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_115(3)) {
-          t = f_exp();
-        } else if (jj_2_116(3)) {
-          t = da_binary_op();
-        } else if (jj_2_117(3)) {
-          t = da_unary_op();
-        } else if (jj_2_118(3)) {
-          t = var_duration();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_128(3)) {
+            t = f_exp();
+          } else if (jj_2_129(3)) {
+            t = da_binary_op();
+          } else if (jj_2_130(3)) {
+            t = da_unary_op();
+          } else if (jj_2_131(3)) {
+            t = var_duration();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6230,42 +6920,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("f_exp_da");
+    }
   }
 
   final public Token da_binary_op() throws ParseException {
+    trace_call("da_binary_op");
+    try {
  /*@bgen(jjtree) DA_BINARY_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_BINARY_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_119(2)) {
-          t = da_add_op();
-        } else if (jj_2_120(2)) {
-          t = da_substract_op();
-        } else if (jj_2_121(2)) {
-          t = da_multiply_op();
-        } else if (jj_2_122(2)) {
-          t = da_divide_op();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_132(2)) {
+            t = da_add_op();
+          } else if (jj_2_133(2)) {
+            t = da_substract_op();
+          } else if (jj_2_134(2)) {
+            t = da_multiply_op();
+          } else if (jj_2_135(2)) {
+            t = da_divide_op();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6279,35 +6974,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_binary_op");
+    }
   }
 
   final public Token da_add_op() throws ParseException {
+    trace_call("da_add_op");
+    try {
  /*@bgen(jjtree) DA_ADD_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_ADD_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ADD);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ADD);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6321,35 +7021,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_add_op");
+    }
   }
 
   final public Token da_substract_op() throws ParseException {
+    trace_call("da_substract_op");
+    try {
  /*@bgen(jjtree) DA_SUBSTRACT_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_SUBSTRACT_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SUB);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SUB);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6363,35 +7068,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_substract_op");
+    }
   }
 
   final public Token da_multiply_op() throws ParseException {
+    trace_call("da_multiply_op");
+    try {
  /*@bgen(jjtree) DA_MULTIPLY_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_MULTIPLY_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(MUL);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(MUL);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6405,35 +7115,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_multiply_op");
+    }
   }
 
   final public Token da_divide_op() throws ParseException {
+    trace_call("da_divide_op");
+    try {
  /*@bgen(jjtree) DA_DIVIDE_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_DIVIDE_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DIV);
-        f_head();
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DIV);
+          f_head();
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6447,34 +7162,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_divide_op");
+    }
   }
 
   final public Token da_unary_op() throws ParseException {
+    trace_call("da_unary_op");
+    try {
  /*@bgen(jjtree) DA_UNARY_OP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDA_UNARY_OP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SUB);
-        f_exp_da();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SUB);
+          f_exp_da();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6488,35 +7208,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("da_unary_op");
+    }
   }
 
   final public Token derived_def() throws ParseException {
+    trace_call("derived_def");
+    try {
  /*@bgen(jjtree) DERIVED_DEF */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDERIVED_DEF);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DERIVED);
-        atomic_formula(LexerTreeConstants.JJTVARIABLE);
-        gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DERIVED);
+          atomic_formula(LexerTreeConstants.JJTVARIABLE);
+          gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6530,63 +7255,68 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("derived_def");
+    }
   }
 
   final public Token problem() throws ParseException {
+    trace_call("problem");
+    try {
  /*@bgen(jjtree) PROBLEM */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPROBLEM);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(DEFINE);
-        jj_consume_token(LPAREN);
-        jj_consume_token(PROBLEM);
-        problem_name();
-        jj_consume_token(RPAREN);
-        jj_consume_token(LPAREN);
-        jj_consume_token(P_DOMAIN);
-        domain_name();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(DEFINE);
+          left_bracket();
+          jj_consume_token(PROBLEM);
+          problem_name();
+          right_bracket();
+          left_bracket();
+          jj_consume_token(P_DOMAIN);
+          domain_name();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
-      if (jj_2_123(2)) {
-        require_def();
-      } else {
-        ;
-      }
-      if (jj_2_124(2)) {
-        object_declaration();
-      } else {
-        ;
-      }
-      init();
-      goal();
-      if (jj_2_125(2)) {
-        constraints();
-      } else {
-        ;
-      }
-      if (jj_2_126(2)) {
-        metric_spec();
-      } else {
-        ;
-      }
-      jj_consume_token(RPAREN);
-                   jjtree.closeNodeScope(jjtn000, true);
-                   jjtc000 = false;
+        }
+        if (jj_2_136(2)) {
+          require_def();
+        } else {
+          ;
+        }
+        if (jj_2_137(2)) {
+          object_declaration();
+        } else {
+          ;
+        }
+        init();
+        goal();
+        if (jj_2_138(2)) {
+          constraints();
+        } else {
+          ;
+        }
+        if (jj_2_139(2)) {
+          metric_spec();
+        } else {
+          ;
+        }
+        right_bracket();
+                          jjtree.closeNodeScope(jjtn000, true);
+                          jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6600,84 +7330,99 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("problem");
+    }
   }
 
   final public Token problem_name() throws ParseException {
+    trace_call("problem_name");
+    try {
  /*@bgen(jjtree) PROBLEM_NAME */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPROBLEM_NAME);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(SYMBOL);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(SYMBOL);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("problem_name");
+    }
   }
 
   final public Token domain_name() throws ParseException {
+    trace_call("domain_name");
+    try {
  /*@bgen(jjtree) DOMAIN_NAME */
         SimpleNode jjtn000 = new SimpleNode(this, JJTDOMAIN_NAME);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(SYMBOL);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(SYMBOL);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 jjtn000.setImage(t.image);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("domain_name");
+    }
   }
 
   final public Token object_declaration() throws ParseException {
+    trace_call("object_declaration");
+    try {
  /*@bgen(jjtree) OBJECT_DECLARATION */
         SimpleNode jjtn000 = new SimpleNode(this, JJTOBJECT_DECLARATION);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(OBJECTS);
-        typed_list(LexerTreeConstants.JJTCONSTANT);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(OBJECTS);
+          typed_list(LexerTreeConstants.JJTCONSTANT);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6691,45 +7436,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("object_declaration");
+    }
   }
 
   final public Token init() throws ParseException {
+    trace_call("init");
+    try {
  /*@bgen(jjtree) INIT */
         SimpleNode jjtn000 = new SimpleNode(this, JJTINIT);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(INIT);
-        label_21:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[34] = jj_gen;
-            break label_21;
+        try {
+          t = left_bracket();
+          jj_consume_token(INIT);
+          label_21:
+          while (true) {
+            if (jj_2_140(2)) {
+              ;
+            } else {
+              break label_21;
+            }
+            init_el();
           }
-          init_el();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6743,40 +7490,45 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("init");
+    }
   }
 
   final public Token init_el() throws ParseException {
+    trace_call("init_el");
+    try {
  /*@bgen(jjtree) INIT_EL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTINIT_EL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_127(2)) {
-          t = literal(LexerTreeConstants.JJTCONSTANT);
-        } else if (jj_2_128(2)) {
-          t = equal_init_el();
-        } else if (jj_2_129(3)) {
-          t = timed_literal();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_141(2)) {
+            t = literal(LexerTreeConstants.JJTCONSTANT);
+          } else if (jj_2_142(2)) {
+            t = equal_init_el();
+          } else if (jj_2_143(3)) {
+            t = timed_literal();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6790,35 +7542,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("init_el");
+    }
   }
 
   final public Token equal_init_el() throws ParseException {
+    trace_call("equal_init_el");
+    try {
  /*@bgen(jjtree) EQUAL_INIT_EL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTEQUAL_INIT_EL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(EQUAL);
-        f_head();
-        number();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(EQUAL);
+          f_head();
+          number();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6832,35 +7589,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("equal_init_el");
+    }
   }
 
   final public Token timed_literal() throws ParseException {
+    trace_call("timed_literal");
+    try {
  /*@bgen(jjtree) TIMED_LITERAL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTIMED_LITERAL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AT);
-        number();
-        literal(LexerTreeConstants.JJTCONSTANT);
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(AT);
+          number();
+          literal(LexerTreeConstants.JJTCONSTANT);
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6874,34 +7636,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("timed_literal");
+    }
   }
 
   final public Token goal() throws ParseException {
+    trace_call("goal");
+    try {
  /*@bgen(jjtree) GOAL */
         SimpleNode jjtn000 = new SimpleNode(this, JJTGOAL);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(GOAL);
-        pre_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(GOAL);
+          pre_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6915,34 +7682,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("goal");
+    }
   }
 
   final public Token constraints() throws ParseException {
+    trace_call("constraints");
+    try {
  /*@bgen(jjtree) CONSTRAINTS */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCONSTRAINTS);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(CONSTRAINTS);
-        pref_con_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(LEFT_BRACKET);
+          jj_consume_token(CONSTRAINTS);
+          pref_con_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -6956,42 +7728,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("constraints");
+    }
   }
 
   final public Token pref_con_gd() throws ParseException {
+    trace_call("pref_con_gd");
+    try {
  /*@bgen(jjtree) PREF_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTPREF_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_130(2)) {
-          t = and_pref_con_gd();
-        } else if (jj_2_131(2)) {
-          t = forall_pref_con_gd();
-        } else if (jj_2_132(2)) {
-          t = named_pref_con_gd();
-        } else if (jj_2_133(2)) {
-          t = con_gd();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_144(2)) {
+            t = and_pref_con_gd();
+          } else if (jj_2_145(2)) {
+            t = forall_pref_con_gd();
+          } else if (jj_2_146(2)) {
+            t = named_pref_con_gd();
+          } else if (jj_2_147(2)) {
+            t = con_gd();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7005,45 +7782,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("pref_con_gd");
+    }
   }
 
   final public Token and_pref_con_gd() throws ParseException {
+    trace_call("and_pref_con_gd");
+    try {
  /*@bgen(jjtree) AND_PREF_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTAND_PREF_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(AND);
-        label_22:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-            ;
-            break;
-          default:
-            jj_la1[35] = jj_gen;
-            break label_22;
+        try {
+          t = left_bracket();
+          jj_consume_token(AND);
+          label_22:
+          while (true) {
+            if (jj_2_148(2)) {
+              ;
+            } else {
+              break label_22;
+            }
+            pref_con_gd();
           }
-          pref_con_gd();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7057,42 +7836,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("and_pref_con_gd");
+    }
   }
 
   final public Token named_pref_con_gd() throws ParseException {
+    trace_call("named_pref_con_gd");
+    try {
  /*@bgen(jjtree) NAMED_PREF_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTNAMED_PREF_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(PREFERENCE);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case SYMBOL:
-          pref_name();
-          break;
-        default:
-          jj_la1[36] = jj_gen;
-          ;
-        }
-        con_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(PREFERENCE);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case SYMBOL:
+            pref_name();
+            break;
+          default:
+            jj_la1[23] = jj_gen;
+            ;
+          }
+          con_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7106,37 +7890,42 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("named_pref_con_gd");
+    }
   }
 
   final public Token forall_pref_con_gd() throws ParseException {
+    trace_call("forall_pref_con_gd");
+    try {
  /*@bgen(jjtree) FORALL_PREF_CON_GD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTFORALL_PREF_CON_GD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(FORALL);
-        jj_consume_token(LPAREN);
-        typed_list(LexerTreeConstants.JJTVARIABLE);
-        jj_consume_token(RPAREN);
-        pref_con_gd();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(FORALL);
+          left_bracket();
+          typed_list(LexerTreeConstants.JJTVARIABLE);
+          right_bracket();
+          pref_con_gd();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7150,38 +7939,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("forall_pref_con_gd");
+    }
   }
 
   final public Token metric_spec() throws ParseException {
+    trace_call("metric_spec");
+    try {
  /*@bgen(jjtree) METRIC_SPEC */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMETRIC_SPEC);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_134(3)) {
-          t = maximize();
-        } else if (jj_2_135(3)) {
-          t = minimize();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_149(3)) {
+            t = maximize();
+          } else if (jj_2_150(3)) {
+            t = minimize();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7195,35 +7989,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("metric_spec");
+    }
   }
 
   final public Token maximize() throws ParseException {
+    trace_call("maximize");
+    try {
  /*@bgen(jjtree) MAXIMIZE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMAXIMIZE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(METRIC);
-        jj_consume_token(MAXIMIZE);
-        metric_f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(METRIC);
+          jj_consume_token(MAXIMIZE);
+          metric_f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7237,35 +8036,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("maximize");
+    }
   }
 
   final public Token minimize() throws ParseException {
+    trace_call("minimize");
+    try {
  /*@bgen(jjtree) MINIMIZE */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMINIMIZE);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(METRIC);
-        jj_consume_token(MINIMIZE);
-        metric_f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(METRIC);
+          jj_consume_token(MINIMIZE);
+          metric_f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7279,48 +8083,53 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("minimize");
+    }
   }
 
   final public Token metric_f_exp() throws ParseException {
+    trace_call("metric_f_exp");
+    try {
  /*@bgen(jjtree) METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMETRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_136(2)) {
-          t = unary_op_metric_f_exp();
-        } else if (jj_2_137(2)) {
-          t = binary_op_metric_f_exp();
-        } else if (jj_2_138(2)) {
-          t = multi_op_metric_f_exp();
-        } else if (jj_2_139(2)) {
-          t = number();
-        } else if (jj_2_140(2)) {
-          t = constant_f_head();
-        } else if (jj_2_141(2)) {
-          t = total_time();
-        } else if (jj_2_142(2)) {
-          t = violated_pref_exp();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_151(2)) {
+            t = unary_op_metric_f_exp();
+          } else if (jj_2_152(2)) {
+            t = binary_op_metric_f_exp();
+          } else if (jj_2_153(2)) {
+            t = multi_op_metric_f_exp();
+          } else if (jj_2_154(2)) {
+            t = number();
+          } else if (jj_2_155(2)) {
+            t = constant_f_head();
+          } else if (jj_2_156(2)) {
+            t = total_time();
+          } else if (jj_2_157(2)) {
+            t = violated_pref_exp();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7334,34 +8143,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("metric_f_exp");
+    }
   }
 
   final public Token violated_pref_exp() throws ParseException {
+    trace_call("violated_pref_exp");
+    try {
  /*@bgen(jjtree) VIOLATED_PREF_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTVIOLATED_PREF_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(IS_VIOLATED);
-        pref_name();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(IS_VIOLATED);
+          pref_name();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7375,45 +8189,47 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("violated_pref_exp");
+    }
   }
 
   final public Token constant_f_head() throws ParseException {
+    trace_call("constant_f_head");
+    try {
  /*@bgen(jjtree) CONSTANT_F_HEAD */
         SimpleNode jjtn000 = new SimpleNode(this, JJTCONSTANT_F_HEAD);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        functor();
-        label_23:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case SYMBOL:
-            ;
-            break;
-          default:
-            jj_la1[37] = jj_gen;
-            break label_23;
+        try {
+          t = left_bracket();
+          functor();
+          label_23:
+          while (true) {
+            if (jj_2_158(2)) {
+              ;
+            } else {
+              break label_23;
+            }
+            constant();
           }
-          constant();
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7427,62 +8243,72 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("constant_f_head");
+    }
   }
 
   final public Token total_time() throws ParseException {
+    trace_call("total_time");
+    try {
  /*@bgen(jjtree) TOTAL_TIME */
         SimpleNode jjtn000 = new SimpleNode(this, JJTTOTAL_TIME);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(TOTAL_TIME);
-      } catch (Throwable e) {
+        try {
+          t = jj_consume_token(TOTAL_TIME);
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("total_time");
+    }
   }
 
   final public Token binary_op_metric_f_exp() throws ParseException {
+    trace_call("binary_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) BINARY_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTBINARY_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_143(2)) {
-          t = add_op_metric_f_exp();
-        } else if (jj_2_144(2)) {
-          t = substract_op_metric_f_exp();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_159(2)) {
+            t = add_op_metric_f_exp();
+          } else if (jj_2_160(2)) {
+            t = substract_op_metric_f_exp();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7496,35 +8322,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("binary_op_metric_f_exp");
+    }
   }
 
   final public Token add_op_metric_f_exp() throws ParseException {
+    trace_call("add_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) ADD_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTADD_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ADD);
-        metric_f_exp();
-        metric_f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ADD);
+          metric_f_exp();
+          metric_f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7538,35 +8369,40 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("add_op_metric_f_exp");
+    }
   }
 
   final public Token substract_op_metric_f_exp() throws ParseException {
+    trace_call("substract_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) SUBSTRACT_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTSUBSTRACT_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SUB);
-        metric_f_exp();
-        metric_f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SUB);
+          metric_f_exp();
+          metric_f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7580,38 +8416,43 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("substract_op_metric_f_exp");
+    }
   }
 
   final public Token multi_op_metric_f_exp() throws ParseException {
+    trace_call("multi_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) MULTI_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMULTI_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        if (jj_2_145(2)) {
-          t = multiply_narity_op_metric_f_exp();
-        } else if (jj_2_146(2)) {
-          t = add_narity_op_metric_f_exp();
-        } else {
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable e) {
+        try {
+          if (jj_2_161(2)) {
+            t = multiply_narity_op_metric_f_exp();
+          } else if (jj_2_162(2)) {
+            t = add_narity_op_metric_f_exp();
+          } else {
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7625,48 +8466,48 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("multi_op_metric_f_exp");
+    }
   }
 
   final public Token multiply_narity_op_metric_f_exp() throws ParseException {
+    trace_call("multiply_narity_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) MULTIPLY_NARITY_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTMULTIPLY_NARITY_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(MUL);
-        metric_f_exp();
-        label_24:
-        while (true) {
+        try {
+          t = left_bracket();
+          jj_consume_token(MUL);
           metric_f_exp();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-          case TOTAL_TIME:
-          case NUMBER:
-            ;
-            break;
-          default:
-            jj_la1[38] = jj_gen;
-            break label_24;
+          label_24:
+          while (true) {
+            metric_f_exp();
+            if (jj_2_163(2)) {
+              ;
+            } else {
+              break label_24;
+            }
           }
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7680,48 +8521,48 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("multiply_narity_op_metric_f_exp");
+    }
   }
 
   final public Token add_narity_op_metric_f_exp() throws ParseException {
+    trace_call("add_narity_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) ADD_NARITY_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTADD_NARITY_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(ADD);
-        metric_f_exp();
-        label_25:
-        while (true) {
+        try {
+          t = left_bracket();
+          jj_consume_token(ADD);
           metric_f_exp();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case LPAREN:
-          case TOTAL_TIME:
-          case NUMBER:
-            ;
-            break;
-          default:
-            jj_la1[39] = jj_gen;
-            break label_25;
+          label_25:
+          while (true) {
+            metric_f_exp();
+            if (jj_2_164(2)) {
+              ;
+            } else {
+              break label_25;
+            }
           }
-        }
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7735,34 +8576,39 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("add_narity_op_metric_f_exp");
+    }
   }
 
   final public Token unary_op_metric_f_exp() throws ParseException {
+    trace_call("unary_op_metric_f_exp");
+    try {
  /*@bgen(jjtree) UNARY_OP_METRIC_F_EXP */
         SimpleNode jjtn000 = new SimpleNode(this, JJTUNARY_OP_METRIC_F_EXP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t = token;
-    try {
       try {
-        t = jj_consume_token(LPAREN);
-        jj_consume_token(SUB);
-        metric_f_exp();
-        jj_consume_token(RPAREN);
-      } catch (Throwable e) {
+        try {
+          t = left_bracket();
+          jj_consume_token(SUB);
+          metric_f_exp();
+          right_bracket();
+        } catch (Throwable e) {
                 this.error(e, t.beginLine, t.beginColumn);;
-      }
+        }
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
                 jjtn000.setLine(t.beginLine);
                 jjtn000.setColumn(t.beginColumn);
                 {if (true) return t;}
-    } catch (Throwable jjte000) {
+      } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
             jjtc000 = false;
@@ -7776,12 +8622,15 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             {if (true) throw (ParseException)jjte000;}
           }
           {if (true) throw (Error)jjte000;}
-    } finally {
+      } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
           }
-    }
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("unary_op_metric_f_exp");
+    }
   }
 
   final private boolean jj_2_1(int xla) {
@@ -8806,79 +9655,198 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     finally { jj_save(145, xla); }
   }
 
-  final private boolean jj_3_51() {
-    if (jj_3R_75()) return true;
-    return false;
+  final private boolean jj_2_147(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_147(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(146, xla); }
   }
 
-  final private boolean jj_3_50() {
-    if (jj_3R_74()) return true;
-    return false;
+  final private boolean jj_2_148(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_148(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(147, xla); }
   }
 
-  final private boolean jj_3_49() {
-    if (jj_3R_73()) return true;
-    return false;
+  final private boolean jj_2_149(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_149(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(148, xla); }
   }
 
-  final private boolean jj_3_48() {
-    if (jj_3R_72()) return true;
-    return false;
+  final private boolean jj_2_150(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_150(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(149, xla); }
   }
 
-  final private boolean jj_3R_140() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
-    if (jj_3R_99()) return true;
-    return false;
+  final private boolean jj_2_151(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_151(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(150, xla); }
   }
 
-  final private boolean jj_3R_35() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(FORALL)) return true;
-    return false;
+  final private boolean jj_2_152(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_152(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(151, xla); }
   }
 
-  final private boolean jj_3R_162() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(OVER)) return true;
-    return false;
+  final private boolean jj_2_153(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_153(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(152, xla); }
   }
 
-  final private boolean jj_3R_139() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(EQUAL)) return true;
-    return false;
+  final private boolean jj_2_154(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_154(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(153, xla); }
   }
 
-  final private boolean jj_3R_34() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_2_155(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_155(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(154, xla); }
+  }
+
+  final private boolean jj_2_156(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_156(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(155, xla); }
+  }
+
+  final private boolean jj_2_157(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_157(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(156, xla); }
+  }
+
+  final private boolean jj_2_158(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_158(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(157, xla); }
+  }
+
+  final private boolean jj_2_159(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_159(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(158, xla); }
+  }
+
+  final private boolean jj_2_160(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_160(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(159, xla); }
+  }
+
+  final private boolean jj_2_161(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_161(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(160, xla); }
+  }
+
+  final private boolean jj_2_162(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_162(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(161, xla); }
+  }
+
+  final private boolean jj_2_163(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_163(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(162, xla); }
+  }
+
+  final private boolean jj_2_164(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_164(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(163, xla); }
+  }
+
+  final private boolean jj_3R_37() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3_129() {
-    if (jj_3R_140()) return true;
+  final private boolean jj_3_143() {
+    if (jj_3R_151()) return true;
     return false;
   }
 
-  final private boolean jj_3R_107() {
-    if (jj_3R_162()) return true;
+  final private boolean jj_3_142() {
+    if (jj_3R_150()) return true;
     return false;
   }
 
-  final private boolean jj_3_128() {
-    if (jj_3R_139()) return true;
+  final private boolean jj_3R_115() {
+    if (jj_3R_177()) return true;
     return false;
   }
 
-  final private boolean jj_3_127() {
-    if (jj_3R_84()) return true;
+  final private boolean jj_3_141() {
+    if (jj_3R_91()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_23() {
+    if (jj_3R_48()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_22() {
+    if (jj_3R_47()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_21() {
+    if (jj_3R_46()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_97() {
+    if (jj_3R_115()) return true;
     return false;
   }
 
   final private boolean jj_3_20() {
     if (jj_3R_45()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_96() {
+    if (jj_3R_114()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_149() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_141()) {
+    jj_scanpos = xsp;
+    if (jj_3_142()) {
+    jj_scanpos = xsp;
+    if (jj_3_143()) return true;
+    }
+    }
     return false;
   }
 
@@ -8892,18 +9860,8 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_85() {
-    if (jj_3R_107()) return true;
-    return false;
-  }
-
   final private boolean jj_3_17() {
     if (jj_3R_42()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_84() {
-    if (jj_3R_106()) return true;
     return false;
   }
 
@@ -8932,40 +9890,19 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_11() {
-    if (jj_3R_36()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_10() {
-    if (jj_3R_35()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_9() {
-    if (jj_3R_34()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_104() {
+  final private boolean jj_3R_112() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_84()) {
+    if (jj_3_96()) {
     jj_scanpos = xsp;
-    if (jj_3_85()) return true;
+    if (jj_3_97()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_144() {
+  final private boolean jj_3R_49() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_9()) {
-    jj_scanpos = xsp;
-    if (jj_3_10()) {
-    jj_scanpos = xsp;
-    if (jj_3_11()) {
-    jj_scanpos = xsp;
     if (jj_3_12()) {
     jj_scanpos = xsp;
     if (jj_3_13()) {
@@ -8982,7 +9919,13 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     jj_scanpos = xsp;
     if (jj_3_19()) {
     jj_scanpos = xsp;
-    if (jj_3_20()) return true;
+    if (jj_3_20()) {
+    jj_scanpos = xsp;
+    if (jj_3_21()) {
+    jj_scanpos = xsp;
+    if (jj_3_22()) {
+    jj_scanpos = xsp;
+    if (jj_3_23()) return true;
     }
     }
     }
@@ -8997,157 +9940,186 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3R_105() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3_51() {
+    if (jj_3R_74()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_113() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(PREFERENCE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_69() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_75() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(ACTION)) return true;
     return false;
   }
 
-  final private boolean jj_3R_165() {
-    if (jj_3R_166()) return true;
+  final private boolean jj_3_93() {
+    if (jj_3R_111()) return true;
     return false;
   }
 
-  final private boolean jj_3_83() {
-    if (jj_3R_105()) return true;
+  final private boolean jj_3_95() {
+    if (jj_3R_113()) return true;
     return false;
   }
 
-  final private boolean jj_3_47() {
-    if (jj_3R_71()) return true;
+  final private boolean jj_3_54() {
+    if (jj_3R_77()) return true;
     return false;
   }
 
-  final private boolean jj_3_82() {
-    if (jj_3R_104()) return true;
+  final private boolean jj_3_94() {
+    if (jj_3R_112()) return true;
     return false;
   }
 
-  final private boolean jj_3R_137() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_147() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(OBJECTS)) return true;
     return false;
   }
 
-  final private boolean jj_3_46() {
-    if (jj_3R_70()) return true;
+  final private boolean jj_3_53() {
+    if (jj_3R_76()) return true;
     return false;
   }
 
-  final private boolean jj_3_45() {
-    if (jj_3R_69()) return true;
+  final private boolean jj_3_52() {
+    if (jj_3R_75()) return true;
     return false;
   }
 
-  final private boolean jj_3R_101() {
+  final private boolean jj_3R_108() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_82()) {
+    if (jj_3_94()) {
     jj_scanpos = xsp;
-    if (jj_3_83()) return true;
+    if (jj_3_95()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_159() {
+  final private boolean jj_3_11() {
+    if (jj_3R_36()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_171() {
     if (jj_scan_token(SYMBOL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_102() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_109() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_61() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_159()) return true;
+  final private boolean jj_3R_66() {
+    if (jj_3R_138()) return true;
+    if (jj_3R_171()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_165()) { jj_scanpos = xsp; break; }
+      if (jj_3_51()) { jj_scanpos = xsp; break; }
     }
-    if (jj_scan_token(RPAREN)) return true;
+    if (jj_3R_180()) return true;
     return false;
   }
 
-  final private boolean jj_3R_103() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_36() {
+    if (jj_3R_138()) return true;
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_110() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
     if (jj_scan_token(FORALL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_64() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(SUB)) return true;
-    if (jj_3R_163()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_126() {
+  final private boolean jj_3R_69() {
     if (jj_3R_138()) return true;
+    if (jj_scan_token(SUB)) return true;
+    if (jj_3R_179()) return true;
     return false;
   }
 
-  final private boolean jj_3_125() {
+  final private boolean jj_3_139() {
+    if (jj_3R_148()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_138() {
     if (jj_3R_33()) return true;
     return false;
   }
 
-  final private boolean jj_3_81() {
-    if (jj_3R_103()) return true;
+  final private boolean jj_3_92() {
+    if (jj_3R_110()) return true;
     return false;
   }
 
-  final private boolean jj_3_80() {
-    if (jj_3R_102()) return true;
+  final private boolean jj_3_91() {
+    if (jj_3R_109()) return true;
     return false;
   }
 
-  final private boolean jj_3_124() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3_137() {
+    if (jj_3R_147()) return true;
     return false;
   }
 
-  final private boolean jj_3_79() {
-    if (jj_3R_101()) return true;
+  final private boolean jj_3_90() {
+    if (jj_3R_108()) return true;
     return false;
   }
 
-  final private boolean jj_3_123() {
+  final private boolean jj_3_136() {
     if (jj_3R_28()) return true;
     return false;
   }
 
   final private boolean jj_3R_32() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(FUNCTIONS)) return true;
     return false;
   }
 
   final private boolean jj_3R_27() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DEFINE)) return true;
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(PROBLEM)) return true;
     return false;
   }
 
-  final private boolean jj_3R_68() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_73() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DIV)) return true;
-    if (jj_3R_100()) return true;
+    if (jj_3R_107()) return true;
     return false;
   }
 
-  final private boolean jj_3R_62() {
+  final private boolean jj_3R_111() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_90()) {
+    jj_scanpos = xsp;
+    if (jj_3_91()) {
+    jj_scanpos = xsp;
+    if (jj_3_92()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_67() {
     if (jj_scan_token(103)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -9161,30 +10133,35 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_78() {
-    if (jj_3R_100()) return true;
+  final private boolean jj_3_89() {
+    if (jj_3R_107()) return true;
     return false;
   }
 
-  final private boolean jj_3_77() {
-    if (jj_3R_99()) return true;
+  final private boolean jj_3_88() {
+    if (jj_3R_106()) return true;
     return false;
   }
 
-  final private boolean jj_3R_71() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3_10() {
+    if (jj_3R_35()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_77() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DERIVED)) return true;
     return false;
   }
 
-  final private boolean jj_3R_67() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_72() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(MUL)) return true;
-    if (jj_3R_100()) return true;
+    if (jj_3R_107()) return true;
     return false;
   }
 
-  final private boolean jj_3R_157() {
+  final private boolean jj_3R_170() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(99)) {
@@ -9194,93 +10171,275 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3R_131() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_141() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SUB)) return true;
-    if (jj_3R_163()) return true;
+    if (jj_3R_179()) return true;
     return false;
   }
 
-  final private boolean jj_3R_66() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(SUB)) return true;
-    if (jj_3R_100()) return true;
+  final private boolean jj_3R_35() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
+    if (jj_3R_170()) return true;
     return false;
   }
 
-  final private boolean jj_3R_132() {
+  final private boolean jj_3R_71() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(SUB)) return true;
+    if (jj_3R_107()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_142() {
     if (jj_scan_token(VAR_DURATION)) return true;
     return false;
   }
 
-  final private boolean jj_3R_136() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_146() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DIV)) return true;
-    if (jj_3R_61()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_31() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(PREDICATES)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_65() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(ADD)) return true;
-    if (jj_3R_100()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_98() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(LEQUAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_44() {
-    if (jj_3R_68()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_43() {
-    if (jj_3R_67()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_42() {
     if (jj_3R_66()) return true;
     return false;
   }
 
-  final private boolean jj_3_41() {
-    if (jj_3R_65()) return true;
+  final private boolean jj_3R_31() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(PREDICATES)) return true;
     return false;
   }
 
-  final private boolean jj_3R_169() {
+  final private boolean jj_3R_70() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(ADD)) return true;
+    if (jj_3R_107()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_105() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(LEQUAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_50() {
+    if (jj_3R_73()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_49() {
+    if (jj_3R_72()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_48() {
+    if (jj_3R_71()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_47() {
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_164() {
     if (jj_scan_token(SYMBOL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_135() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_145() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(MUL)) return true;
-    if (jj_3R_61()) return true;
+    if (jj_3R_66()) return true;
     return false;
   }
 
-  final private boolean jj_3R_97() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_104() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
     if (jj_scan_token(GEQUAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_63() {
+  final private boolean jj_3R_68() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_41()) {
+    if (jj_3_47()) {
+    jj_scanpos = xsp;
+    if (jj_3_48()) {
+    jj_scanpos = xsp;
+    if (jj_3_49()) {
+    jj_scanpos = xsp;
+    if (jj_3_50()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3_46() {
+    if (jj_3R_69()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_9() {
+    if (jj_3R_34()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_45() {
+    if (jj_3R_68()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_30() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(CONSTANTS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_144() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(SUB)) return true;
+    if (jj_3R_66()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_103() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(EQUAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_65() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_45()) {
+    jj_scanpos = xsp;
+    if (jj_3_46()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3_87() {
+    if (jj_3R_105()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_86() {
+    if (jj_3R_104()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_85() {
+    if (jj_3R_103()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_143() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(ADD)) return true;
+    if (jj_3R_66()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_34() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(98)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(97)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(99)) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_99() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_85()) {
+    jj_scanpos = xsp;
+    if (jj_3_86()) {
+    jj_scanpos = xsp;
+    if (jj_3_87()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_106() {
+    if (jj_scan_token(NUMBER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_135() {
+    if (jj_3R_146()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_134() {
+    if (jj_3R_145()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_133() {
+    if (jj_3R_144()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_132() {
+    if (jj_3R_143()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_44() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_43() {
+    if (jj_3R_66()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_42() {
+    if (jj_3R_65()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_176() {
+    if (jj_3R_106()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_140() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_132()) {
+    jj_scanpos = xsp;
+    if (jj_3_133()) {
+    jj_scanpos = xsp;
+    if (jj_3_134()) {
+    jj_scanpos = xsp;
+    if (jj_3_135()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_102() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
+    if (jj_scan_token(AT)) return true;
+    if (jj_scan_token(END)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_107() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_176()) {
     jj_scanpos = xsp;
     if (jj_3_42()) {
     jj_scanpos = xsp;
@@ -9293,385 +10452,232 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_40() {
-    if (jj_3R_64()) return true;
+  final private boolean jj_3_131() {
+    if (jj_3R_142()) return true;
     return false;
   }
 
-  final private boolean jj_3_39() {
-    if (jj_3R_63()) return true;
+  final private boolean jj_3_130() {
+    if (jj_3R_141()) return true;
     return false;
   }
 
-  final private boolean jj_3R_30() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(CONSTANTS)) return true;
+  final private boolean jj_3_129() {
+    if (jj_3R_140()) return true;
     return false;
   }
 
-  final private boolean jj_3R_134() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(SUB)) return true;
-    if (jj_3R_61()) return true;
+  final private boolean jj_3_128() {
+    if (jj_3R_107()) return true;
     return false;
   }
 
-  final private boolean jj_3R_96() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_101() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT)) return true;
+    if (jj_scan_token(START)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_179() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_128()) {
+    jj_scanpos = xsp;
+    if (jj_3_129()) {
+    jj_scanpos = xsp;
+    if (jj_3_130()) {
+    jj_scanpos = xsp;
+    if (jj_3_131()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_64() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(EQUAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_60() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_39()) {
-    jj_scanpos = xsp;
-    if (jj_3_40()) return true;
-    }
+  final private boolean jj_3_84() {
+    if (jj_3R_102()) return true;
     return false;
   }
 
-  final private boolean jj_3_76() {
-    if (jj_3R_98()) return true;
+  final private boolean jj_3_83() {
+    if (jj_3R_101()) return true;
     return false;
   }
 
-  final private boolean jj_3_75() {
-    if (jj_3R_97()) return true;
+  final private boolean jj_3_127() {
+    if (jj_3R_127()) return true;
     return false;
   }
 
-  final private boolean jj_3_74() {
-    if (jj_3R_96()) return true;
+  final private boolean jj_3_126() {
+    if (jj_3R_126()) return true;
     return false;
   }
 
-  final private boolean jj_3R_133() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(ADD)) return true;
-    if (jj_3R_61()) return true;
+  final private boolean jj_3_125() {
+    if (jj_3R_125()) return true;
     return false;
   }
 
-  final private boolean jj_3R_92() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_74()) {
-    jj_scanpos = xsp;
-    if (jj_3_75()) {
-    jj_scanpos = xsp;
-    if (jj_3_76()) return true;
-    }
-    }
+  final private boolean jj_3_124() {
+    if (jj_3R_124()) return true;
     return false;
   }
 
-  final private boolean jj_3R_99() {
-    if (jj_scan_token(NUMBER)) return true;
+  final private boolean jj_3_123() {
+    if (jj_3R_123()) return true;
     return false;
   }
 
-  final private boolean jj_3_122() {
-    if (jj_3R_136()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_121() {
-    if (jj_3R_135()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_120() {
-    if (jj_3R_134()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_119() {
-    if (jj_3R_133()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_38() {
-    if (jj_3R_62()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_37() {
-    if (jj_3R_61()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_36() {
-    if (jj_3R_60()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_161() {
-    if (jj_3R_99()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_130() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_119()) {
-    jj_scanpos = xsp;
-    if (jj_3_120()) {
-    jj_scanpos = xsp;
-    if (jj_3_121()) {
-    jj_scanpos = xsp;
-    if (jj_3_122()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_95() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
-    if (jj_scan_token(END)) return true;
+  final private boolean jj_3R_29() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(TYPES)) return true;
     return false;
   }
 
   final private boolean jj_3R_100() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_161()) {
+    if (jj_3_83()) {
     jj_scanpos = xsp;
-    if (jj_3_36()) {
-    jj_scanpos = xsp;
-    if (jj_3_37()) {
-    jj_scanpos = xsp;
-    if (jj_3_38()) return true;
-    }
-    }
+    if (jj_3_84()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3_118() {
-    if (jj_3R_132()) return true;
+  final private boolean jj_3_80() {
+    if (jj_3R_98()) return true;
     return false;
   }
 
-  final private boolean jj_3_117() {
-    if (jj_3R_131()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_116() {
-    if (jj_3R_130()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_115() {
-    if (jj_3R_100()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_94() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
-    if (jj_scan_token(START)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_163() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_115()) {
-    jj_scanpos = xsp;
-    if (jj_3_116()) {
-    jj_scanpos = xsp;
-    if (jj_3_117()) {
-    jj_scanpos = xsp;
-    if (jj_3_118()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_59() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(EQUAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_73() {
-    if (jj_3R_95()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_72() {
-    if (jj_3R_94()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_114() {
-    if (jj_3R_119()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_113() {
-    if (jj_3R_118()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_112() {
-    if (jj_3R_117()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_111() {
-    if (jj_3R_116()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_110() {
-    if (jj_3R_115()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_29() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(TYPES)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_93() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_72()) {
-    jj_scanpos = xsp;
-    if (jj_3_73()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_56() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_61() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(LESS)) return true;
     return false;
   }
 
-  final private boolean jj_3_71() {
-    if (jj_3R_93()) return true;
+  final private boolean jj_3_82() {
+    if (jj_3R_100()) return true;
     return false;
   }
 
-  final private boolean jj_3_70() {
-    if (jj_3R_92()) return true;
+  final private boolean jj_3_81() {
+    if (jj_3R_99()) return true;
     return false;
   }
 
-  final private boolean jj_3R_91() {
+  final private boolean jj_3R_98() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_70()) {
+    if (jj_3_81()) {
     jj_scanpos = xsp;
-    if (jj_3_71()) return true;
+    if (jj_3_82()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_58() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_63() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(LEQUAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_129() {
+  final private boolean jj_3R_139() {
     if (jj_scan_token(CONTINOUS_VARIABLE)) return true;
     return false;
   }
 
-  final private boolean jj_3_109() {
-    if (jj_3R_129()) return true;
+  final private boolean jj_3_122() {
+    if (jj_3R_139()) return true;
     return false;
   }
 
-  final private boolean jj_3_108() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3_121() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(MUL)) return true;
     return false;
   }
 
-  final private boolean jj_3_107() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3_120() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(MUL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_90() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_97() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_57() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_62() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(GEQUAL)) return true;
     return false;
   }
 
-  final private boolean jj_3_69() {
-    if (jj_3R_91()) return true;
+  final private boolean jj_3_79() {
+    if (jj_3R_98()) return true;
     return false;
   }
 
-  final private boolean jj_3_68() {
-    if (jj_3R_90()) return true;
+  final private boolean jj_3_78() {
+    if (jj_3R_97()) return true;
     return false;
   }
 
-  final private boolean jj_3_67() {
-    if (jj_3R_72()) return true;
+  final private boolean jj_3_77() {
+    if (jj_3R_78()) return true;
     return false;
   }
 
   final private boolean jj_3R_28() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(REQUIREMENTS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_55() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_60() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(GREATER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_128() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_137() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DECREASE)) return true;
     return false;
   }
 
-  final private boolean jj_3_35() {
-    if (jj_3R_59()) return true;
+  final private boolean jj_3_41() {
+    if (jj_3R_64()) return true;
     return false;
   }
 
-  final private boolean jj_3_34() {
-    if (jj_3R_58()) return true;
+  final private boolean jj_3_40() {
+    if (jj_3R_63()) return true;
     return false;
   }
 
-  final private boolean jj_3_33() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3_39() {
+    if (jj_3R_62()) return true;
     return false;
   }
 
-  final private boolean jj_3_32() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3_38() {
+    if (jj_3R_61()) return true;
     return false;
   }
 
-  final private boolean jj_3_31() {
-    if (jj_3R_55()) return true;
+  final private boolean jj_3_37() {
+    if (jj_3R_60()) return true;
     return false;
   }
 
@@ -9680,32 +10686,32 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
+  final private boolean jj_3R_172() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_37()) {
+    jj_scanpos = xsp;
+    if (jj_3_38()) {
+    jj_scanpos = xsp;
+    if (jj_3_39()) {
+    jj_scanpos = xsp;
+    if (jj_3_40()) {
+    jj_scanpos = xsp;
+    if (jj_3_41()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
   final private boolean jj_3_7() {
     if (jj_3R_32()) return true;
     return false;
   }
 
-  final private boolean jj_3R_158() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_31()) {
-    jj_scanpos = xsp;
-    if (jj_3_32()) {
-    jj_scanpos = xsp;
-    if (jj_3_33()) {
-    jj_scanpos = xsp;
-    if (jj_3_34()) {
-    jj_scanpos = xsp;
-    if (jj_3_35()) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_127() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_136() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(INCREASE)) return true;
     return false;
   }
@@ -9720,13 +10726,13 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_106() {
-    if (jj_3R_128()) return true;
+  final private boolean jj_3_119() {
+    if (jj_3R_137()) return true;
     return false;
   }
 
-  final private boolean jj_3_105() {
-    if (jj_3R_127()) return true;
+  final private boolean jj_3_118() {
+    if (jj_3R_136()) return true;
     return false;
   }
 
@@ -9735,8 +10741,13 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3R_53() {
-    if (jj_3R_158()) return true;
+  final private boolean jj_3R_57() {
+    if (jj_3R_172()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_164() {
+    if (jj_3R_169()) return true;
     return false;
   }
 
@@ -9745,51 +10756,156 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3R_122() {
+  final private boolean jj_3R_131() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_105()) {
+    if (jj_3_118()) {
     jj_scanpos = xsp;
-    if (jj_3_106()) return true;
+    if (jj_3_119()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_54() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_59() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(NOT)) return true;
     return false;
   }
 
   final private boolean jj_3R_26() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DEFINE)) return true;
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DOMAIN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_70() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3_163() {
+    if (jj_3R_169()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_76() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DURATIVE_ACTION)) return true;
     return false;
   }
 
-  final private boolean jj_3R_126() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_135() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AT)) return true;
     if (jj_scan_token(END)) return true;
-    if (jj_3R_84()) return true;
+    if (jj_3R_91()) return true;
     return false;
   }
 
-  final private boolean jj_3_30() {
-    if (jj_3R_54()) return true;
+  final private boolean jj_3_36() {
+    if (jj_3R_59()) return true;
     return false;
   }
 
-  final private boolean jj_3_29() {
-    if (jj_3R_46()) return true;
+  final private boolean jj_3_35() {
+    if (jj_3R_50()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_158() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(SUB)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_138() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(13)) {
+    jj_scanpos = xsp;
+    if (jj_3R_178()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_178() {
+    return false;
+  }
+
+  final private boolean jj_3R_91() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_35()) {
+    jj_scanpos = xsp;
+    if (jj_3_36()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_96() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(DECREASE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_134() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT)) return true;
+    if (jj_scan_token(START)) return true;
+    if (jj_3R_91()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_174() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_180() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(14)) {
+    jj_scanpos = xsp;
+    if (jj_3R_181()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_173() {
+    if (jj_3R_164()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_117() {
+    if (jj_3R_135()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_116() {
+    if (jj_3R_134()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_181() {
+    return false;
+  }
+
+  final private boolean jj_3R_168() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(ADD)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_95() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(INCREASE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_74() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_173()) {
+    jj_scanpos = xsp;
+    if (jj_3R_174()) return true;
+    }
     return false;
   }
 
@@ -9803,248 +10919,181 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3R_147() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(SUB)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_84() {
+  final private boolean jj_3R_129() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_29()) {
+    if (jj_3_116()) {
     jj_scanpos = xsp;
-    if (jj_3_30()) return true;
+    if (jj_3_117()) return true;
     }
-    return false;
-  }
-
-  final private boolean jj_3R_89() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(DECREASE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_125() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
-    if (jj_scan_token(START)) return true;
-    if (jj_3R_84()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_168() {
-    if (jj_3R_62()) return true;
     return false;
   }
 
   final private boolean jj_3R_167() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_104() {
-    if (jj_3R_126()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_103() {
-    if (jj_3R_125()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_156() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(ADD)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_88() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(INCREASE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_166() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_167()) {
-    jj_scanpos = xsp;
-    if (jj_3R_168()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_120() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_103()) {
-    jj_scanpos = xsp;
-    if (jj_3_104()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_155() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_138()) return true;
     if (jj_scan_token(MUL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_87() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_94() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SCALE_DOWN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_124() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_133() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AT)) return true;
     if (jj_scan_token(END)) return true;
     return false;
   }
 
-  final private boolean jj_3_146() {
-    if (jj_3R_156()) return true;
+  final private boolean jj_3_162() {
+    if (jj_3R_168()) return true;
     return false;
   }
 
-  final private boolean jj_3_145() {
-    if (jj_3R_155()) return true;
+  final private boolean jj_3_161() {
+    if (jj_3R_167()) return true;
     return false;
   }
 
-  final private boolean jj_3R_46() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_157()) return true;
+  final private boolean jj_3R_50() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
+    if (jj_3R_170()) return true;
     return false;
   }
 
-  final private boolean jj_3R_149() {
+  final private boolean jj_3R_160() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_145()) {
+    if (jj_3_161()) {
     jj_scanpos = xsp;
-    if (jj_3_146()) return true;
+    if (jj_3_162()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_86() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_93() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SCALE_UP)) return true;
     return false;
   }
 
-  final private boolean jj_3R_123() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_132() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AT)) return true;
     if (jj_scan_token(START)) return true;
     return false;
   }
 
-  final private boolean jj_3R_52() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_56() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(FORALL)) return true;
     return false;
   }
 
-  final private boolean jj_3_102() {
-    if (jj_3R_124()) return true;
+  final private boolean jj_3_115() {
+    if (jj_3R_133()) return true;
     return false;
   }
 
-  final private boolean jj_3_101() {
-    if (jj_3R_123()) return true;
+  final private boolean jj_3_114() {
+    if (jj_3R_132()) return true;
     return false;
   }
 
-  final private boolean jj_3R_154() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_166() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SUB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_85() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_92() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(ASSIGN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_121() {
+  final private boolean jj_3R_130() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_101()) {
+    if (jj_3_114()) {
     jj_scanpos = xsp;
-    if (jj_3_102()) return true;
+    if (jj_3_115()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_51() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_55() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(EXISTS)) return true;
     return false;
   }
 
-  final private boolean jj_3_66() {
-    if (jj_3R_89()) return true;
+  final private boolean jj_3_110() {
+    if (jj_3R_128()) return true;
     return false;
   }
 
-  final private boolean jj_3_65() {
-    if (jj_3R_88()) return true;
+  final private boolean jj_3_76() {
+    if (jj_3R_96()) return true;
     return false;
   }
 
-  final private boolean jj_3_64() {
-    if (jj_3R_87()) return true;
+  final private boolean jj_3_75() {
+    if (jj_3R_95()) return true;
     return false;
   }
 
-  final private boolean jj_3_63() {
-    if (jj_3R_86()) return true;
+  final private boolean jj_3_74() {
+    if (jj_3R_94()) return true;
     return false;
   }
 
-  final private boolean jj_3_62() {
-    if (jj_3R_85()) return true;
+  final private boolean jj_3_73() {
+    if (jj_3R_93()) return true;
     return false;
   }
 
-  final private boolean jj_3_100() {
-    if (jj_3R_122()) return true;
+  final private boolean jj_3_72() {
+    if (jj_3R_92()) return true;
     return false;
   }
 
-  final private boolean jj_3_99() {
-    if (jj_3R_121()) return true;
+  final private boolean jj_3_113() {
+    if (jj_3R_131()) return true;
     return false;
   }
 
-  final private boolean jj_3R_153() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_165() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(ADD)) return true;
     return false;
   }
 
-  final private boolean jj_3_98() {
-    if (jj_3R_120()) return true;
+  final private boolean jj_3_112() {
+    if (jj_3R_130()) return true;
     return false;
   }
 
-  final private boolean jj_3R_83() {
+  final private boolean jj_3_111() {
+    if (jj_3R_129()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_90() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_62()) {
+    if (jj_3_72()) {
     jj_scanpos = xsp;
-    if (jj_3_63()) {
+    if (jj_3_73()) {
     jj_scanpos = xsp;
-    if (jj_3_64()) {
+    if (jj_3_74()) {
     jj_scanpos = xsp;
-    if (jj_3_65()) {
+    if (jj_3_75()) {
     jj_scanpos = xsp;
-    if (jj_3_66()) return true;
+    if (jj_3_76()) return true;
     }
     }
     }
@@ -10052,136 +11101,176 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_144() {
-    if (jj_3R_154()) return true;
+  final private boolean jj_3_160() {
+    if (jj_3R_166()) return true;
     return false;
   }
 
-  final private boolean jj_3_143() {
-    if (jj_3R_153()) return true;
+  final private boolean jj_3_159() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
-  final private boolean jj_3R_110() {
+  final private boolean jj_3_69() {
+    if (jj_3R_88()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_118() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_98()) {
+    if (jj_3_111()) {
     jj_scanpos = xsp;
-    if (jj_3_99()) {
+    if (jj_3_112()) {
     jj_scanpos = xsp;
-    if (jj_3_100()) return true;
+    if (jj_3_113()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_50() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_54() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(IMPLY)) return true;
     return false;
   }
 
-  final private boolean jj_3_61() {
-    if (jj_3R_84()) return true;
+  final private boolean jj_3_34() {
+    if (jj_3R_58()) return true;
     return false;
   }
 
-  final private boolean jj_3_60() {
-    if (jj_3R_83()) return true;
+  final private boolean jj_3_71() {
+    if (jj_3R_91()) return true;
     return false;
   }
 
-  final private boolean jj_3R_148() {
+  final private boolean jj_3_158() {
+    if (jj_3R_164()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_70() {
+    if (jj_3R_90()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_159() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_143()) {
+    if (jj_3_159()) {
     jj_scanpos = xsp;
-    if (jj_3_144()) return true;
+    if (jj_3_160()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_81() {
+  final private boolean jj_3R_88() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_60()) {
+    if (jj_3_70()) {
     jj_scanpos = xsp;
-    if (jj_3_61()) return true;
+    if (jj_3_71()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_111() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_119() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_49() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_53() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(NOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_151() {
+  final private boolean jj_3_33() {
+    if (jj_3R_58()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_162() {
     if (jj_scan_token(TOTAL_TIME)) return true;
     return false;
   }
 
-  final private boolean jj_3R_82() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_89() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_112() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_120() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(FORALL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_48() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_52() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(OR)) return true;
     return false;
   }
 
-  final private boolean jj_3_59() {
-    if (jj_3R_81()) return true;
+  final private boolean jj_3_68() {
+    if (jj_3R_88()) return true;
     return false;
   }
 
-  final private boolean jj_3_58() {
-    if (jj_3R_82()) return true;
+  final private boolean jj_3_67() {
+    if (jj_3R_89()) return true;
     return false;
   }
 
-  final private boolean jj_3R_150() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_159()) return true;
+  final private boolean jj_3R_161() {
+    if (jj_3R_138()) return true;
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_47() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_51() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_113() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_121() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(WHEN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_163() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(IS_VIOLATED)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_32() {
+    if (jj_3R_57()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_31() {
+    if (jj_3R_56()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_30() {
+    if (jj_3R_55()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_29() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
   final private boolean jj_3_28() {
     if (jj_3R_53()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_152() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(IS_VIOLATED)) return true;
     return false;
   }
 
@@ -10200,91 +11289,71 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3_24() {
-    if (jj_3R_49()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_23() {
-    if (jj_3R_48()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_22() {
-    if (jj_3R_47()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_21() {
-    if (jj_3R_46()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_80() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_87() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(WHEN)) return true;
     return false;
   }
 
-  final private boolean jj_3_142() {
-    if (jj_3R_152()) return true;
+  final private boolean jj_3_157() {
+    if (jj_3R_163()) return true;
     return false;
   }
 
-  final private boolean jj_3R_119() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_127() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(DECREASE)) return true;
     return false;
   }
 
-  final private boolean jj_3_141() {
-    if (jj_3R_151()) return true;
+  final private boolean jj_3_156() {
+    if (jj_3R_162()) return true;
     return false;
   }
 
-  final private boolean jj_3_140() {
-    if (jj_3R_150()) return true;
+  final private boolean jj_3_155() {
+    if (jj_3R_161()) return true;
     return false;
   }
 
-  final private boolean jj_3_139() {
-    if (jj_3R_99()) return true;
+  final private boolean jj_3_154() {
+    if (jj_3R_106()) return true;
     return false;
   }
 
-  final private boolean jj_3_138() {
-    if (jj_3R_149()) return true;
+  final private boolean jj_3_153() {
+    if (jj_3R_160()) return true;
     return false;
   }
 
-  final private boolean jj_3_137() {
-    if (jj_3R_148()) return true;
+  final private boolean jj_3_152() {
+    if (jj_3R_159()) return true;
     return false;
   }
 
-  final private boolean jj_3_136() {
-    if (jj_3R_147()) return true;
+  final private boolean jj_3_151() {
+    if (jj_3R_158()) return true;
     return false;
   }
 
-  final private boolean jj_3R_164() {
+  final private boolean jj_3R_58() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_21()) {
-    jj_scanpos = xsp;
-    if (jj_3_22()) {
-    jj_scanpos = xsp;
-    if (jj_3_23()) {
-    jj_scanpos = xsp;
-    if (jj_3_24()) {
-    jj_scanpos = xsp;
     if (jj_3_25()) {
     jj_scanpos = xsp;
     if (jj_3_26()) {
     jj_scanpos = xsp;
     if (jj_3_27()) {
     jj_scanpos = xsp;
-    if (jj_3_28()) return true;
+    if (jj_3_28()) {
+    jj_scanpos = xsp;
+    if (jj_3_29()) {
+    jj_scanpos = xsp;
+    if (jj_3_30()) {
+    jj_scanpos = xsp;
+    if (jj_3_31()) {
+    jj_scanpos = xsp;
+    if (jj_3_32()) return true;
     }
     }
     }
@@ -10295,361 +11364,507 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return false;
   }
 
-  final private boolean jj_3R_79() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_169() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_151()) {
+    jj_scanpos = xsp;
+    if (jj_3_152()) {
+    jj_scanpos = xsp;
+    if (jj_3_153()) {
+    jj_scanpos = xsp;
+    if (jj_3_154()) {
+    jj_scanpos = xsp;
+    if (jj_3_155()) {
+    jj_scanpos = xsp;
+    if (jj_3_156()) {
+    jj_scanpos = xsp;
+    if (jj_3_157()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_86() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(FORALL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_118() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_126() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(INCREASE)) return true;
     return false;
   }
 
-  final private boolean jj_3_57() {
-    if (jj_3R_81()) return true;
+  final private boolean jj_3_63() {
+    if (jj_3R_85()) return true;
     return false;
   }
 
-  final private boolean jj_3R_45() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3_66() {
+    if (jj_3R_88()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_48() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(HOLD_AFTER)) return true;
     return false;
   }
 
-  final private boolean jj_3_56() {
-    if (jj_3R_80()) return true;
+  final private boolean jj_3_65() {
+    if (jj_3R_87()) return true;
     return false;
   }
 
-  final private boolean jj_3_55() {
-    if (jj_3R_79()) return true;
+  final private boolean jj_3_64() {
+    if (jj_3R_86()) return true;
     return false;
   }
 
-  final private boolean jj_3R_146() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_157() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(METRIC)) return true;
     if (jj_scan_token(MINIMIZE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_78() {
+  final private boolean jj_3R_85() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_55()) {
+    if (jj_3_64()) {
     jj_scanpos = xsp;
-    if (jj_3_56()) {
+    if (jj_3_65()) {
     jj_scanpos = xsp;
-    if (jj_3_57()) return true;
+    if (jj_3_66()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_117() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_125() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SCALE_DOWN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_44() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_47() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(HOLD_DURING)) return true;
     return false;
   }
 
-  final private boolean jj_3R_145() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_156() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(METRIC)) return true;
     if (jj_scan_token(MAXIMIZE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_77() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_84() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(AND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_116() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_124() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SCALE_UP)) return true;
     return false;
   }
 
-  final private boolean jj_3_135() {
-    if (jj_3R_146()) return true;
+  final private boolean jj_3_150() {
+    if (jj_3R_157()) return true;
     return false;
   }
 
-  final private boolean jj_3_134() {
-    if (jj_3R_145()) return true;
+  final private boolean jj_3_149() {
+    if (jj_3R_156()) return true;
     return false;
   }
 
-  final private boolean jj_3R_43() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_46() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(ALWAYS_WITHIN)) return true;
     return false;
   }
 
-  final private boolean jj_3_54() {
-    if (jj_3R_78()) return true;
+  final private boolean jj_3_62() {
+    if (jj_3R_85()) return true;
     return false;
   }
 
-  final private boolean jj_3_53() {
-    if (jj_3R_77()) return true;
+  final private boolean jj_3_61() {
+    if (jj_3R_84()) return true;
     return false;
   }
 
-  final private boolean jj_3R_138() {
+  final private boolean jj_3R_148() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_134()) {
+    if (jj_3_149()) {
     jj_scanpos = xsp;
-    if (jj_3_135()) return true;
+    if (jj_3_150()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_115() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_123() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(ASSIGN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_42() {
-    if (jj_scan_token(LPAREN)) return true;
+  final private boolean jj_3R_45() {
+    if (jj_3R_138()) return true;
     if (jj_scan_token(SOMETIME_BEFORE)) return true;
     return false;
   }
 
-  final private boolean jj_3_97() {
+  final private boolean jj_3_109() {
+    if (jj_3R_127()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_108() {
+    if (jj_3R_126()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_107() {
+    if (jj_3R_125()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_106() {
+    if (jj_3R_124()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_105() {
+    if (jj_3R_123()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_153() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(FORALL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_148() {
+    if (jj_3R_155()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_122() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_105()) {
+    jj_scanpos = xsp;
+    if (jj_3_106()) {
+    jj_scanpos = xsp;
+    if (jj_3_107()) {
+    jj_scanpos = xsp;
+    if (jj_3_108()) {
+    jj_scanpos = xsp;
+    if (jj_3_109()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_44() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(SOMETIME_AFTER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_104() {
+    if (jj_3R_122()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_103() {
+    if (jj_3R_121()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_154() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(PREFERENCE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_102() {
+    if (jj_3R_120()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_101() {
     if (jj_3R_119()) return true;
     return false;
   }
 
-  final private boolean jj_3_96() {
+  final private boolean jj_3_100() {
     if (jj_3R_118()) return true;
     return false;
   }
 
-  final private boolean jj_3_95() {
+  final private boolean jj_3R_83() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(PREFERENCE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_43() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT_MOST_ONCE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_128() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_100()) {
+    jj_scanpos = xsp;
+    if (jj_3_101()) {
+    jj_scanpos = xsp;
+    if (jj_3_102()) {
+    jj_scanpos = xsp;
+    if (jj_3_103()) {
+    jj_scanpos = xsp;
+    if (jj_3_104()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_175() {
+    if (jj_3R_58()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_60() {
+    if (jj_3R_83()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_152() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AND)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_79() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_60()) {
+    jj_scanpos = xsp;
+    if (jj_3R_175()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3_59() {
+    if (jj_3R_82()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_147() {
+    if (jj_3R_49()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_146() {
+    if (jj_3R_154()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_42() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(WITHIN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_145() {
+    if (jj_3R_153()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_144() {
+    if (jj_3R_152()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_155() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_144()) {
+    jj_scanpos = xsp;
+    if (jj_3_145()) {
+    jj_scanpos = xsp;
+    if (jj_3_146()) {
+    jj_scanpos = xsp;
+    if (jj_3_147()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_81() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(FORALL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_41() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(SOMETIME)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_117() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_33() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
+    if (jj_scan_token(CONSTRAINTS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_80() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AND)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_40() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(ALWAYS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_116() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT)) return true;
+    if (jj_scan_token(START)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_99() {
     if (jj_3R_117()) return true;
     return false;
   }
 
-  final private boolean jj_3_94() {
+  final private boolean jj_3_98() {
     if (jj_3R_116()) return true;
     return false;
   }
 
-  final private boolean jj_3_93() {
-    if (jj_3R_115()) return true;
+  final private boolean jj_3R_78() {
+    if (jj_scan_token(LEFT_BRACKET)) return true;
+    if (jj_scan_token(RIGHT_BRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_142() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(FORALL)) return true;
+  final private boolean jj_3R_39() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_24() {
+    if (jj_3R_49()) return true;
     return false;
   }
 
   final private boolean jj_3R_114() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_93()) {
+    if (jj_3_98()) {
     jj_scanpos = xsp;
-    if (jj_3_94()) {
-    jj_scanpos = xsp;
-    if (jj_3_95()) {
-    jj_scanpos = xsp;
-    if (jj_3_96()) {
-    jj_scanpos = xsp;
-    if (jj_3_97()) return true;
-    }
-    }
-    }
+    if (jj_3_99()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_41() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(SOMETIME_AFTER)) return true;
+  final private boolean jj_3_58() {
+    if (jj_3R_81()) return true;
     return false;
   }
 
-  final private boolean jj_3_92() {
-    if (jj_3R_114()) return true;
+  final private boolean jj_3_57() {
+    if (jj_3R_80()) return true;
     return false;
   }
 
-  final private boolean jj_3_91() {
-    if (jj_3R_113()) return true;
+  final private boolean jj_3_56() {
+    if (jj_3R_79()) return true;
     return false;
   }
 
-  final private boolean jj_3_90() {
-    if (jj_3R_112()) return true;
+  final private boolean jj_3_55() {
+    if (jj_3R_78()) return true;
     return false;
   }
 
-  final private boolean jj_3R_143() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(PREFERENCE)) return true;
+  final private boolean jj_3R_151() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(AT)) return true;
+    if (jj_3R_106()) return true;
     return false;
   }
 
-  final private boolean jj_3_89() {
-    if (jj_3R_111()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_88() {
-    if (jj_3R_110()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_76() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(PREFERENCE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_40() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT_MOST_ONCE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_160() {
-    if (jj_3R_164()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_52() {
-    if (jj_3R_76()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_141() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AND)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_73() {
+  final private boolean jj_3R_82() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_52()) {
+    if (jj_3_55()) {
     jj_scanpos = xsp;
-    if (jj_3R_160()) return true;
+    if (jj_3_56()) {
+    jj_scanpos = xsp;
+    if (jj_3_57()) {
+    jj_scanpos = xsp;
+    if (jj_3_58()) return true;
     }
-    return false;
-  }
-
-  final private boolean jj_3_133() {
-    if (jj_3R_144()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_132() {
-    if (jj_3R_143()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_39() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(WITHIN)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_131() {
-    if (jj_3R_142()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_130() {
-    if (jj_3R_141()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_75() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(FORALL)) return true;
+    }
+    }
     return false;
   }
 
   final private boolean jj_3R_38() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(SOMETIME)) return true;
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(FORALL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_109() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
+  final private boolean jj_3R_177() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(OVER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_33() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(CONSTRAINTS)) return true;
+  final private boolean jj_3R_150() {
+    if (jj_3R_138()) return true;
+    if (jj_scan_token(EQUAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_74() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AND)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_37() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(ALWAYS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_108() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
-    if (jj_scan_token(START)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_87() {
-    if (jj_3R_109()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_86() {
-    if (jj_3R_108()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_72() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_36() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_scan_token(AT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_106() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_86()) {
-    jj_scanpos = xsp;
-    if (jj_3_87()) return true;
-    }
+  final private boolean jj_3_140() {
+    if (jj_3R_149()) return true;
     return false;
   }
 
@@ -10662,7 +11877,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[40];
+  final private int[] jj_la1 = new int[24];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -10674,18 +11889,18 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
       jj_la1_3();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x2000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2000,0x0,0x2000,0x0,0x0,0x2000,0x0,0x2000,0x2000,0x2000,0x0,0x0,0x0,0x0,0x0,0x2000,0x2000,0x0,0x2000,0x2000,0x2000,0x2000,0x0,0x2000,0x2000,0x2000,0x0,0x0,0x2000,0x2000,};
+      jj_la1_0 = new int[] {0x4000,0x2000,0x20802000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x82000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2000,0x0,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x1ffff80,0x1ffff80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0x1,0x1ffff80,0x1ffff80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3e000000,0x0,0x0,0x0,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x2,0x0,0x2,0x0,0x2,0x0,0x0,0x0,0x0,0x400000,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8000000,0x8000000,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x2,0x0,0x2,0x0,0x0,0x400000,0x0,0x2,0x0,0x0,0x0,0x0,0x1f80,0x0,0x0,0x0,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0xe,0x0,0x8,0x0,0x80,0x0,0xe,0xe,0xe,0x0,0x8,0xe,0x0,0x0,0x0,0x0,0x0,0x8,0x88,0x88,0x10,0x88,0x0,0x0,0x8,0x0,0x0,0x0,0x0,0x8,0x0,0x0,0x0,0x8,0x8,0x10,0x10,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0xe,0x0,0x8,0x0,0x80,0x0,0xe,0xe,0x8,0xe,0x0,0x8,0x88,0x88,0x10,0x0,0x8,0x8,0x8,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[146];
+  final private JJCalls[] jj_2_rtns = new JJCalls[164];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -10698,7 +11913,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -10712,7 +11927,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -10722,7 +11937,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -10733,7 +11948,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -10742,7 +11957,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -10752,7 +11967,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 24; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -10773,6 +11988,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
           }
         }
       }
+      trace_token(token, "");
       return token;
     }
     token = oldToken;
@@ -10808,6 +12024,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     else token = token.next = token_source.getNextToken();
     jj_ntk = -1;
     jj_gen++;
+      trace_token(token, " (in getNextToken)");
     return token;
   }
 
@@ -10871,7 +12088,7 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 24; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -10906,15 +12123,58 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
     return new ParseException(token, exptokseq, tokenImage);
   }
 
+  private int trace_indent = 0;
+  private boolean trace_enabled = true;
+
   final public void enable_tracing() {
+    trace_enabled = true;
   }
 
   final public void disable_tracing() {
+    trace_enabled = false;
+  }
+
+  final private void trace_call(String s) {
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.println("Call:   " + s);
+    }
+    trace_indent = trace_indent + 2;
+  }
+
+  final private void trace_return(String s) {
+    trace_indent = trace_indent - 2;
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.println("Return: " + s);
+    }
+  }
+
+  final private void trace_token(Token t, String where) {
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.print("Consumed token: <" + tokenImage[t.kind]);
+      if (t.kind != 0 && !tokenImage[t.kind].equals("\"" + t.image + "\"")) {
+        System.out.print(": \"" + t.image + "\"");
+      }
+      System.out.println(" at line " + t.beginLine + " column " + t.beginColumn + ">" + where);
+    }
+  }
+
+  final private void trace_scan(Token t1, int t2) {
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.print("Visited token: <" + tokenImage[t1.kind]);
+      if (t1.kind != 0 && !tokenImage[t1.kind].equals("\"" + t1.image + "\"")) {
+        System.out.print(": \"" + t1.image + "\"");
+      }
+      System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
+    }
   }
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 146; i++) {
+    for (int i = 0; i < 164; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -11067,6 +12327,24 @@ public class Lexer/*@bgen(jjtree)*/implements LexerTreeConstants, LexerConstants
             case 143: jj_3_144(); break;
             case 144: jj_3_145(); break;
             case 145: jj_3_146(); break;
+            case 146: jj_3_147(); break;
+            case 147: jj_3_148(); break;
+            case 148: jj_3_149(); break;
+            case 149: jj_3_150(); break;
+            case 150: jj_3_151(); break;
+            case 151: jj_3_152(); break;
+            case 152: jj_3_153(); break;
+            case 153: jj_3_154(); break;
+            case 154: jj_3_155(); break;
+            case 155: jj_3_156(); break;
+            case 156: jj_3_157(); break;
+            case 157: jj_3_158(); break;
+            case 158: jj_3_159(); break;
+            case 159: jj_3_160(); break;
+            case 160: jj_3_161(); break;
+            case 161: jj_3_162(); break;
+            case 162: jj_3_163(); break;
+            case 163: jj_3_164(); break;
           }
         }
         p = p.next;

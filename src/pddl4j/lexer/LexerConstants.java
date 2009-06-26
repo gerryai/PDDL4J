@@ -7,8 +7,8 @@ public interface LexerConstants {
   int SINGLE_LINE_COMMENT = 9;
   int FORMAL_COMMENT = 10;
   int MULTI_LINE_COMMENT = 11;
-  int LPAREN = 13;
-  int RPAREN = 14;
+  int LEFT_BRACKET = 13;
+  int RIGHT_BRACKET = 14;
   int DEFINE = 15;
   int DOMAIN = 16;
   int REQUIREMENTS = 17;

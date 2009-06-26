@@ -117,14 +117,14 @@ public class GreaterComp extends FCompExp {
     }
     
     /**
-     * Returns <code>true</code> if this comparaison expression is evaluable.
-     * In the general case, an comparaison expression is evaluable if it is
+     * Returns <code>true</code> if this comparison expression is evaluable.
+     * In the general case, an comparison expression is evaluable if it is
      * ground and its arguments are recursively either a number either a
-     * aritmetic function. In the case of the equality, a comparaison expression
+     * arithmetic function. In the case of the equality, a comparison expression
      * is also evaluable if the arguments of the expression are constant
      * terms.
      * 
-     * @return <code>true</code> if this comparaison expression is evaluable;
+     * @return <code>true</code> if this comparison expression is evaluable;
      *         <code>false</code> otherwise.
      */
     public boolean isEvaluable() {
@@ -132,10 +132,10 @@ public class GreaterComp extends FCompExp {
     }
     
     /**
-     * Evaluates this comparaison expression.
+     * Evaluates this comparison expression.
      * 
      * @return the result of the evaluation.
-     * @throws EvaluationException if the comparaison expression is not ground or
+     * @throws EvaluationException if the comparison expression is not ground or
      *             if an numeric error occurs during the evaluation of an
      *             numeric error.
      * @see pddl4j.exp.fcomp.FCompExp#isEvaluable()            

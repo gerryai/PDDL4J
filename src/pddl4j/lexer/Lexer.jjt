@@ -158,6 +158,7 @@ public class Lexer {
         }
         return retval;
     }
+    
 }
 PARSER_END(Lexer)
 
@@ -193,10 +194,12 @@ MORE :
 		< ~[] > 
 }
 
+
+
 TOKEN :
 {
-  	< LPAREN: "(">
-| 	< RPAREN: ")">
+  	< LEFT_BRACKET: "(">
+| 	< RIGHT_BRACKET: ")">
 }
 
 TOKEN : {
@@ -346,13 +349,40 @@ SimpleNode parse() #ROOT:
 	
 }
 
+Token right_bracket() #void :
+{
+	Token t = null;
+}
+{
+	(<RIGHT_BRACKET>
+|   {
+		ParseException e = generateParseException();
+		this.mgr.logLexicalError(generateErrorMesssage(e), this.file, e.currentToken.beginLine, e.currentToken.beginColumn);
+	})
+	{ return t;}
+}
+
+Token left_bracket() #void :
+{
+	Token t = null;
+}
+{
+	(t=<LEFT_BRACKET>
+|   {
+		ParseException e = generateParseException();
+		this.mgr.logLexicalError(generateErrorMesssage(e), this.file, e.currentToken.beginLine, e.currentToken.beginColumn);
+	})
+	{ return t;}
+}
+
+
 Token domain() #DOMAIN:
 {
 	Token t = token;
 }
 {
 	try {
-		t=<LPAREN> <DEFINE> <LPAREN> <DOMAIN> domain_name() <RPAREN>
+		t=left_bracket() <DEFINE> left_bracket() <DOMAIN> domain_name() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -392,7 +422,7 @@ Token domain() #DOMAIN:
 		this.error(e, t.beginLine, t.beginColumn);
 	}
 	try {
-		<RPAREN>
+		right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -410,7 +440,7 @@ Token require_def() #REQUIRE_DEF:
 }
 {
 	try {
-		t=<LPAREN> <REQUIREMENTS> (require_key())+ <RPAREN>
+		t=left_bracket() <REQUIREMENTS> (require_key())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	} 
@@ -462,7 +492,7 @@ Token type_def() #TYPE_DEF:
 }
 {
 	try {
-		t=<LPAREN> <TYPES> typed_list(LexerTreeConstants.JJTPRIMITIVE_TYPE) <RPAREN>
+		t=left_bracket() <TYPES> typed_list(LexerTreeConstants.JJTPRIMITIVE_TYPE) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -504,7 +534,7 @@ Token type() #TYPE:
 }
 {
 	try {
-		t=<LPAREN> <EITHER> (primitive_type())+ <RPAREN>
+		t=left_bracket() <EITHER> (LOOKAHEAD(2) primitive_type())+ right_bracket()
 	|	t=primitive_type()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
@@ -538,7 +568,7 @@ Token constants_def() #CONSTANT_DEF:
 }
 {
 	try {
-		t=<LPAREN> <CONSTANTS> typed_list(LexerTreeConstants.JJTCONSTANT) <RPAREN> 
+		t=left_bracket() <CONSTANTS> typed_list(LexerTreeConstants.JJTCONSTANT) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -569,7 +599,7 @@ Token predicates_def() #PREDICATE_DEF:
 }
 {
 	try {
-		t=<LPAREN> <PREDICATES> (atomic_formula_skeleton())+ <RPAREN> 
+		t=left_bracket() <PREDICATES> (LOOKAHEAD(2) atomic_formula_skeleton())+ right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -585,7 +615,7 @@ Token atomic_formula_skeleton() #ATOMIC_FORMULA_SKELETON:
 	Token t = token;
 }
 {
-	t=<LPAREN> predicate() typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> 
+	t=<LEFT_BRACKET> predicate() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket()  
 	{ 
 		jjtThis.setLine(t.beginLine);
 		jjtThis.setColumn(t.beginColumn);
@@ -627,7 +657,7 @@ Token functions_def() #FUNCTION_DEF:
 }
 {
 	try {
-		t=<LPAREN> <FUNCTIONS> function_typed_list(LexerTreeConstants.JJTATOMIC_FUNCTION_SKELETON) <RPAREN> 
+		t=left_bracket() <FUNCTIONS> function_typed_list(LexerTreeConstants.JJTATOMIC_FUNCTION_SKELETON) right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -643,7 +673,7 @@ Token atomic_function_skeleton() #ATOMIC_FUNCTION_SKELETON:
 	Token t = token;
 }
 {
-	t=<LPAREN> functor() typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>
+	t=left_bracket() functor() typed_list(LexerTreeConstants.JJTVARIABLE) <RIGHT_BRACKET>
 	{ 
 		jjtThis.setLine(t.beginLine);
 		jjtThis.setColumn(t.beginColumn);
@@ -670,7 +700,7 @@ Token function_typed_list(int type) #FUNCTION_TYPED_LIST:
 	Token t = token;
 }
 {
-	(t=atomic_function_skeleton())* (<SUB> function_type() function_typed_list(type))? 
+	(LOOKAHEAD(2) t=atomic_function_skeleton())* (<SUB> function_type() function_typed_list(type))? 
 	{ 
 		if (t != null) {
 			jjtThis.setLine(t.beginLine);
@@ -728,7 +758,7 @@ Token and_con_gd() #AND_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <AND> (con_gd())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) con_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -745,7 +775,7 @@ Token forall_con_gd() #FORALL_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> con_gd() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -762,7 +792,7 @@ Token at_end_con_gd() #AT_END_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <AT> <END> gd() <RPAREN> 
+		t=left_bracket() <AT> <END> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -779,7 +809,7 @@ Token always_con_gd() #ALWAYS_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <ALWAYS> gd() <RPAREN> 
+		t=left_bracket() <ALWAYS> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -796,7 +826,7 @@ Token sometime_con_gd() #SOMETIME_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <SOMETIME> gd() <RPAREN> 
+		t=left_bracket() <SOMETIME> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -813,7 +843,7 @@ Token within_con_gd() #WITHIN_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <WITHIN> <NUMBER> gd() <RPAREN> 
+		t=left_bracket() <WITHIN> <NUMBER> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -830,7 +860,7 @@ Token at_most_once_con_gd() #AT_MOST_ONCE_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <AT_MOST_ONCE> gd() <RPAREN> 
+		t=left_bracket() <AT_MOST_ONCE> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -847,7 +877,7 @@ Token sometime_after_con_gd() #SOMETIME_AFTER_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <SOMETIME_AFTER> gd() gd() <RPAREN> 
+		t=left_bracket() <SOMETIME_AFTER> gd() gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -864,7 +894,7 @@ Token sometime_before_con_gd() #SOMETIME_BEFORE_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <SOMETIME_BEFORE> gd() gd() <RPAREN> 
+		t=left_bracket() <SOMETIME_BEFORE> gd() gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -881,7 +911,7 @@ Token always_within_con_gd() #ALWAYS_WITHIN_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <ALWAYS_WITHIN> <NUMBER> gd() gd() <RPAREN> 
+		t=left_bracket() <ALWAYS_WITHIN> <NUMBER> gd() gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -898,7 +928,7 @@ Token hold_during_con_gd() #HOLD_DURING_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <HOLD_DURING> <NUMBER> <NUMBER> gd() <RPAREN> 
+		t=left_bracket() <HOLD_DURING> <NUMBER> <NUMBER> gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -915,7 +945,7 @@ Token hold_after_con_gd() #HOLD_AFTER_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <HOLD_AFTER> <NUMBER> gd() <RPAREN> 
+		t=left_bracket() <HOLD_AFTER> <NUMBER> gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -957,7 +987,7 @@ Token and_gd() #AND_GD:
 }
 {
 	try {
-		t=<LPAREN> <AND> (gd())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -974,7 +1004,7 @@ Token or_gd() #OR_GD:
 }
 {
 	try {
-		t=<LPAREN> <OR> (gd())* <RPAREN> 
+		t=left_bracket() <OR> (LOOKAHEAD(2) gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -991,7 +1021,7 @@ Token not_gd() #NOT_GD:
 }
 {
 	try {
-		t=<LPAREN> <NOT> gd() <RPAREN> 
+		t=left_bracket() <NOT> gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1008,7 +1038,7 @@ Token imply_gd() #IMPLY_GD:
 }
 {
 	try {
-		t=<LPAREN> <IMPLY> gd() gd() <RPAREN> 
+		t=left_bracket() <IMPLY> gd() gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1025,7 +1055,7 @@ Token exists_gd() #EXISTS_GD:
 }
 {
 	try {
-		t=<LPAREN> <EXISTS> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> gd() <RPAREN> 
+		t=left_bracket() <EXISTS> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1042,7 +1072,7 @@ Token forall_gd() #FORALL_GD:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> gd() <RPAREN> 
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1059,14 +1089,14 @@ Token atomic_formula(int type) #ATOMIC_FORMULA:
 }
 {
 	try {
-		t=<LPAREN> predicate() (		
+		t=<LEFT_BRACKET> predicate() (		
 		LOOKAHEAD({ type == LexerTreeConstants.JJTCONSTANT } ) (constant())* {
 				jjtThis.setTypeId(LexerTreeConstants.JJTCONSTANT);
 			}
 		| LOOKAHEAD({ type == LexerTreeConstants.JJTTERM }) (term())* {		
 				jjtThis.setTypeId(LexerTreeConstants.JJTTERM);
 			}
-		) <RPAREN> 
+		) right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1120,7 +1150,7 @@ Token not_atomic_formula(int type) #NOT_ATOMIC_FORMULA:
 }
 {		
 	try {
-		t=<LPAREN> <NOT> atomic_formula(type) <RPAREN>
+		t=left_bracket() <NOT> atomic_formula(type) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1175,7 +1205,7 @@ Token greater_comp() #GREATER_COMP:
 }
 {
 	try {
-		t=<LPAREN> <GREATER> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <GREATER> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1192,7 +1222,7 @@ Token greater_equal_comp() #GREATER_EQUAL_COMP:
 }
 {
 	try {
-		t=<LPAREN> <GEQUAL> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <GEQUAL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1209,7 +1239,7 @@ Token less_equal_comp() #LESS_EQUAL_COMP:
 }
 {
 	try {
-		t=<LPAREN> <LEQUAL> f_exp() f_exp() <RPAREN> 
+		t=left_bracket() <LEQUAL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1226,7 +1256,7 @@ Token less_comp() #LESS_COMP:
 }
 {
 	try {
-		t=<LPAREN> <LESS> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <LESS> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1243,7 +1273,7 @@ Token equal_comp() #EQUAL_COMP:
 }
 {
 	try {
-		t=<LPAREN> <EQUAL> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <EQUAL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1336,7 +1366,7 @@ Token add_op() #ADD_OP:
 }
 {
 	try {
-		t=<LPAREN> <ADD> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <ADD> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1353,7 +1383,7 @@ Token substract_op() #SUBSTRACT_OP:
 }
 {
 	try {
-		t=<LPAREN> <SUB> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <SUB> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1370,7 +1400,7 @@ Token multiply_op() #MULTIPLY_OP:
 }
 {
 	try {
-		t=<LPAREN> <MUL> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <MUL> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1387,7 +1417,7 @@ Token divide_op() #DIVIDE_OP:
 }
 {
 	try {
-		t=<LPAREN> <DIV> f_exp() f_exp() <RPAREN>
+		t=left_bracket() <DIV> f_exp() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1404,7 +1434,7 @@ Token unary_op() #UNARY_OP:
 }
 {
 	try {
-		t=<LPAREN> <SUB> f_exp_da() <RPAREN>
+		t=left_bracket() <SUB> f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1421,7 +1451,7 @@ Token f_head() #F_HEAD:
 }
 {
 	try {
-		t=<LPAREN> functor() (term())* <RPAREN> 
+		t=left_bracket() functor() (LOOKAHEAD(2) term())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1457,10 +1487,10 @@ Token action_def() #ACTION_DEF:
 }
 {
 	try {
-		t=<LPAREN> <ACTION> action_name()
-		<PARAMETERS> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>
+		t=left_bracket() <ACTION> action_name()
+		<PARAMETERS> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket()
 		action_def_body()
-		<RPAREN> 
+		right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1533,7 +1563,7 @@ Token empty_or() #EMPTY_OR:
 }
 {
 	try {
-		t=<LPAREN> <RPAREN>
+		t=<LEFT_BRACKET> <RIGHT_BRACKET>
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1550,7 +1580,7 @@ Token and_pre_gd() #AND_PRE_GD:
 }
 {
 	try {
-		t=<LPAREN> <AND> (pre_gd())* <RPAREN>
+		t=left_bracket() <AND> (LOOKAHEAD(2) pre_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1567,7 +1597,7 @@ Token forall_pre_gd() #FORALL_PRE_GD:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> pre_gd() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() pre_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1602,7 +1632,7 @@ Token named_pref_gd() #NAMED_PREF_GD:
 }
 {
 	try {
-		t=<LPAREN> <PREFERENCE> [pref_name()] gd() <RPAREN>
+		t=left_bracket() <PREFERENCE> [pref_name()] gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1655,7 +1685,7 @@ Token and_c_effect() #AND_C_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AND> (c_effect())* <RPAREN>
+		t=left_bracket() <AND> (LOOKAHEAD(2) c_effect())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1691,7 +1721,7 @@ Token forall_effect() #FORALL_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> effect() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1708,7 +1738,7 @@ Token when_con_effect() #WHEN_CON_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <WHEN> gd() cond_effect() <RPAREN>
+		t=left_bracket() <WHEN> gd() cond_effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1743,7 +1773,7 @@ Token and_p_effect() #AND_P_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AND> (p_effect())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) p_effect())* right_bracket()  
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1799,7 +1829,7 @@ Token assign() #ASSIGN:
 }
 {
 	try {
-		t=<LPAREN> <ASSIGN> f_head() f_exp() <RPAREN>
+		t=left_bracket() <ASSIGN> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1817,7 +1847,7 @@ Token scale_up() #SCALE_UP:
 }
 {
 	try {
-		t=<LPAREN> <SCALE_UP> f_head() f_exp() <RPAREN>
+		t=left_bracket() <SCALE_UP> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1834,7 +1864,7 @@ Token scale_down() #SCALE_DOWN:
 }
 {
 	try {
-		t=<LPAREN> <SCALE_DOWN> f_head() f_exp() <RPAREN>
+		t=left_bracket() <SCALE_DOWN> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1851,7 +1881,7 @@ Token increase() #INCREASE:
 }
 {
 	try {
-		t=<LPAREN> <INCREASE> f_head() f_exp() <RPAREN>
+		t=left_bracket() <INCREASE> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1868,7 +1898,7 @@ Token decrease() #DECREASE:
 }
 {
 	try {
-		t=<LPAREN> <DECREASE> f_head() f_exp() <RPAREN>
+		t=left_bracket() <DECREASE> f_head() f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1885,10 +1915,10 @@ Token durative_action_def() #DURATION_ACTION_DEF:
 }
 {
 	try {
-		t=<LPAREN> <DURATIVE_ACTION> da_symbol()
-		<PARAMETERS> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN>
+		t=left_bracket() <DURATIVE_ACTION> da_symbol()
+		<PARAMETERS> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket()
 		da_def_body()
-		<RPAREN>
+		right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -1961,7 +1991,7 @@ Token and_simple_duration_constraint() #AND_SIMPLE_DURATION_CONSTRAINT:
 }
 {
 	try {
-		t=<LPAREN> <AND> (simple_duration_constraint())+ <RPAREN>
+		t=left_bracket() <AND> (LOOKAHEAD(2) simple_duration_constraint())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2014,7 +2044,7 @@ Token at_start_simple_duration_constraint() #AT_START_SIMPLE_DURATION_CONSTRAINT
 }
 {
 	try {
-		t=<LPAREN> <AT> <START> simple_duration_constraint() <RPAREN>
+		t=left_bracket() <AT> <START> simple_duration_constraint() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2031,7 +2061,7 @@ Token at_end_simple_duration_constraint() #AT_END_SIMPLE_DURATION_CONSTRAINT:
 }
 {
 	try {
-		t=<LPAREN> <AT> <END> simple_duration_constraint() <RPAREN>
+		t=<LEFT_BRACKET> <AT> <END> simple_duration_constraint() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2067,7 +2097,7 @@ Token equal_d_op() #EQUAL_D_OP:
 }
 {
 	try {
-		t=<LPAREN> <EQUAL> var_duration() d_value() <RPAREN> 
+		t=left_bracket() <EQUAL> var_duration() d_value() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2084,7 +2114,7 @@ Token gequal_d_op() #GEQUAL_D_OP:
 }
 {
 	try {
-		t=<LPAREN> <GEQUAL> var_duration() d_value() <RPAREN>
+		t=<LEFT_BRACKET> <GEQUAL> var_duration() d_value() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2101,7 +2131,7 @@ Token lequal_d_op() #LEQUAL_D_OP:
 }
 {
 	try {
-		t=<LPAREN> <LEQUAL> var_duration() d_value() <RPAREN>
+		t=left_bracket() <LEQUAL> var_duration() d_value() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2172,7 +2202,7 @@ Token forall_da_gd() #FORALL_DA_GD:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> da_gd() <RPAREN>
+		t=<LEFT_BRACKET> <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() da_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2189,7 +2219,7 @@ Token and_da_gd() #AND_DA_GD:
 }
 {
 	try {
-		t=<LPAREN> <AND> (da_gd())* <RPAREN>
+		t=<LEFT_BRACKET> <AND> (LOOKAHEAD(2) da_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2225,7 +2255,7 @@ Token named_pref_timed_gd() #NAMED_PREF_TIMED_GD:
 }
 {
 	try {
-		t=<LPAREN> <PREFERENCE> [pref_name()] timed_gd() <RPAREN>
+		t=left_bracket() <PREFERENCE> [pref_name()] timed_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2277,7 +2307,7 @@ Token over_all_timed_gd() #OVER_ALL_TIMED_GD:
 }
 {
 	try {
-		t=<LPAREN> <OVER> <ALL> gd() <RPAREN>
+		t=left_bracket() <OVER> <ALL> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2312,7 +2342,7 @@ Token at_start_timed_gd() #AT_START_TIMED_GD:
 }
 {
 	try {
-		t=<LPAREN> <AT> <START> gd() <RPAREN>
+		t=left_bracket() <AT> <START> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2329,7 +2359,7 @@ Token at_end_timed_gd() #AT_END_TIMED_GD:
 }
 {
 	try {
-		t=<LPAREN> <AT> <END> gd() <RPAREN> 
+		t=left_bracket() <AT> <END> gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2405,7 +2435,7 @@ Token da_assign() #DA_ASSIGN:
 }
 {
 	try {
-		t=<LPAREN> <ASSIGN> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <ASSIGN> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2422,7 +2452,7 @@ Token da_scale_up() #DA_SCALE_UP:
 }
 {
 	try {
-		t=<LPAREN> <SCALE_UP> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <SCALE_UP> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2439,7 +2469,7 @@ Token da_scale_down() #DA_SCALE_DOWN:
 }
 {
 	try {
-		t=<LPAREN> <SCALE_DOWN> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <SCALE_DOWN> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2457,7 +2487,7 @@ Token da_increase() #DA_INCREASE:
 }
 {
 	try {
-		t=<LPAREN> <INCREASE> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <INCREASE> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2474,7 +2504,7 @@ Token da_decrease() #DA_DECREASE:
 }
 {
 	try {
-		t=<LPAREN> <DECREASE> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <DECREASE> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2491,7 +2521,7 @@ Token when_da_effect() #WHEN_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <WHEN> da_gd() timed_effect() <RPAREN>
+		t=left_bracket() <WHEN> da_gd() timed_effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2509,7 +2539,7 @@ Token forall_da_effect() #FORALL_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> da_effect() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() da_effect() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2526,7 +2556,7 @@ Token and_da_effect() #AND_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AND> (da_effect())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) da_effect())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2580,7 +2610,7 @@ Token at_start_f_assign_da_effect() #AT_START_F_ASSIGN_DA_EFFECT:
 }
 {
 	try { 
-		t=<LPAREN> <AT> <START> f_assign_da() <RPAREN>
+		t=left_bracket() <AT> <START> f_assign_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2598,7 +2628,7 @@ Token at_end_f_assign_da_effect() #AT_END_F_ASSIGN_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AT> <END> f_assign_da() <RPAREN>
+		t=left_bracket() <AT> <END> f_assign_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2633,7 +2663,7 @@ Token at_start_da_effect() #AT_START_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AT> <START> literal(LexerTreeConstants.JJTTERM) <RPAREN> 
+		t=left_bracket() <AT> <START> literal(LexerTreeConstants.JJTTERM) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2651,7 +2681,7 @@ Token at_end_da_effect() #AT_END_DA_EFFECT:
 }
 {
 	try {
-		t=<LPAREN> <AT> <END> literal(LexerTreeConstants.JJTTERM)  <RPAREN>
+		t=left_bracket() <AT> <END> literal(LexerTreeConstants.JJTTERM)  right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2686,7 +2716,7 @@ Token increase_assign_op_t() #INCREASE_ASSIGN_OP_T:
 }
 {
 	try {
-		t=<LPAREN> <INCREASE> f_head() f_exp_t() <RPAREN>
+		t=left_bracket() <INCREASE> f_head() f_exp_t() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2703,7 +2733,7 @@ Token decrease_assign_op_t() #DECREASE_ASSIGN_OP_T:
 }
 {
 	try {
-		t=<LPAREN> <DECREASE> f_head() f_exp_t() <RPAREN>
+		t=left_bracket() <DECREASE> f_head() f_exp_t() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2720,8 +2750,8 @@ Token f_exp_t() #F_EXP_T:
 }
 {
 	try {
-		LOOKAHEAD(2) t=<LPAREN> <MUL> continous_variable() f_exp() <RPAREN>
-	| 	LOOKAHEAD(2) t=<LPAREN> <MUL> f_exp() continous_variable() <RPAREN>
+		LOOKAHEAD(2) t=left_bracket() <MUL> continous_variable() f_exp() right_bracket()
+	| 	LOOKAHEAD(2) t=left_bracket() <MUL> f_exp() continous_variable() right_bracket()
 	| 	LOOKAHEAD(2) t=continous_variable() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
@@ -2820,7 +2850,7 @@ Token da_add_op() #DA_ADD_OP:
 }
 {
 	try {
-		t=<LPAREN> <ADD> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <ADD> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2837,7 +2867,7 @@ Token da_substract_op() #DA_SUBSTRACT_OP:
 }
 {
 	try {
-		t=<LPAREN> <SUB> f_head() f_exp_da() <RPAREN> 
+		t=left_bracket() <SUB> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2854,7 +2884,7 @@ Token da_multiply_op() #DA_MULTIPLY_OP:
 }
 {
 	try {
-		t=<LPAREN> <MUL> f_head() f_exp_da() <RPAREN> 
+		t=left_bracket() <MUL> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2871,7 +2901,7 @@ Token da_divide_op() #DA_DIVIDE_OP:
 }
 {
 	try {
-		t=<LPAREN> <DIV> f_head() f_exp_da() <RPAREN>
+		t=left_bracket() <DIV> f_head() f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2888,7 +2918,7 @@ Token da_unary_op() #DA_UNARY_OP:
 }
 {
 	try {
-		t=<LPAREN> <SUB> f_exp_da() <RPAREN>
+		t=left_bracket() <SUB> f_exp_da() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2905,7 +2935,7 @@ Token derived_def() #DERIVED_DEF:
 }
 {
 	try {
-		t=<LPAREN> <DERIVED> atomic_formula(LexerTreeConstants.JJTVARIABLE) gd() <RPAREN> 
+		t=left_bracket() <DERIVED> atomic_formula(LexerTreeConstants.JJTVARIABLE) gd() right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2922,8 +2952,8 @@ Token problem() #PROBLEM:
 }
 {
 	try {
-		t=<LPAREN> <DEFINE> <LPAREN> <PROBLEM> problem_name() <RPAREN> 
-		<LPAREN> <P_DOMAIN> domain_name() <RPAREN>
+		t=left_bracket() <DEFINE> left_bracket() <PROBLEM> problem_name() right_bracket()
+		left_bracket() <P_DOMAIN> domain_name() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -2934,7 +2964,7 @@ Token problem() #PROBLEM:
 	[LOOKAHEAD(2) constraints()]
 	[LOOKAHEAD(2) metric_spec()]
 	// [length-spec()] not implemented
-	<RPAREN> { 
+	right_bracket() { 
 		jjtThis.setLine(t.beginLine);
 		jjtThis.setColumn(t.beginColumn);
 		return t;
@@ -2983,7 +3013,7 @@ Token object_declaration() #OBJECT_DECLARATION:
 }
 {
 	try {
-		t=<LPAREN> <OBJECTS> typed_list(LexerTreeConstants.JJTCONSTANT) <RPAREN> 
+		t=left_bracket() <OBJECTS> typed_list(LexerTreeConstants.JJTCONSTANT) right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3000,7 +3030,7 @@ Token init() #INIT:
 }
 {
 	try {
-		t=<LPAREN> <INIT> (init_el())* <RPAREN> 
+		t=left_bracket() <INIT> (LOOKAHEAD(2) init_el())* right_bracket() 
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3036,7 +3066,7 @@ Token equal_init_el() #EQUAL_INIT_EL:
 }
 {	
 	try {
-		t=<LPAREN> <EQUAL> f_head() number() <RPAREN>
+		t=left_bracket() <EQUAL> f_head() number() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3053,7 +3083,7 @@ Token timed_literal() #TIMED_LITERAL:
 }
 {
 	try {
-		t=<LPAREN> <AT> number() literal(LexerTreeConstants.JJTCONSTANT) <RPAREN>
+		t=left_bracket() <AT> number() literal(LexerTreeConstants.JJTCONSTANT) right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3070,7 +3100,7 @@ Token goal() #GOAL:
 }
 {
 	try {
-		t=<LPAREN> <GOAL> pre_gd() <RPAREN> 
+		t=left_bracket() <GOAL> pre_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3087,7 +3117,7 @@ Token constraints() #CONSTRAINTS:
 }
 {
 	try {
-		t=<LPAREN> <CONSTRAINTS> pref_con_gd() <RPAREN> 
+		t=<LEFT_BRACKET> <CONSTRAINTS> pref_con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3124,7 +3154,7 @@ Token and_pref_con_gd() #AND_PREF_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <AND> (pref_con_gd())* <RPAREN> 
+		t=left_bracket() <AND> (LOOKAHEAD(2) pref_con_gd())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3141,7 +3171,7 @@ Token named_pref_con_gd() #NAMED_PREF_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <PREFERENCE> [pref_name()] con_gd() <RPAREN> 
+		t=left_bracket() <PREFERENCE> [pref_name()] con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3158,7 +3188,7 @@ Token forall_pref_con_gd() #FORALL_PREF_CON_GD:
 }
 {
 	try {
-		t=<LPAREN> <FORALL> <LPAREN> typed_list(LexerTreeConstants.JJTVARIABLE) <RPAREN> pref_con_gd() <RPAREN>
+		t=left_bracket() <FORALL> left_bracket() typed_list(LexerTreeConstants.JJTVARIABLE) right_bracket() pref_con_gd() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3193,7 +3223,7 @@ Token maximize() #MAXIMIZE:
 }
 {
 	try {
-		t=<LPAREN> <METRIC> <MAXIMIZE> metric_f_exp() <RPAREN>
+		t=left_bracket() <METRIC> <MAXIMIZE> metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3210,7 +3240,7 @@ Token minimize() #MINIMIZE:
 }
 {
 	try {
-		t=<LPAREN> <METRIC> <MINIMIZE> metric_f_exp() <RPAREN>
+		t=left_bracket() <METRIC> <MINIMIZE> metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3250,7 +3280,7 @@ Token violated_pref_exp() #VIOLATED_PREF_EXP:
 }
 {
 	try {
-		t=<LPAREN> <IS_VIOLATED> pref_name() <RPAREN>
+		t=left_bracket() <IS_VIOLATED> pref_name() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3267,7 +3297,7 @@ Token constant_f_head() #CONSTANT_F_HEAD:
 }
 {
 	try {
-		t=<LPAREN> functor() (constant())* <RPAREN>
+		t=left_bracket() functor() (LOOKAHEAD(2) constant())* right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3320,7 +3350,7 @@ Token add_op_metric_f_exp() #ADD_OP_METRIC_F_EXP:
 }
 {
 	try {
-		t=<LPAREN> <ADD> metric_f_exp() metric_f_exp() <RPAREN>
+		t=left_bracket() <ADD> metric_f_exp() metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3337,7 +3367,7 @@ Token substract_op_metric_f_exp() #SUBSTRACT_OP_METRIC_F_EXP:
 }
 {
 	try{
-		t=<LPAREN> <SUB> metric_f_exp() metric_f_exp() <RPAREN>
+		t=left_bracket() <SUB> metric_f_exp() metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3372,7 +3402,7 @@ Token multiply_narity_op_metric_f_exp() #MULTIPLY_NARITY_OP_METRIC_F_EXP:
 }
 {
 	try {
-		t=<LPAREN> <MUL> metric_f_exp() (metric_f_exp())+ <RPAREN>
+		t=left_bracket() <MUL> metric_f_exp() (LOOKAHEAD(2) metric_f_exp())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3389,7 +3419,7 @@ Token add_narity_op_metric_f_exp() #ADD_NARITY_OP_METRIC_F_EXP:
 }
 {
 	try {
-		t=<LPAREN> <ADD> metric_f_exp() (metric_f_exp())+ <RPAREN>
+		t=left_bracket() <ADD> metric_f_exp() (LOOKAHEAD(2) metric_f_exp())+ right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);
 	}
@@ -3406,7 +3436,7 @@ Token unary_op_metric_f_exp() #UNARY_OP_METRIC_F_EXP:
 }
 {
 	try {
-		t=<LPAREN> <SUB> metric_f_exp() <RPAREN>
+		t=left_bracket() <SUB> metric_f_exp() right_bracket()
 	} catch (Throwable e) {
 		this.error(e, t.beginLine, t.beginColumn);;
 	}

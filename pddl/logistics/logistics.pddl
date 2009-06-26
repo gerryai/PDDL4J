@@ -5,7 +5,7 @@
 ;; Tue Dec  1 16:10:25 EST 1998 Henry Kautz
 
 (define (domain logistics)
-  (:requirements :strips :typing) 
+  (:requirements :strips :typing)
   (:types 
   	package location vehicle - object
   	truck airplane - vehicle

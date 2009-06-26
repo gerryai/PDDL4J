@@ -58,7 +58,7 @@ public class Test {
             
             boolean success;
             PDDLObject domain = parser.parse(new File(args[0]));
-
+            
             if (mgr.contains(Message.ERROR)) {
                 mgr.print(Message.ALL);
             } // else we print the warning and start the planning process
@@ -66,7 +66,7 @@ public class Test {
                 mgr.print(Message.WARNING);
                 System.out.println("\nParsing domain \"" + domain.getDomainName()
                             + "\" done successfully ...");
-                //System.out.println(domain);
+                System.out.println(domain);
                 
                 
                 PDDLObject problem = parser.parse(new File(args[1]));
